@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — YourName Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark">
+
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">YourName</a>
+    <div class="nav-links">
+      <a href="index.html">People</a>
+      <a href="cars.html">Cars</a>
+      <a href="about.html" class="active">About</a>
+    </div>
+  </nav>
+
+  <section class="about-hero">
+    <div class="animate-fade">
+      <p class="hero-sub">Hello, I am</p>
+      <h1>YourName</h1>
+      <p class="hero-desc">Photographer based in [Your City]</p>
+    </div>
+  </section>
+
+  <div class="about-section">
+    <!-- Replace the src below with your own photo, e.g: images/me.jpg -->
+    <img src="https://picsum.photos/seed/about1/600/800" alt="About me" class="about-img about-animate">
+    <div class="about-text about-animate">
+      <h3>My Story</h3>
+      <p>Replace this with your own story. Talk about how you got into photography, what drives you, and what makes your work stand out.</p>
+      <p>Whether it is the raw emotion of a portrait or the mechanical precision of an automotive shot, every project tells a unique story.</p>
+      <p>Based in [Your City] — available for commissions worldwide.</p>
+    </div>
+  </div>
+
+  <section class="contact-section">
+    <h2>Get in Touch</h2>
+    <p>Have a project in mind? Let us talk.</p>
+
+    <!--
+      HOW TO SET UP THE CONTACT FORM SO EMAILS REACH YOU:
+      1. Go to https://formspree.io and create a FREE account
+      2. Click "New Form", give it a name (e.g. "Portfolio Contact")
+      3. Copy your Form ID — it looks like:  xwkgpqzr
+      4. Replace YOUR_FORM_ID below with your actual ID
+      That's it — Formspree will email you every submission for free.
+    -->
+    <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="project">Project Type</label>
+        <select id="project" name="project_type">
+          <option value="">Select a type</option>
+          <option value="portrait">Portrait / People</option>
+          <option value="automotive">Automotive</option>
+          <option value="event">Event</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send Message</button>
+    </form>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 YourName Photography</p>
+    <div class="footer-links">
+      <a href="index.html">People</a>
+      <a href="cars.html">Cars</a>
+      <a href="about.html">Contact</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
