@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Cars</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark" data-page="cars">
+
+  <nav id="navbar">
+    <a class="nav-logo" href="index.html">YourName</a>
+    <div class="nav-links">
+      <a href="index.html">People</a>
+      <a href="cars.html" class="active">Cars</a>
+      <a href="about.html">About</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-sub animate-fade">Automotive Photography</p>
+      <h1 class="hero-title animate-up">Power <em>Meets</em><br>Precision</h1>
+      <p class="hero-desc animate-fade-delay">Speed, form, and mechanical beauty captured in every frame.</p>
+      <a href="#gallery" class="cta-btn animate-fade-delay2">View Gallery</a>
+    </div>
+    <div class="hero-scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="marquee-section">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+
+  <section id="gallery" class="gallery-section">
+    <div class="section-header">
+      <h2>Gallery</h2>
+      <p>Machines in their finest light</p>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </section>
+
+  <div class="portfolio-switch">
+    <a href="index.html" class="switch-link">
+      <span>Also explore</span>
+      <strong>People Photography &#x2192;</strong>
+    </a>
+  </div>
+
+  <div id="lightbox" class="lightbox">
+    <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
+    <button class="lightbox-prev" onclick="changeSlide(-1)">&#x2039;</button>
+    <img id="lightbox-img" src="" alt="">
+    <button class="lightbox-next" onclick="changeSlide(1)">&#x203A;</button>
+    <p id="lightbox-caption"></p>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 YourName Photography</p>
+    <div class="footer-links">
+      <a href="index.html">People</a>
+      <a href="cars.html">Cars</a>
+      <a href="about.html">Contact</a>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
