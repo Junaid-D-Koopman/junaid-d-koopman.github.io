@@ -1,22 +1,19 @@
 /* ================================================
-   ONEDRIVE LINK CONVERTER
-   Converts a 1drv.ms sharing link into a direct
-   image URL via the OneDrive shares API.
-   ================================================ */
-function oneDriveUrl(shareUrl) {
-  var encoded = btoa(shareUrl)
-    .replace(/=/g, '')
-    .replace(/\//g, '_')
-    .replace(/\+/g, '-');
-  return 'https://api.onedrive.com/v1.0/shares/u!' + encoded + '/root/content';
-}
-
-/* ================================================
    YOUR PHOTOS
    ------------------------------------------------
-   Add/remove sharing links from OneDrive freely.
-   Caption = what shows on hover.
+   By default, placeholder images from picsum.photos
+   are used so the site works immediately.
+
+   To use YOUR own photos:
+   1. Upload your images to GitHub inside folders:
+        images/people/   ← for portrait photos
+        images/cars/     ← for car photos
+   2. Replace the src values below with the file paths
+      For example:
+        src: 'images/people/portrait1.jpg'
+        src: 'images/cars/ferrari.jpg'
    ================================================ */
+
 var peopleImages = [
   { src: 'https://picsum.photos/seed/pp1/600/800', caption: 'Portrait Series'  },
   { src: 'https://picsum.photos/seed/pp2/800/600', caption: 'Street Portrait'  },
@@ -30,17 +27,15 @@ var peopleImages = [
 ];
 
 var carImages = [
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQBNe4--SCXVT6sGNWSFerRAAbwSSdf8xEXqqYcqKus0kOs?e=qWISPT'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQCCJ4LfDX-UQLWcZXJMKbLIAUYk0W8FuY5kCQDPjkg2SLA?e=t1FeQI'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQBy0wJRnLkaQYvPppUzoPHuAdBsUJhJMTeZ05_YxnuXfRk?e=LKla9Q'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQD5Wi5ZcsQYSI2QLtq886oJAdbk-SAQ6H-VyKgiCPuV-bY?e=r4N6zF'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQAY_a88HI14QrjJyEsioRvdAW4g_Cqmmy7ERS4z-uOBsZE?e=gws6ln'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQBWa-gGnjcaTKP5kOEg-7CtAZzhCwrLqmYF6YApk9Y2mpY?e=lQazFV'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQBB1TMoq7S0T5Vrm-_uIJTNAZotj40z-9IKsdmFDK16N98?e=m1wZjj'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQBe8j-wha7RQ7CxIIcZkiaaAaEf5_mPpKSFOBHHn5JjsQs?e=QWAacY'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQD4NviFumJxQJYLLfYS0CwwAUoWswN3q8m5v3hsrpiuPzY?e=xpTJfb'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQCb2OlxFAUTT5VkmbOI9QVuAbORPZZcZZ0-9TZRfk24UnM?e=Tldbe6'), caption: 'Ferrari' },
-  { src: oneDriveUrl('https://1drv.ms/i/c/0d77267083a5f2c1/IQDDZbNKKCDRRqXBmnhWy236AWwDfzw7vkyDo-cWSvC63jc?e=PM13Ic'), caption: 'Ferrari' }
+  { src: 'https://picsum.photos/seed/cp1/900/600', caption: 'Classic Chrome'   },
+  { src: 'https://picsum.photos/seed/cp2/600/800', caption: 'Detail Shot'      },
+  { src: 'https://picsum.photos/seed/cp3/800/500', caption: 'Night Drive'      },
+  { src: 'https://picsum.photos/seed/cp4/700/700', caption: 'Interior'         },
+  { src: 'https://picsum.photos/seed/cp5/900/550', caption: 'Speed Blur'       },
+  { src: 'https://picsum.photos/seed/cp6/600/750', caption: 'Engine Bay'       },
+  { src: 'https://picsum.photos/seed/cp7/800/600', caption: 'Track Day'        },
+  { src: 'https://picsum.photos/seed/cp8/700/500', caption: 'Wheel Detail'     },
+  { src: 'https://picsum.photos/seed/cp9/600/900', caption: 'Sunset Cruise'    }
 ];
 
 /* ================================================
@@ -54,9 +49,6 @@ var currentIndex = 0;
 
 /* ================================================
    BUILD MASONRY GALLERY
-   Images use natural aspect ratios — portrait and
-   landscape shots both lay out correctly because
-   each img is width:100% / height:auto in CSS.
    ================================================ */
 var grid = document.getElementById('galleryGrid');
 if (grid) {
