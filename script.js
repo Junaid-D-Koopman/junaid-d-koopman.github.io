@@ -27,15 +27,15 @@ var peopleImages = [
 ];
 
 var carImages = [
-  { src: 'https://picsum.photos/seed/cp1/900/600', caption: 'Classic Chrome'   },
-  { src: 'https://picsum.photos/seed/cp2/600/800', caption: 'Detail Shot'      },
-  { src: 'https://picsum.photos/seed/cp3/800/500', caption: 'Night Drive'      },
-  { src: 'https://picsum.photos/seed/cp4/700/700', caption: 'Interior'         },
-  { src: 'https://picsum.photos/seed/cp5/900/550', caption: 'Speed Blur'       },
-  { src: 'https://picsum.photos/seed/cp6/600/750', caption: 'Engine Bay'       },
-  { src: 'https://picsum.photos/seed/cp7/800/600', caption: 'Track Day'        },
-  { src: 'https://picsum.photos/seed/cp8/700/500', caption: 'Wheel Detail'     },
-  { src: 'https://picsum.photos/seed/cp9/600/900', caption: 'Sunset Cruise'    }
+  { src: 'images/cars/image-1.jpg',  caption: 'ferrari-1'},
+  { src: 'images/cars/image-2.jpg',  caption: 'ferrari-2'},
+  { src: 'images/cars/image-3.jpg',  caption: 'ferrari-3'},
+  { src: 'images/cars/image-4.jpg',  caption: 'ferrari-4'},
+  { src: 'images/cars/image-5.jpg',  caption: 'ferrari-5'},
+  { src: 'images/cars/image-6.jpg',  caption: 'ferrari-6'},
+  { src: 'images/cars/image-7.jpg',  caption: 'ferrari-7'},
+  { src: 'images/cars/image-8.jpg',  caption: 'ferrari-8'},
+  { src: 'images/cars/image-9.jpg',  caption: 'ferrari-9'},
 ];
 
 /* ================================================
