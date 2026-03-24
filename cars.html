@@ -7,6 +7,352 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ============================================================
+       CAR PAGE — AUTOMOTIVE MAGAZINE THEME
+       ============================================================ */
+
+    /* ---- CINEMATIC HERO ---- */
+    .car-hero {
+      position: relative; height: 100vh; min-height: 620px;
+      overflow: hidden; display: flex; align-items: flex-end;
+      padding: 0 4rem 5rem;
+    }
+    .car-hero-bg {
+      position: absolute; inset: 0;
+      background: center / cover no-repeat;
+      transform: scale(1.1); will-change: transform;
+    }
+    .car-hero-bg::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(0,0,0,0.45);
+    }
+    .car-hero-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(8,8,8,1) 0%,
+        rgba(8,8,8,0.55) 40%,
+        transparent 100%);
+    }
+    /* Subtle film-grain overlay */
+    .car-hero-grain {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      opacity: 0.035;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+    .car-hero-content {
+      position: relative; z-index: 2; max-width: 1200px; width: 100%;
+    }
+    .car-eyebrow {
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.8rem;
+      font-size: 0.68rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--accent); opacity: 0; animation: fadeIn 0.8s 0.2s forwards;
+    }
+    .car-eyebrow::before {
+      content: ''; display: inline-block;
+      width: 36px; height: 1px; background: var(--accent);
+    }
+    .car-hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4.5rem, 10.5vw, 10rem);
+      line-height: 0.88; font-weight: 700; letter-spacing: -0.02em;
+      color: #fff; margin-bottom: 0;
+    }
+    .title-line { display: block; overflow: hidden; }
+    .title-line span {
+      display: block;
+      transform: translateY(110%);
+      animation: lineReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .title-line:nth-child(1) span { animation-delay: 0.15s; }
+    .title-line:nth-child(2) span { animation-delay: 0.32s; color: var(--accent); font-style: italic; }
+    .title-line:nth-child(3) span { animation-delay: 0.49s; }
+    .car-hero-meta {
+      display: flex; align-items: center; gap: 3rem;
+      margin-top: 2.8rem; padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      opacity: 0; animation: fadeIn 0.8s 0.9s forwards;
+    }
+    .hero-stat .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1;
+    }
+    .hero-stat .lbl {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-top: 0.3rem;
+    }
+    .hero-divider { width: 1px; height: 38px; background: rgba(255,255,255,0.12); }
+    .hero-cta { margin-left: auto; }
+    .car-hero-side {
+      position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+      z-index: 2; writing-mode: vertical-lr;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      opacity: 0; animation: fadeIn 1s 1.2s forwards;
+    }
+    .car-hero-side::after {
+      content: ''; width: 1px; height: 64px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    /* ---- ACCENT TICKER ---- */
+    .car-ticker {
+      background: var(--accent); padding: 0.65rem 0; overflow: hidden;
+      white-space: nowrap;
+    }
+    .car-ticker-track {
+      display: inline-flex; gap: 0; animation: marquee 28s linear infinite;
+    }
+    .car-ticker-track span {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.3em;
+      text-transform: uppercase; color: #080808; padding: 0 2rem;
+    }
+    .car-ticker-dot { color: rgba(8,8,8,0.35) !important; padding: 0 !important; letter-spacing: 0 !important; }
+
+    /* ---- SECTION LABEL ---- */
+    .sec-label {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.8rem;
+    }
+    .sec-label::before {
+      content: ''; display: inline-block;
+      width: 28px; height: 1px; background: var(--accent);
+    }
+
+    /* ---- FEATURED SPLIT ---- */
+    .car-featured {
+      display: grid; grid-template-columns: 58% 1fr; min-height: 88vh; overflow: hidden;
+    }
+    .feat-img-wrap {
+      position: relative; overflow: hidden;
+    }
+    .feat-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transform: scale(1.06);
+      transition: transform 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .feat-img-wrap.revealed img { transform: scale(1); }
+    .feat-wipe {
+      position: absolute; inset: 0; background: var(--bg2); z-index: 2;
+      transform: translateX(0);
+      transition: transform 1.3s cubic-bezier(0.77, 0, 0.18, 1);
+    }
+    .feat-img-wrap.revealed .feat-wipe { transform: translateX(101%); }
+    .feat-text {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 4rem; background: var(--bg2);
+      opacity: 0; transform: translateX(30px);
+      transition: opacity 0.9s ease 0.4s, transform 0.9s ease 0.4s;
+    }
+    .feat-text.revealed { opacity: 1; transform: translateX(0); }
+    .feat-ghost-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 9rem; line-height: 1; font-weight: 700;
+      color: rgba(255,255,255,0.03); margin-bottom: -2.5rem;
+      user-select: none; pointer-events: none;
+    }
+    .feat-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 3vw, 2.8rem); line-height: 1.15; margin-bottom: 1.5rem;
+    }
+    .feat-text h2 em { color: var(--accent); font-style: italic; }
+    .feat-text p { color: var(--muted); font-size: 0.93rem; line-height: 1.88; max-width: 360px; margin-bottom: 2.5rem; }
+    .feat-specs { display: flex; gap: 2.5rem; }
+    .feat-spec-val {
+      font-family: 'Playfair Display', serif; font-size: 1.4rem;
+      font-weight: 700; color: var(--text); line-height: 1;
+    }
+    .feat-spec-key {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.35rem;
+    }
+
+    /* ---- MAGAZINE GRID ---- */
+    .car-grid-section { background: var(--bg); }
+    .car-grid-header {
+      padding: 5rem 4rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .car-grid-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+    }
+    .car-grid-header p {
+      color: var(--muted); font-size: 0.85rem;
+      max-width: 260px; text-align: right; line-height: 1.65;
+    }
+    .car-mag-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 17vw;
+      gap: 3px;
+    }
+    .mag-item {
+      position: relative; overflow: hidden; cursor: pointer;
+      background: #0f0f0f;
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .mag-item.vis { opacity: 1; transform: translateY(0); }
+    .mag-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(0.82);
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  filter 0.75s ease;
+    }
+    .mag-item:hover img { transform: scale(1.08); filter: brightness(1); }
+    .mag-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.38s;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.4rem 1.6rem;
+    }
+    .mag-item:hover .mag-overlay { opacity: 1; }
+    .mag-overlay .o-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--accent); line-height: 1;
+      transform: translateY(10px);
+      transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mag-overlay .o-cap {
+      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      transform: translateY(10px);
+      transition: transform 0.38s 0.04s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .mag-item:hover .mag-overlay .o-num,
+    .mag-item:hover .mag-overlay .o-cap { transform: translateY(0); }
+
+    /* Grid placement — editorial layout */
+    .mag-item:nth-child(1)  { grid-column: span 7;  grid-row: span 2; }
+    .mag-item:nth-child(2)  { grid-column: span 5;  grid-row: span 1; }
+    .mag-item:nth-child(3)  { grid-column: span 5;  grid-row: span 1; }
+    .mag-item:nth-child(4)  { grid-column: span 4;  grid-row: span 2; }
+    .mag-item:nth-child(5)  { grid-column: span 4;  grid-row: span 2; }
+    .mag-item:nth-child(6)  { grid-column: span 4;  grid-row: span 2; }
+    .mag-item:nth-child(7)  { grid-column: span 8;  grid-row: span 2; }
+    .mag-item:nth-child(8)  { grid-column: span 4;  grid-row: span 1; }
+    .mag-item:nth-child(9)  { grid-column: span 4;  grid-row: span 1; }
+    .mag-item:nth-child(10) { grid-column: span 5;  grid-row: span 2; }
+    .mag-item:nth-child(11) { grid-column: span 4;  grid-row: span 1; }
+    .mag-item:nth-child(12) { grid-column: span 3;  grid-row: span 1; }
+
+    /* ---- FILMSTRIP ---- */
+    .car-film-section {
+      padding: 5rem 0; background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .car-film-head { padding: 0 4rem 2.5rem; }
+    .car-film-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--text);
+    }
+    .film-scroll {
+      display: flex; gap: 3px; overflow-x: auto;
+      padding: 0 4rem 1rem; cursor: grab;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .film-scroll::-webkit-scrollbar { display: none; }
+    .film-scroll:active { cursor: grabbing; }
+    .film-frame {
+      flex-shrink: 0; width: 320px; height: 215px;
+      position: relative; overflow: hidden; cursor: pointer;
+    }
+    .film-frame img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(0.78) sepia(0.15);
+      transition: transform 0.55s ease, filter 0.55s ease;
+    }
+    .film-frame:hover img { transform: scale(1.07); filter: brightness(1) sepia(0); }
+    .film-id {
+      position: absolute; top: 0.7rem; left: 0.7rem;
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.5); background: rgba(0,0,0,0.55);
+      padding: 0.18rem 0.45rem; pointer-events: none;
+    }
+    .film-hint {
+      padding: 1.2rem 4rem 0;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2); display: flex; align-items: center; gap: 0.6rem;
+    }
+    .film-hint::before {
+      content: '←→'; font-size: 0.75rem; color: var(--accent);
+    }
+
+    /* ---- STATS BAR ---- */
+    .car-stats {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--border);
+    }
+    .stat-cell {
+      padding: 3.5rem 2rem; text-align: center;
+      border-right: 1px solid var(--border); position: relative; overflow: hidden;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-cell::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 100%; height: 2px; background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .stat-cell.vis::after { transform: scaleX(1); }
+    .stat-n {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 3.5vw, 4rem); font-weight: 700;
+      color: var(--text); line-height: 1; margin-bottom: 0.5rem;
+    }
+    .stat-n .acc { color: var(--accent); }
+    .stat-l {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
+    }
+
+    /* ---- KEYFRAMES ---- */
+    @keyframes lineReveal {
+      from { transform: translateY(110%); }
+      to   { transform: translateY(0); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+      .car-featured { grid-template-columns: 1fr; }
+      .feat-img-wrap { height: 62vw; }
+      .feat-text { padding: 3rem 2.5rem; }
+      .car-mag-grid { grid-auto-rows: 24vw; }
+      .mag-item:nth-child(1) { grid-column: span 12; grid-row: span 2; }
+      .mag-item:nth-child(2),
+      .mag-item:nth-child(3) { grid-column: span 6; }
+      .car-grid-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .car-grid-header p { text-align: left; }
+    }
+    @media (max-width: 700px) {
+      .car-hero { padding: 0 1.5rem 3.5rem; }
+      .car-hero-side { display: none; }
+      .car-hero-meta { flex-wrap: wrap; gap: 1.5rem; }
+      .hero-cta { margin-left: 0; width: 100%; }
+      .car-grid-header { padding: 3rem 1.5rem 1.5rem; }
+      .car-mag-grid { grid-auto-rows: 36vw; }
+      .mag-item:nth-child(4),
+      .mag-item:nth-child(5),
+      .mag-item:nth-child(6) { grid-column: span 6; }
+      .mag-item:nth-child(7) { grid-column: span 12; }
+      .mag-item:nth-child(10),
+      .mag-item:nth-child(11),
+      .mag-item:nth-child(12) { grid-column: span 4; }
+      .car-stats { grid-template-columns: repeat(2, 1fr); }
+      .stat-cell:nth-child(2) { border-right: none; }
+      .stat-cell { padding: 2.5rem 1rem; }
+      .film-scroll { padding: 0 1.5rem 1rem; }
+      .film-hint { padding: 1rem 1.5rem 0; }
+      .car-film-head { padding: 0 1.5rem 2rem; }
+      .film-frame { width: 250px; height: 168px; }
+    }
+  </style>
 </head>
 <body class="dark" data-page="cars">
 
@@ -19,31 +365,130 @@
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-content">
-      <p class="hero-sub animate-fade">Automotive Photography</p>
-      <h1 class="hero-title animate-up">Power <em>Meets</em><br>Precision</h1>
-      <p class="hero-desc animate-fade-delay">Speed, form, and mechanical beauty captured in every frame.</p>
-      <a href="#gallery" class="cta-btn animate-fade-delay2">View Gallery</a>
+  <!-- ═══════════════════════════════════════
+       CINEMATIC HERO
+  ═══════════════════════════════════════ -->
+  <section class="car-hero">
+    <div class="car-hero-bg" id="heroBg"></div>
+    <div class="car-hero-grain"></div>
+    <div class="car-hero-content">
+      <div class="car-eyebrow">Automotive Photography</div>
+      <h1 class="car-hero-title">
+        <span class="title-line"><span>Power</span></span>
+        <span class="title-line"><span>Meets</span></span>
+        <span class="title-line"><span>Precision</span></span>
+      </h1>
+      <div class="car-hero-meta">
+        <div class="hero-stat">
+          <div class="num" id="heroImgCount">—</div>
+          <div class="lbl">Frames Captured</div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <div class="num">2026</div>
+          <div class="lbl">Season</div>
+        </div>
+        <div class="hero-divider"></div>
+        <div class="hero-stat">
+          <div class="num">4K</div>
+          <div class="lbl">Resolution</div>
+        </div>
+        <div class="hero-cta">
+          <a href="#car-gallery" class="cta-btn">View Gallery</a>
+        </div>
+      </div>
     </div>
-    <div class="hero-scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
+    <div class="car-hero-side">Scroll</div>
   </section>
 
-  <div class="marquee-section">
-    <div class="marquee-track" id="marqueeTrack"></div>
+  <!-- ═══════════════════════════════════════
+       ACCENT TICKER
+  ═══════════════════════════════════════ -->
+  <div class="car-ticker" aria-hidden="true">
+    <div class="car-ticker-track" id="tickerTrack"></div>
   </div>
 
-  <section id="gallery" class="gallery-section">
-    <div class="section-header">
-      <h2>Gallery</h2>
-      <p>Machines in their finest light</p>
+  <!-- ═══════════════════════════════════════
+       FEATURED SPLIT
+  ═══════════════════════════════════════ -->
+  <div class="car-featured">
+    <div class="feat-img-wrap" id="featImgWrap">
+      <img id="featImg" src="" alt="Featured Shot">
+      <div class="feat-wipe"></div>
     </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
+    <div class="feat-text" id="featText">
+      <div class="sec-label">Featured Shot</div>
+      <div class="feat-ghost-num">01</div>
+      <h2>Where <em>Speed</em><br>Becomes Art</h2>
+      <p>Every angle tells a story of engineering mastery — the tension of a static pose, the blur of raw acceleration. These frames don't just document a machine; they capture the soul behind it.</p>
+      <div class="feat-specs">
+        <div>
+          <div class="feat-spec-val">1/4000</div>
+          <div class="feat-spec-key">Shutter Speed</div>
+        </div>
+        <div>
+          <div class="feat-spec-val">f/2.8</div>
+          <div class="feat-spec-key">Aperture</div>
+        </div>
+        <div>
+          <div class="feat-spec-val">ISO 400</div>
+          <div class="feat-spec-key">Sensitivity</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       MAGAZINE GRID
+  ═══════════════════════════════════════ -->
+  <section class="car-grid-section" id="car-gallery">
+    <div class="car-grid-header">
+      <div>
+        <div class="sec-label">Full Collection</div>
+        <h2>The Gallery</h2>
+      </div>
+      <p>A curated series exploring form, speed, and the artistry of automotive design.</p>
+    </div>
+    <div class="car-mag-grid" id="carMagGrid"></div>
   </section>
 
+  <!-- ═══════════════════════════════════════
+       FILMSTRIP
+  ═══════════════════════════════════════ -->
+  <section class="car-film-section">
+    <div class="car-film-head">
+      <div class="sec-label">Behind the Lens</div>
+      <h2>Every Frame Counts</h2>
+    </div>
+    <div class="film-scroll" id="filmStrip"></div>
+    <p class="film-hint">Drag to explore</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       STATS
+  ═══════════════════════════════════════ -->
+  <div class="car-stats" id="carStats">
+    <div class="stat-cell">
+      <div class="stat-n"><span class="counter" data-target="12">0</span></div>
+      <div class="stat-l">Shots in Series</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-n"><span class="counter" data-target="4">0</span><span class="acc">K</span></div>
+      <div class="stat-l">Resolution</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-n"><span class="acc">20</span>26</div>
+      <div class="stat-l">Season</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-n"><span class="counter" data-target="100">0</span><span class="acc">%</span></div>
+      <div class="stat-l">Passion</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       PORTFOLIO SWITCH
+  ═══════════════════════════════════════ -->
   <div class="portfolio-switch">
     <a href="index.html" class="switch-link">
       <span>Also explore</span>
@@ -51,11 +496,14 @@
     </a>
   </div>
 
+  <!-- ═══════════════════════════════════════
+       LIGHTBOX
+  ═══════════════════════════════════════ -->
   <div id="lightbox" class="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
-    <button class="lightbox-prev" onclick="changeSlide(-1)">&#x2039;</button>
+    <button class="lightbox-prev"  onclick="changeSlide(-1)">&#x2039;</button>
     <img id="lightbox-img" src="" alt="">
-    <button class="lightbox-next" onclick="changeSlide(1)">&#x203A;</button>
+    <button class="lightbox-next"  onclick="changeSlide(1)">&#x203A;</button>
     <p id="lightbox-caption"></p>
   </div>
 
@@ -69,5 +517,136 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    /* ── Ticker ── */
+    (function() {
+      var words = ['Automotive Photography','·','Speed & Form','·','Mechanical Beauty','·','Track Day','·','Raw Power','·'];
+      var t = document.getElementById('tickerTrack');
+      if (!t) return;
+      [0,1].forEach(function() {
+        words.forEach(function(w) {
+          var s = document.createElement('span');
+          if (w === '·') s.className = 'car-ticker-dot';
+          s.textContent = w;
+          t.appendChild(s);
+        });
+      });
+    })();
+
+    /* ── Hero BG + hero count (data-driven from carImages) ── */
+    (function() {
+      var bg = document.getElementById('heroBg');
+      var cnt = document.getElementById('heroImgCount');
+      if (typeof carImages === 'undefined') return;
+      if (bg && carImages.length)
+        bg.style.backgroundImage = "url('" + carImages[0].src + "')";
+      if (cnt)
+        cnt.textContent = carImages.length;
+    })();
+
+    /* ── Hero parallax ── */
+    var _heroBg = document.getElementById('heroBg');
+    window.addEventListener('scroll', function() {
+      if (!_heroBg) return;
+      _heroBg.style.transform = 'scale(1.1) translateY(' + (window.scrollY * 0.22) + 'px)';
+    }, { passive: true });
+
+    /* ── Featured split reveal ── */
+    (function() {
+      if (typeof carImages === 'undefined' || carImages.length < 2) return;
+      var fi = document.getElementById('featImg');
+      if (fi) { fi.src = carImages[1].src; fi.alt = carImages[1].caption; }
+
+      var wrap = document.getElementById('featImgWrap');
+      var text = document.getElementById('featText');
+      var obs  = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          if (wrap) wrap.classList.add('revealed');
+          if (text) text.classList.add('revealed');
+          obs.disconnect();
+        }
+      }, { threshold: 0.2 });
+      if (wrap) obs.observe(wrap);
+    })();
+
+    /* ── Build magazine grid ── */
+    (function() {
+      var grid = document.getElementById('carMagGrid');
+      if (!grid || typeof carImages === 'undefined') return;
+      carImages.forEach(function(img, i) {
+        var item = document.createElement('div');
+        item.className = 'mag-item';
+        item.innerHTML =
+          '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+          '<div class="mag-overlay">' +
+            '<div class="o-num">0' + (i + 1) + '</div>' +
+            '<div class="o-cap">' + img.caption + '</div>' +
+          '</div>';
+        item.addEventListener('click', function() { openLightbox(i); });
+        grid.appendChild(item);
+      });
+
+      /* scroll reveal */
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry, i) {
+          if (entry.isIntersecting) {
+            setTimeout(function() { entry.target.classList.add('vis'); }, i * 85);
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.06 });
+      grid.querySelectorAll('.mag-item').forEach(function(el) { obs.observe(el); });
+    })();
+
+    /* ── Build filmstrip ── */
+    (function() {
+      var strip = document.getElementById('filmStrip');
+      if (!strip || typeof carImages === 'undefined') return;
+      carImages.forEach(function(img, i) {
+        var f = document.createElement('div');
+        f.className = 'film-frame';
+        f.innerHTML =
+          '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+          '<div class="film-id">FRAME ' + String(i + 1).padStart(2,'0') + '</div>';
+        f.addEventListener('click', function() { openLightbox(i); });
+        strip.appendChild(f);
+      });
+
+      /* drag-to-scroll */
+      var down = false, startX, sl;
+      strip.addEventListener('mousedown', function(e) {
+        down = true; startX = e.pageX - strip.offsetLeft; sl = strip.scrollLeft;
+      });
+      ['mouseleave','mouseup'].forEach(function(ev) {
+        strip.addEventListener(ev, function() { down = false; });
+      });
+      strip.addEventListener('mousemove', function(e) {
+        if (!down) return;
+        e.preventDefault();
+        strip.scrollLeft = sl - (e.pageX - strip.offsetLeft - startX) * 1.6;
+      });
+    })();
+
+    /* ── Stats counters ── */
+    (function() {
+      function count(el) {
+        var target = +el.dataset.target, dur = 1800, t0 = performance.now();
+        (function tick(now) {
+          var p = Math.min((now - t0) / dur, 1);
+          var ease = 1 - Math.pow(1 - p, 4);
+          el.textContent = Math.floor(ease * target);
+          if (p < 1) requestAnimationFrame(tick); else el.textContent = target;
+        })(t0);
+      }
+      var obs = new IntersectionObserver(function(entries) {
+        if (!entries[0].isIntersecting) return;
+        document.querySelectorAll('.stat-cell').forEach(function(c) { c.classList.add('vis'); });
+        document.querySelectorAll('.counter').forEach(count);
+        obs.disconnect();
+      }, { threshold: 0.35 });
+      var el = document.getElementById('carStats');
+      if (el) obs.observe(el);
+    })();
+  </script>
 </body>
 </html>
