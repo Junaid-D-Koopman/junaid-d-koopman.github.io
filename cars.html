@@ -242,6 +242,67 @@
     .mag-item:nth-child(11) { grid-column: span 4;  grid-row: span 1; }
     .mag-item:nth-child(12) { grid-column: span 3;  grid-row: span 1; }
 
+    /* ---- GALLERY SWITCHER ---- */
+    .gallery-switcher {
+      background: var(--bg); padding: 3.5rem 4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .switcher-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+    .switcher-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    }
+    .switcher-head p { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.06em; }
+    .switcher-cards {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px;
+    }
+    .switcher-card {
+      position: relative; overflow: hidden; cursor: pointer;
+      aspect-ratio: 16/9; background: #0f0f0f;
+      outline: 2px solid transparent; outline-offset: -2px;
+      transition: outline-color 0.3s;
+    }
+    .switcher-card.active { outline-color: var(--accent); }
+    .switcher-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(0.5) saturate(0.7);
+      transition: filter 0.45s ease, transform 0.45s ease;
+    }
+    .switcher-card:hover img,
+    .switcher-card.active img { filter: brightness(0.72) saturate(1); }
+    .switcher-card:hover img  { transform: scale(1.06); }
+    .switcher-card-info {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.1rem 1.2rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 60%);
+    }
+    .switcher-card-label {
+      font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.9); line-height: 1.3;
+    }
+    .switcher-card-count {
+      font-size: 0.58rem; letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.35); margin-top: 0.2rem;
+    }
+    .switcher-active-bar {
+      position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--accent); transition: width 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .switcher-card.active .switcher-active-bar { width: 100%; }
+
+    @media (max-width: 900px) {
+      .switcher-cards { grid-template-columns: repeat(2, 1fr); }
+      .gallery-switcher { padding: 2.5rem 1.5rem; }
+      .switcher-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+    @media (max-width: 500px) {
+      .switcher-cards { grid-template-columns: 1fr 1fr; }
+    }
+
     /* ---- FILMSTRIP ---- */
     .car-film-section {
       padding: 5rem 0; background: var(--bg2);
@@ -439,6 +500,20 @@
   </div>
 
   <!-- ═══════════════════════════════════════
+       GALLERY SWITCHER
+  ═══════════════════════════════════════ -->
+  <section class="gallery-switcher" id="gallerySwitcher">
+    <div class="switcher-head">
+      <div>
+        <div class="sec-label">Collections</div>
+        <h2>Choose a Gallery</h2>
+      </div>
+      <p id="activeGalleryLabel">Viewing: Overview</p>
+    </div>
+    <div class="switcher-cards" id="switcherCards"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
        MAGAZINE GRID
   ═══════════════════════════════════════ -->
   <section class="car-grid-section" id="car-gallery">
@@ -518,6 +593,131 @@
 
   <script src="script.js"></script>
   <script>
+    /* ── Gallery Switcher ── */
+    (function() {
+      if (typeof carGalleries === 'undefined') return;
+      var cards     = document.getElementById('switcherCards');
+      var activeKey = 'overview';
+
+      Object.keys(carGalleries).forEach(function(key) {
+        var g    = carGalleries[key];
+        var card = document.createElement('div');
+        card.className = 'switcher-card' + (key === activeKey ? ' active' : '');
+        card.dataset.key = key;
+        card.innerHTML =
+          '<img src="' + g.cover + '" alt="' + g.label + '" loading="lazy">' +
+          '<div class="switcher-card-info">' +
+            '<div class="switcher-card-label">' + g.label + '</div>' +
+            '<div class="switcher-card-count">' + g.images.length + ' frames</div>' +
+          '</div>' +
+          '<div class="switcher-active-bar"></div>';
+        card.addEventListener('click', function() { switchGallery(key); });
+        cards.appendChild(card);
+      });
+
+      function switchGallery(key) {
+        if (key === activeKey) return;
+        activeKey = key;
+        var g = carGalleries[key];
+
+        /* update active state on cards */
+        document.querySelectorAll('.switcher-card').forEach(function(c) {
+          c.classList.toggle('active', c.dataset.key === key);
+        });
+
+        /* update label */
+        var lbl = document.getElementById('activeGalleryLabel');
+        if (lbl) lbl.textContent = 'Viewing: ' + g.label;
+
+        /* update global images array & lightbox source */
+        images = g.images;
+
+        /* rebuild magazine grid */
+        buildMagGrid(g.images);
+
+        /* rebuild filmstrip */
+        buildFilmStrip(g.images);
+
+        /* update hero count */
+        var cnt = document.getElementById('heroImgCount');
+        if (cnt) cnt.textContent = g.images.length;
+
+        /* update featured image */
+        var fi = document.getElementById('featImg');
+        if (fi && g.images.length > 1) {
+          fi.style.opacity = '0';
+          setTimeout(function() {
+            fi.src = g.images[1].src;
+            fi.alt = g.images[1].caption;
+            fi.style.opacity = '1';
+          }, 250);
+        }
+
+        /* scroll to grid */
+        var sec = document.getElementById('car-gallery');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    })();
+
+    /* ── Build magazine grid (extracted as callable fn) ── */
+    function buildMagGrid(imgs) {
+      var grid = document.getElementById('carMagGrid');
+      if (!grid) return;
+
+      /* animate out */
+      grid.style.opacity = '0';
+      grid.style.transition = 'opacity 0.25s';
+      setTimeout(function() {
+        grid.innerHTML = '';
+        imgs.forEach(function(img, i) {
+          var item = document.createElement('div');
+          item.className = 'mag-item';
+          item.innerHTML =
+            '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+            '<div class="mag-overlay">' +
+              '<div class="o-num">0' + (i + 1) + '</div>' +
+              '<div class="o-cap">' + img.caption + '</div>' +
+            '</div>';
+          item.addEventListener('click', function() { openLightbox(i); });
+          grid.appendChild(item);
+        });
+
+        /* staggered reveal */
+        grid.style.opacity = '1';
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry, i) {
+            if (entry.isIntersecting) {
+              setTimeout(function() { entry.target.classList.add('vis'); }, i * 85);
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.06 });
+        grid.querySelectorAll('.mag-item').forEach(function(el) {
+          requestAnimationFrame(function() { obs.observe(el); });
+        });
+      }, 260);
+    }
+
+    /* ── Build filmstrip (extracted as callable fn) ── */
+    function buildFilmStrip(imgs) {
+      var strip = document.getElementById('filmStrip');
+      if (!strip) return;
+      strip.style.opacity = '0';
+      setTimeout(function() {
+        strip.innerHTML = '';
+        imgs.forEach(function(img, i) {
+          var f = document.createElement('div');
+          f.className = 'film-frame';
+          f.innerHTML =
+            '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+            '<div class="film-id">FRAME ' + String(i + 1).padStart(2,'0') + '</div>';
+          f.addEventListener('click', function() { openLightbox(i); });
+          strip.appendChild(f);
+        });
+        strip.style.opacity = '1';
+      }, 260);
+    }
+
     /* ── Ticker ── */
     (function() {
       var words = ['Automotive Photography','·','Speed & Form','·','Mechanical Beauty','·','Track Day','·','Raw Power','·'];
@@ -569,50 +769,16 @@
       if (wrap) obs.observe(wrap);
     })();
 
-    /* ── Build magazine grid ── */
-    (function() {
-      var grid = document.getElementById('carMagGrid');
-      if (!grid || typeof carImages === 'undefined') return;
-      carImages.forEach(function(img, i) {
-        var item = document.createElement('div');
-        item.className = 'mag-item';
-        item.innerHTML =
-          '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
-          '<div class="mag-overlay">' +
-            '<div class="o-num">0' + (i + 1) + '</div>' +
-            '<div class="o-cap">' + img.caption + '</div>' +
-          '</div>';
-        item.addEventListener('click', function() { openLightbox(i); });
-        grid.appendChild(item);
-      });
+    /* ── Initial grid + filmstrip build ── */
+    if (typeof carImages !== 'undefined') {
+      buildMagGrid(carImages);
+      buildFilmStrip(carImages);
+    }
 
-      /* scroll reveal */
-      var obs = new IntersectionObserver(function(entries) {
-        entries.forEach(function(entry, i) {
-          if (entry.isIntersecting) {
-            setTimeout(function() { entry.target.classList.add('vis'); }, i * 85);
-            obs.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.06 });
-      grid.querySelectorAll('.mag-item').forEach(function(el) { obs.observe(el); });
-    })();
-
-    /* ── Build filmstrip ── */
+    /* ── Filmstrip drag-to-scroll ── */
     (function() {
       var strip = document.getElementById('filmStrip');
-      if (!strip || typeof carImages === 'undefined') return;
-      carImages.forEach(function(img, i) {
-        var f = document.createElement('div');
-        f.className = 'film-frame';
-        f.innerHTML =
-          '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
-          '<div class="film-id">FRAME ' + String(i + 1).padStart(2,'0') + '</div>';
-        f.addEventListener('click', function() { openLightbox(i); });
-        strip.appendChild(f);
-      });
-
-      /* drag-to-scroll */
+      if (!strip) return;
       var down = false, startX, sl;
       strip.addEventListener('mousedown', function(e) {
         down = true; startX = e.pageX - strip.offsetLeft; sl = strip.scrollLeft;
