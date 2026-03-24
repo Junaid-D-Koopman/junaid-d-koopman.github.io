@@ -7,8 +7,255 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* ============================================================
+       PEOPLE PAGE — EDITORIAL MAGAZINE THEME  (light)
+       ============================================================ */
+
+    /* ---- HERO: full-bleed image right, text left ---- */
+    .people-hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+    }
+    .ph-left {
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 10rem 4rem 5rem;
+      background: var(--bg);
+      position: relative; z-index: 1;
+    }
+    /* thin vertical rule between columns */
+    .ph-left::after {
+      content: ''; position: absolute; right: 0; top: 10%; bottom: 10%;
+      width: 1px; background: var(--border);
+    }
+    .ph-right {
+      position: relative; overflow: hidden;
+    }
+    .ph-right-img {
+      position: absolute; inset: 0;
+      background: center / cover no-repeat;
+      transform: scale(1.08);
+      transition: transform 8s ease;
+    }
+    .ph-right-img.loaded { transform: scale(1.0); }
+    .ph-right::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, transparent 18%);
+    }
+    /* issue-number watermark */
+    .ph-issue {
+      position: absolute; bottom: 2.5rem; right: 2.5rem; z-index: 2;
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem; font-weight: 700; line-height: 1;
+      color: rgba(0,0,0,0.06); pointer-events: none; user-select: none;
+    }
+
+    .ph-eyebrow {
+      display: flex; align-items: center; gap: 0.8rem;
+      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 2rem;
+      opacity: 0; animation: fadeIn 0.8s 0.2s forwards;
+    }
+    .ph-eyebrow::before {
+      content: ''; width: 32px; height: 1px; background: var(--accent);
+    }
+
+    .ph-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3.5rem, 6vw, 6.5rem);
+      line-height: 0.92; font-weight: 700; letter-spacing: -0.02em;
+      color: var(--text); margin-bottom: 2rem;
+    }
+    .ph-title-line { display: block; overflow: hidden; }
+    .ph-title-line span {
+      display: block;
+      transform: translateY(110%);
+      animation: lineReveal 1s cubic-bezier(0.22,1,0.36,1) forwards;
+    }
+    .ph-title-line:nth-child(1) span { animation-delay: 0.1s; }
+    .ph-title-line:nth-child(2) span { animation-delay: 0.26s; font-style: italic; color: var(--accent); }
+    .ph-title-line:nth-child(3) span { animation-delay: 0.42s; }
+
+    .ph-desc {
+      font-size: 0.93rem; color: var(--muted); line-height: 1.85;
+      max-width: 380px; margin-bottom: 3rem;
+      opacity: 0; animation: fadeIn 0.9s 0.75s forwards;
+    }
+    .ph-meta {
+      display: flex; align-items: center; gap: 2.5rem;
+      padding-top: 2rem; border-top: 1px solid var(--border);
+      opacity: 0; animation: fadeIn 0.9s 0.95s forwards;
+    }
+    .ph-stat .n {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.7rem; font-weight: 700; color: var(--accent); line-height: 1;
+    }
+    .ph-stat .l {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.25rem;
+    }
+    .ph-divider { width: 1px; height: 32px; background: var(--border); }
+    .ph-scroll {
+      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+      margin-top: 3.5rem; color: var(--muted);
+      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+      opacity: 0; animation: fadeIn 0.8s 1.3s forwards;
+    }
+    .ph-scroll-line {
+      width: 1px; height: 42px;
+      background: linear-gradient(to bottom, var(--muted), transparent);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    /* ---- PULL QUOTE DIVIDER ---- */
+    .people-quote {
+      padding: 5rem 4rem;
+      display: flex; align-items: center; gap: 3rem;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .quote-mark {
+      font-family: 'Playfair Display', serif;
+      font-size: 8rem; line-height: 0.6;
+      color: var(--accent); opacity: 0.25;
+      flex-shrink: 0; user-select: none;
+    }
+    .quote-body { max-width: 580px; }
+    .quote-body p {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+      font-style: italic; line-height: 1.55;
+      color: var(--text); margin-bottom: 1.2rem;
+    }
+    .quote-attr {
+      font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--muted); display: flex; align-items: center; gap: 0.6rem;
+    }
+    .quote-attr::before {
+      content: ''; width: 22px; height: 1px; background: var(--accent);
+    }
+
+    /* ---- GALLERY SWITCHER (people) ---- */
+    .people-switcher {
+      background: var(--bg); padding: 4rem 4rem 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .psw-head {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 2rem;
+    }
+    .psw-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--text);
+    }
+    .psw-head p { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.06em; }
+    .psw-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
+    }
+    .psw-card {
+      position: relative; overflow: hidden; cursor: pointer;
+      aspect-ratio: 3/2; background: #e8e0d8;
+      outline: 2px solid transparent; outline-offset: -2px;
+      transition: outline-color 0.3s;
+    }
+    .psw-card.active { outline-color: var(--accent); }
+    .psw-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(0.65) saturate(0.7);
+      transition: filter 0.45s ease, transform 0.45s ease;
+    }
+    .psw-card:hover img,
+    .psw-card.active img { filter: brightness(0.78) saturate(1); }
+    .psw-card:hover img { transform: scale(1.06); }
+    .psw-card-info {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.1rem 1.3rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    }
+    .psw-card-label {
+      font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.95); line-height: 1.3;
+    }
+    .psw-card-count {
+      font-size: 0.58rem; letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.4); margin-top: 0.2rem;
+    }
+    .psw-active-bar {
+      position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .psw-card.active .psw-active-bar { width: 100%; }
+
+    /* ---- MASONRY GALLERY ---- */
+    .people-gallery-section {
+      padding: 4rem 0 6rem; background: var(--bg);
+    }
+    .pgs-header {
+      padding: 0 4rem 2.5rem;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .pgs-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem); color: var(--text);
+    }
+    .pgs-header p { color: var(--muted); font-size: 0.82rem; max-width: 220px; text-align: right; line-height: 1.7; }
+
+    /* re-skin the shared .gallery-grid for the light editorial look */
+    .gallery-grid {
+      columns: 3; column-gap: 3px;
+      padding: 0 4rem;
+    }
+    .gallery-item {
+      break-inside: avoid; margin-bottom: 3px;
+    }
+    .gallery-item img { width: 100%; height: auto; display: block; }
+
+    /* ---- SEC LABEL (shared helper) ---- */
+    .sec-label {
+      display: inline-flex; align-items: center; gap: 0.7rem;
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 0.6rem;
+    }
+    .sec-label::before {
+      content: ''; width: 26px; height: 1px; background: var(--accent);
+    }
+
+    /* ---- KEYFRAMES ---- */
+    @keyframes lineReveal {
+      from { transform: translateY(110%); }
+      to   { transform: translateY(0); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 1024px) {
+      .people-hero { grid-template-columns: 1fr; min-height: auto; }
+      .ph-left { padding: 9rem 2.5rem 4rem; }
+      .ph-left::after { display: none; }
+      .ph-right { height: 55vw; }
+      .people-quote { padding: 3.5rem 2.5rem; gap: 1.5rem; }
+      .people-switcher { padding: 3rem 2.5rem 2rem; }
+      .pgs-header { padding: 0 2.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .pgs-header p { text-align: left; }
+      .gallery-grid { columns: 2; padding: 0 2.5rem; }
+    }
+    @media (max-width: 650px) {
+      .ph-left { padding: 8rem 1.5rem 3rem; }
+      .ph-right { height: 72vw; }
+      .people-quote { flex-direction: column; gap: 0; padding: 3rem 1.5rem; }
+      .quote-mark { font-size: 5rem; }
+      .people-switcher { padding: 2.5rem 1.5rem 1.5rem; }
+      .psw-cards { grid-template-columns: 1fr 1fr; }
+      .psw-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .gallery-grid { columns: 1; padding: 0 1.5rem; }
+      .pgs-header { padding: 0 1.5rem 1.5rem; }
+    }
+  </style>
 </head>
-<body class="light">
+<body class="light" data-page="people">
 
   <nav id="navbar">
     <a class="nav-logo" href="index.html">Junaid K</a>
@@ -19,31 +266,97 @@
     </div>
   </nav>
 
-  <section class="hero">
-    <div class="hero-content">
-      <p class="hero-sub animate-fade">Photography Portfolio</p>
-      <h1 class="hero-title animate-up">Capturing <em>Human</em><br>Moments</h1>
-      <p class="hero-desc animate-fade-delay">Portraits, emotions, and stories told through light and shadow.</p>
-      <a href="#gallery" class="cta-btn animate-fade-delay2">View Gallery</a>
+  <!-- ═══════════════════════════════════════
+       HERO — split layout
+  ═══════════════════════════════════════ -->
+  <section class="people-hero">
+    <div class="ph-left">
+      <div class="ph-eyebrow">Portrait Photography</div>
+      <h1 class="ph-title">
+        <span class="ph-title-line"><span>Human</span></span>
+        <span class="ph-title-line"><span>Stories</span></span>
+        <span class="ph-title-line"><span>Told</span></span>
+      </h1>
+      <p class="ph-desc">
+        Every portrait holds a universe — a fleeting expression, a stolen glance,
+        a moment suspended in light. These are the frames that stay with you.
+      </p>
+      <div class="ph-meta">
+        <div class="ph-stat">
+          <div class="n" id="peopleCount">—</div>
+          <div class="l">Portraits</div>
+        </div>
+        <div class="ph-divider"></div>
+        <div class="ph-stat">
+          <div class="n">2</div>
+          <div class="l">Collections</div>
+        </div>
+        <div class="ph-divider"></div>
+        <div class="ph-stat">
+          <div class="n">2026</div>
+          <div class="l">Season</div>
+        </div>
+      </div>
+      <div class="ph-scroll">
+        <span>Scroll</span>
+        <div class="ph-scroll-line"></div>
+      </div>
     </div>
-    <div class="hero-scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
+    <div class="ph-right">
+      <div class="ph-right-img" id="phHeroBg"></div>
+      <div class="ph-issue">01</div>
     </div>
   </section>
 
+  <!-- ═══════════════════════════════════════
+       MARQUEE
+  ═══════════════════════════════════════ -->
   <div class="marquee-section">
     <div class="marquee-track" id="marqueeTrack"></div>
   </div>
 
-  <section id="gallery" class="gallery-section">
-    <div class="section-header">
-      <h2>Gallery</h2>
-      <p>A collection of human moments</p>
+  <!-- ═══════════════════════════════════════
+       PULL QUOTE
+  ═══════════════════════════════════════ -->
+  <div class="people-quote">
+    <div class="quote-mark">&ldquo;</div>
+    <div class="quote-body">
+      <p>Photography is the art of frozen time — the ability to store emotion and feelings within a frame.</p>
+      <div class="quote-attr">Meshack Otieno</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════
+       GALLERY SWITCHER
+  ═══════════════════════════════════════ -->
+  <section class="people-switcher">
+    <div class="psw-head">
+      <div>
+        <div class="sec-label">Collections</div>
+        <h2>Choose a Gallery</h2>
+      </div>
+      <p id="activePeopleLabel">Viewing: Overview</p>
+    </div>
+    <div class="psw-cards" id="peopleSwitcherCards"></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════
+       MASONRY GALLERY
+  ═══════════════════════════════════════ -->
+  <section class="people-gallery-section" id="gallery">
+    <div class="pgs-header">
+      <div>
+        <div class="sec-label">Full Collection</div>
+        <h2>The Gallery</h2>
+      </div>
+      <p>Emotions, milestones & quiet moments in time.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid"></div>
   </section>
 
+  <!-- ═══════════════════════════════════════
+       PORTFOLIO SWITCH
+  ═══════════════════════════════════════ -->
   <div class="portfolio-switch">
     <a href="cars.html" class="switch-link">
       <span>Also explore</span>
@@ -51,11 +364,14 @@
     </a>
   </div>
 
+  <!-- ═══════════════════════════════════════
+       LIGHTBOX
+  ═══════════════════════════════════════ -->
   <div id="lightbox" class="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
-    <button class="lightbox-prev" onclick="changeSlide(-1)">&#x2039;</button>
+    <button class="lightbox-prev"  onclick="changeSlide(-1)">&#x2039;</button>
     <img id="lightbox-img" src="" alt="">
-    <button class="lightbox-next" onclick="changeSlide(1)">&#x203A;</button>
+    <button class="lightbox-next"  onclick="changeSlide(1)">&#x203A;</button>
     <p id="lightbox-caption"></p>
   </div>
 
@@ -69,5 +385,29 @@
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    /* ── Hero BG + count ── */
+    (function() {
+      var bg  = document.getElementById('phHeroBg');
+      var cnt = document.getElementById('peopleCount');
+      if (typeof peopleGalleries === 'undefined') return;
+      var allImgs = peopleGalleries.matricBall.images.length +
+                    peopleGalleries.wedding.images.length;
+      if (cnt) cnt.textContent = allImgs;
+      var cover = peopleGalleries.matricBall.cover;
+      if (bg) {
+        bg.style.backgroundImage = "url('" + cover + "')";
+        /* subtle ken-burns on load */
+        setTimeout(function() { bg.classList.add('loaded'); }, 100);
+      }
+    })();
+
+    /* ── Parallax hero image ── */
+    var _phBg = document.getElementById('phHeroBg');
+    window.addEventListener('scroll', function() {
+      if (!_phBg) return;
+      _phBg.style.transform = 'scale(1.0) translateY(' + (window.scrollY * 0.18) + 'px)';
+    }, { passive: true });
+  </script>
 </body>
 </html>
