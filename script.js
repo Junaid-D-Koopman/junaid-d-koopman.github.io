@@ -1,19 +1,6 @@
-/* ================================================
-   YOUR PHOTOS
-   ------------------------------------------------
-   By default, placeholder images from picsum.photos
-   are used so the site works immediately.
-
-   To use YOUR own photos:
-   1. Upload your images to GitHub inside folders:
-        images/people/   ← for portrait photos
-        images/cars/     ← for car photos
-   2. Replace the src values below with the file paths
-      For example:
-        src: 'images/people/portrait1.jpg'
-        src: 'images/cars/ferrari.jpg'
-   ================================================ */
-
+/* ======================
+   PEOPLE IMAGES
+   ====================== */
 var peopleImages = [
   { src: 'https://picsum.photos/seed/pp1/600/800', caption: 'Portrait Series'  },
   { src: 'https://picsum.photos/seed/pp2/800/600', caption: 'Street Portrait'  },
@@ -26,32 +13,91 @@ var peopleImages = [
   { src: 'https://picsum.photos/seed/pp9/600/850', caption: 'Silhouette'       }
 ];
 
-var carImages = [
-  { src: 'images/cars/image-1.jpg',  caption: 'ferrari-1'},
-  { src: 'images/cars/image-2.jpg',  caption: 'ferrari-2'},
-  { src: 'images/cars/image-3.jpg',  caption: 'ferrari-3'},
-  { src: 'images/cars/image-4.jpg',  caption: 'ferrari-4'},
-  { src: 'images/cars/image-5.jpg',  caption: 'ferrari-5'},
-  { src: 'images/cars/image-6.jpg',  caption: 'ferrari-6'},
-  { src: 'images/cars/image-7.jpg',  caption: 'ferrari-7'},
-  { src: 'images/cars/image-8.jpg',  caption: 'ferrari-8'},
-  { src: 'images/cars/image-9.jpg',  caption: 'ferrari-9'},
-];
+/* ======================
+   CAR GALLERIES
+   ====================== */
+var carGalleries = {
+  overview: {
+    label:    'Overview',
+    cover:    'images/cars/image-1.jpg',
+    images: [
+      { src: 'images/cars/image-1.jpg',  caption: 'ferrari-1'  },
+      { src: 'images/cars/image-2.jpg',  caption: 'ferrari-2'  },
+      { src: 'images/cars/image-3.jpg',  caption: 'ferrari-3'  },
+      { src: 'images/cars/image-4.jpg',  caption: 'ferrari-4'  },
+      { src: 'images/cars/image-5.jpg',  caption: 'ferrari-5'  },
+      { src: 'images/cars/image-6.jpg',  caption: 'ferrari-6'  },
+      { src: 'images/cars/image-7.jpg',  caption: 'ferrari-7'  },
+      { src: 'images/cars/image-8.jpg',  caption: 'ferrari-8'  },
+      { src: 'images/cars/image-9.jpg',  caption: 'ferrari-9'  }
+    ]
+  },
+  porsche: {
+    label:    'Porsche Boxster GTS',
+    cover:    'images/cars/porsche boxster gts/gts-1.jpg',
+    images: [
+      { src: 'images/cars/porsche boxster gts/gts-1.jpg', caption: 'Boxster GTS — 01' },
+      { src: 'images/cars/porsche boxster gts/gts-2.jpg', caption: 'Boxster GTS — 02' },
+      { src: 'images/cars/porsche boxster gts/gts-3.jpg', caption: 'Boxster GTS — 03' },
+      { src: 'images/cars/porsche boxster gts/gts-4.jpg', caption: 'Boxster GTS — 04' },
+      { src: 'images/cars/porsche boxster gts/gts-5.jpg', caption: 'Boxster GTS — 05' },
+      { src: 'images/cars/porsche boxster gts/gts-6.jpg', caption: 'Boxster GTS — 06' },
+      { src: 'images/cars/porsche boxster gts/gts-7.jpg', caption: 'Boxster GTS — 07' }
+    ]
+  },
+  lamborghini: {
+    label:    'Lamborghini STO',
+    cover:    'images/cars/lamborghini sto/sto-1.jpg',
+    images: [
+      { src: 'images/cars/lamborghini sto/sto-1.jpg',  caption: 'Lamborghini STO — 01' },
+      { src: 'images/cars/lamborghini sto/sto-2.jpg',  caption: 'Lamborghini STO — 02' },
+      { src: 'images/cars/lamborghini sto/sto-3.jpg',  caption: 'Lamborghini STO — 03' },
+      { src: 'images/cars/lamborghini sto/sto-4.jpg',  caption: 'Lamborghini STO — 04' },
+      { src: 'images/cars/lamborghini sto/sto-5.jpg',  caption: 'Lamborghini STO — 05' },
+      { src: 'images/cars/lamborghini sto/sto-6.jpg',  caption: 'Lamborghini STO — 06' },
+      { src: 'images/cars/lamborghini sto/sto-7.jpg',  caption: 'Lamborghini STO — 07' },
+      { src: 'images/cars/lamborghini sto/sto-8.jpg',  caption: 'Lamborghini STO — 08' },
+      { src: 'images/cars/lamborghini sto/sto-9.jpg',  caption: 'Lamborghini STO — 09' },
+      { src: 'images/cars/lamborghini sto/sto-10.jpg', caption: 'Lamborghini STO — 10' },
+      { src: 'images/cars/lamborghini sto/sto-11.jpg', caption: 'Lamborghini STO — 11' },
+      { src: 'images/cars/lamborghini sto/sto-12.jpg', caption: 'Lamborghini STO — 12' },
+      { src: 'images/cars/lamborghini sto/sto-13.jpg', caption: 'Lamborghini STO — 13' },
+      { src: 'images/cars/lamborghini sto/sto-14.jpg', caption: 'Lamborghini STO — 14' },
+      { src: 'images/cars/lamborghini sto/sto-15.jpg', caption: 'Lamborghini STO — 15' },
+      { src: 'images/cars/lamborghini sto/sto-16.jpg', caption: 'Lamborghini STO — 16' },
+      { src: 'images/cars/lamborghini sto/sto-17.jpg', caption: 'Lamborghini STO — 17' }
+    ]
+  },
+  alfaromeo: {
+    label:    'Alfa Romeo',
+    cover:    'images/cars/alfa romeo/alfaromeo-1.jpg',
+    images: [
+      { src: 'images/cars/alfa romeo/alfaromeo-1.jpg', caption: 'Alfa Romeo — 01' },
+      { src: 'images/cars/alfa romeo/alfaromeo-2.jpg', caption: 'Alfa Romeo — 02' },
+      { src: 'images/cars/alfa romeo/alfaromeo-3.jpg', caption: 'Alfa Romeo — 03' },
+      { src: 'images/cars/alfa romeo/alfaromeo-4.jpg', caption: 'Alfa Romeo — 04' },
+      { src: 'images/cars/alfa romeo/alfaromeo-5.jpg', caption: 'Alfa Romeo — 05' },
+      { src: 'images/cars/alfa romeo/alfaromeo-6.jpg', caption: 'Alfa Romeo — 06' },
+      { src: 'images/cars/alfa romeo/alfaromeo-7.jpg', caption: 'Alfa Romeo — 07' }
+    ]
+  }
+};
 
-/* ================================================
-   PAGE DETECTION
-   cars.html has  data-page="cars"  on its <body>
-   everything else defaults to the people gallery
-   ================================================ */
-var isCarPage    = document.body.getAttribute('data-page') === 'cars';
-var images       = isCarPage ? carImages : peopleImages;
+/* Default carImages still used by the original people-page path */
+var carImages    = carGalleries.overview.images;
 var currentIndex = 0;
 
-/* ================================================
-   BUILD MASONRY GALLERY
-   ================================================ */
+/* ======================
+   PAGE DETECTION
+   ====================== */
+var isCarPage  = document.body.getAttribute('data-page') === 'cars';
+var images     = isCarPage ? carImages : peopleImages;
+
+/* ======================
+   BUILD MASONRY GALLERY  (people page)
+   ====================== */
 var grid = document.getElementById('galleryGrid');
-if (grid) {
+if (grid && !isCarPage) {
   images.forEach(function(img, i) {
     var item = document.createElement('div');
     item.className = 'gallery-item';
@@ -64,23 +110,21 @@ if (grid) {
   initScrollObserver();
 }
 
-/* ================================================
-   BUILD AUTO-SCROLLING MARQUEE STRIP
-   Images are duplicated for a seamless infinite loop
-   ================================================ */
+/* ======================
+   BUILD MARQUEE  (people page)
+   ====================== */
 var track = document.getElementById('marqueeTrack');
-if (track) {
+if (track && !isCarPage) {
   images.concat(images).forEach(function(img) {
-    var el    = document.createElement('img');
-    el.src    = img.src;
-    el.alt    = img.caption;
+    var el = document.createElement('img');
+    el.src = img.src; el.alt = img.caption;
     track.appendChild(el);
   });
 }
 
-/* ================================================
-   ABOUT PAGE — fade in elements on scroll
-   ================================================ */
+/* ======================
+   ABOUT PAGE ANIMATIONS
+   ====================== */
 document.querySelectorAll('.about-animate').forEach(function(el) {
   var obs = new IntersectionObserver(function(entries) {
     if (entries[0].isIntersecting) {
@@ -91,9 +135,9 @@ document.querySelectorAll('.about-animate').forEach(function(el) {
   obs.observe(el);
 });
 
-/* ================================================
-   GALLERY SCROLL REVEAL — staggered fade-up
-   ================================================ */
+/* ======================
+   GALLERY SCROLL REVEAL
+   ====================== */
 function initScrollObserver() {
   var items = document.querySelectorAll('.gallery-item');
   var obs   = new IntersectionObserver(function(entries) {
@@ -109,27 +153,25 @@ function initScrollObserver() {
   items.forEach(function(item) { obs.observe(item); });
 }
 
-/* ================================================
-   LIGHTBOX — open, close, navigate
-   ================================================ */
+/* ======================
+   LIGHTBOX
+   ====================== */
 function openLightbox(index) {
   currentIndex = index;
   var lb  = document.getElementById('lightbox');
   var img = document.getElementById('lightbox-img');
   var cap = document.getElementById('lightbox-caption');
   if (!lb) return;
-  img.src          = images[index].src;
-  cap.textContent  = images[index].caption;
+  img.src         = images[index].src;
+  cap.textContent = images[index].caption;
   lb.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
 function closeLightbox() {
   var lb = document.getElementById('lightbox');
   if (lb) lb.classList.remove('open');
   document.body.style.overflow = '';
 }
-
 function changeSlide(dir) {
   currentIndex = (currentIndex + dir + images.length) % images.length;
   var img = document.getElementById('lightbox-img');
@@ -145,34 +187,26 @@ function changeSlide(dir) {
   }, 160);
 }
 
-/* Smooth transition on slide change */
 var lbImg = document.getElementById('lightbox-img');
-if (lbImg) {
-  lbImg.style.transition = 'opacity 0.16s ease, transform 0.16s ease';
-}
+if (lbImg) lbImg.style.transition = 'opacity 0.16s ease, transform 0.16s ease';
 
-/* Click outside image to close */
 var lb = document.getElementById('lightbox');
 if (lb) {
   lb.addEventListener('click', function(e) {
     if (e.target === lb) closeLightbox();
   });
 }
-
-/* Keyboard: Escape = close, Arrow keys = navigate */
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape')      closeLightbox();
-  if (e.key === 'ArrowRight')  changeSlide(1);
-  if (e.key === 'ArrowLeft')   changeSlide(-1);
+  if (e.key === 'Escape')     closeLightbox();
+  if (e.key === 'ArrowRight') changeSlide(1);
+  if (e.key === 'ArrowLeft')  changeSlide(-1);
 });
 
-/* ================================================
-   NAV — shrinks slightly on scroll
-   ================================================ */
+/* ======================
+   NAV SHRINK ON SCROLL
+   ====================== */
 window.addEventListener('scroll', function() {
   var nav = document.getElementById('navbar');
   if (!nav) return;
-  nav.style.padding = window.scrollY > 60
-    ? '0.85rem 4rem'
-    : '1.5rem 4rem';
+  nav.style.padding = window.scrollY > 60 ? '0.85rem 4rem' : '1.5rem 4rem';
 }, { passive: true });
