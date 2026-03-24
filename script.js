@@ -1,17 +1,54 @@
 /* ======================
-   PEOPLE IMAGES
+   PEOPLE GALLERIES
    ====================== */
-var peopleImages = [
-  { src: 'https://picsum.photos/seed/pp1/600/800', caption: 'Portrait Series'  },
-  { src: 'https://picsum.photos/seed/pp2/800/600', caption: 'Street Portrait'  },
-  { src: 'https://picsum.photos/seed/pp3/600/900', caption: 'Studio Session'   },
-  { src: 'https://picsum.photos/seed/pp4/700/700', caption: 'Natural Light'    },
-  { src: 'https://picsum.photos/seed/pp5/600/750', caption: 'Candid Moment'    },
-  { src: 'https://picsum.photos/seed/pp6/800/550', caption: 'Urban Life'       },
-  { src: 'https://picsum.photos/seed/pp7/600/800', caption: 'Emotions'         },
-  { src: 'https://picsum.photos/seed/pp8/700/500', caption: 'Close Up'         },
-  { src: 'https://picsum.photos/seed/pp9/600/850', caption: 'Silhouette'       }
-];
+var peopleGalleries = {
+  matricBall: {
+    label:  'Matric Ball',
+    cover:  'images/matric ball/JDKF0169.jpg',
+    images: [
+      { src: 'images/matric ball/JDKF0169.jpg',   caption: 'Matric Ball — I'    },
+      { src: 'images/matric ball/JDKF0176.jpg',   caption: 'Matric Ball — II'   },
+      { src: 'images/matric ball/JDKF0184.jpg',   caption: 'Matric Ball — III'  },
+      { src: 'images/matric ball/JDKF0210.jpg',   caption: 'Matric Ball — IV'   },
+      { src: 'images/matric ball/JDKF0220.jpg',   caption: 'Matric Ball — V'    },
+      { src: 'images/matric ball/JDKF9899-1.jpg', caption: 'Matric Ball — VI'   },
+      { src: 'images/matric ball/JDKF9918.jpg',   caption: 'Matric Ball — VII'  }
+    ]
+  },
+  wedding: {
+    label:  'Wedding',
+    cover:  'images/wedding/JDKF1819.jpg',
+    images: [
+      { src: 'images/wedding/JDKF1819.jpg', caption: 'Wedding — I'   },
+      { src: 'images/wedding/JDKF1870.jpg', caption: 'Wedding — II'  },
+      { src: 'images/wedding/JDKF1897.jpg', caption: 'Wedding — III' },
+      { src: 'images/wedding/JDKF1959.jpg', caption: 'Wedding — IV'  },
+      { src: 'images/wedding/JDKF2015.jpg', caption: 'Wedding — V'   },
+      { src: 'images/wedding/JDKF2073.jpg', caption: 'Wedding — VI'  }
+    ]
+  }
+};
+
+/* Build overview: 2 matricBall, 2 wedding interleaved */
+(function() {
+  var subs = [peopleGalleries.matricBall.images, peopleGalleries.wedding.images];
+  var mixed = [];
+  var maxLen = Math.max.apply(null, subs.map(function(s){ return s.length; }));
+  for (var i = 0; i < maxLen; i += 2) {
+    subs.forEach(function(sub) {
+      if (sub[i])   mixed.push(sub[i]);
+      if (sub[i+1]) mixed.push(sub[i+1]);
+    });
+  }
+  peopleGalleries.overview = {
+    label:  'Overview',
+    cover:  peopleGalleries.matricBall.cover,
+    images: mixed
+  };
+})();
+
+/* Legacy flat array (used by lightbox & marquee) */
+var peopleImages = peopleGalleries.overview.images;
 
 /* ======================
    CAR GALLERIES
@@ -112,36 +149,85 @@ var currentIndex = 0;
 /* ======================
    PAGE DETECTION
    ====================== */
-var isCarPage  = document.body.getAttribute('data-page') === 'cars';
-var images     = isCarPage ? carImages : peopleImages;
+var isCarPage    = document.body.getAttribute('data-page') === 'cars';
+var isPeoplePage = document.body.getAttribute('data-page') === 'people';
+var images       = isCarPage ? carGalleries.overview.images : peopleImages;
 
 /* ======================
-   BUILD MASONRY GALLERY  (people page)
+   PEOPLE PAGE — gallery + switcher
    ====================== */
-var grid = document.getElementById('galleryGrid');
-if (grid && !isCarPage) {
-  images.forEach(function(img, i) {
-    var item = document.createElement('div');
-    item.className = 'gallery-item';
-    item.innerHTML =
-      '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
-      '<div class="gallery-overlay"><div class="overlay-icon">+</div></div>';
-    item.addEventListener('click', function() { openLightbox(i); });
-    grid.appendChild(item);
-  });
-  initScrollObserver();
+if (isPeoplePage) {
+  /* marquee */
+  var track = document.getElementById('marqueeTrack');
+  if (track) {
+    peopleImages.concat(peopleImages).forEach(function(img) {
+      var el = document.createElement('img');
+      el.src = img.src; el.alt = img.caption;
+      track.appendChild(el);
+    });
+  }
+
+  /* initial gallery */
+  buildPeopleGallery(peopleGalleries.overview.images);
+
+  /* switcher cards */
+  (function() {
+    var cards     = document.getElementById('peopleSwitcherCards');
+    if (!cards) return;
+    var activeKey = 'overview';
+
+    Object.keys(peopleGalleries).forEach(function(key) {
+      var g    = peopleGalleries[key];
+      var card = document.createElement('div');
+      card.className = 'psw-card' + (key === activeKey ? ' active' : '');
+      card.dataset.key = key;
+      card.innerHTML =
+        '<img src="' + g.cover + '" alt="' + g.label + '" loading="lazy">' +
+        '<div class="psw-card-info">' +
+          '<div class="psw-card-label">' + g.label + '</div>' +
+          '<div class="psw-card-count">' + g.images.length + ' portraits</div>' +
+        '</div>' +
+        '<div class="psw-active-bar"></div>';
+      card.addEventListener('click', function() {
+        if (key === activeKey) return;
+        activeKey = key;
+        images = g.images;
+        document.querySelectorAll('.psw-card').forEach(function(c) {
+          c.classList.toggle('active', c.dataset.key === key);
+        });
+        var lbl = document.getElementById('activePeopleLabel');
+        if (lbl) lbl.textContent = 'Viewing: ' + g.label;
+        buildPeopleGallery(g.images);
+        var sec = document.getElementById('gallery');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      cards.appendChild(card);
+    });
+  })();
 }
 
-/* ======================
-   BUILD MARQUEE  (people page)
-   ====================== */
-var track = document.getElementById('marqueeTrack');
-if (track && !isCarPage) {
-  images.concat(images).forEach(function(img) {
-    var el = document.createElement('img');
-    el.src = img.src; el.alt = img.caption;
-    track.appendChild(el);
-  });
+function buildPeopleGallery(imgs) {
+  var grid = document.getElementById('galleryGrid');
+  if (!grid) return;
+  grid.style.opacity = '0';
+  grid.style.transition = 'opacity 0.25s';
+  setTimeout(function() {
+    grid.innerHTML = '';
+    imgs.forEach(function(img, i) {
+      var item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML =
+        '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+        '<div class="gallery-overlay"><div class="overlay-icon">+</div></div>';
+      item.addEventListener('click', function() {
+        images = imgs;
+        openLightbox(i);
+      });
+      grid.appendChild(item);
+    });
+    grid.style.opacity = '1';
+    initScrollObserver();
+  }, 260);
 }
 
 /* ======================
