@@ -16,22 +16,8 @@ var peopleImages = [
 /* ======================
    CAR GALLERIES
    ====================== */
+/* Sub-galleries defined first so overview can reference them */
 var carGalleries = {
-  overview: {
-    label:    'Overview',
-    cover:    'images/cars/image-1.jpg',
-    images: [
-      { src: 'images/cars/image-1.jpg',  caption: 'ferrari-1'  },
-      { src: 'images/cars/image-2.jpg',  caption: 'ferrari-2'  },
-      { src: 'images/cars/image-3.jpg',  caption: 'ferrari-3'  },
-      { src: 'images/cars/image-4.jpg',  caption: 'ferrari-4'  },
-      { src: 'images/cars/image-5.jpg',  caption: 'ferrari-5'  },
-      { src: 'images/cars/image-6.jpg',  caption: 'ferrari-6'  },
-      { src: 'images/cars/image-7.jpg',  caption: 'ferrari-7'  },
-      { src: 'images/cars/image-8.jpg',  caption: 'ferrari-8'  },
-      { src: 'images/cars/image-9.jpg',  caption: 'ferrari-9'  }
-    ]
-  },
   porsche: {
     label:    'Porsche Boxster GTS',
     cover:    'images/cars/porsche boxster gts/gts-1.jpg',
@@ -82,6 +68,42 @@ var carGalleries = {
     ]
   }
 };
+
+/* Build overview using interleave pattern:
+   2 overview, 2 gallery-1, 2 overview, 2 gallery-2, 2 overview, 2 gallery-3 */
+(function() {
+  var base = [
+    { src: 'images/cars/image-1.jpg', caption: 'ferrari-1' },
+    { src: 'images/cars/image-2.jpg', caption: 'ferrari-2' },
+    { src: 'images/cars/image-3.jpg', caption: 'ferrari-3' },
+    { src: 'images/cars/image-4.jpg', caption: 'ferrari-4' },
+    { src: 'images/cars/image-5.jpg', caption: 'ferrari-5' },
+    { src: 'images/cars/image-6.jpg', caption: 'ferrari-6' },
+    { src: 'images/cars/image-7.jpg', caption: 'ferrari-7' },
+    { src: 'images/cars/image-8.jpg', caption: 'ferrari-8' },
+    { src: 'images/cars/image-9.jpg', caption: 'ferrari-9' }
+  ];
+  var subs = [
+    carGalleries.porsche.images,
+    carGalleries.lamborghini.images,
+    carGalleries.alfaromeo.images
+  ];
+  var mixed = [];
+  var bi    = 0;
+  subs.forEach(function(sub) {
+    mixed.push(base[bi], base[bi + 1]);
+    bi += 2;
+    mixed.push(sub[0], sub[1]);
+  });
+  /* append any remaining base images */
+  while (bi < base.length) { mixed.push(base[bi++]); }
+
+  carGalleries.overview = {
+    label:  'Overview',
+    cover:  'images/cars/image-1.jpg',
+    images: mixed
+  };
+})();
 
 /* Default carImages still used by the original people-page path */
 var carImages    = carGalleries.overview.images;
