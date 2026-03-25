@@ -11,18 +11,14 @@
     /* ============================================================
        PEOPLE PAGE — CALM · SOPHISTICATED · DARK
        ============================================================ */
-
-    /* Override accent to baby blue for people page only */
     body[data-page="people"] { --accent: #89c4e1; }
     body[data-page="people"] .people-ig-btn { color: #080808; }
 
     /* ---- HERO ---- */
     .people-hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
-      background: var(--bg);
+      display: grid; grid-template-columns: 1fr 1fr;
+      overflow: hidden; background: var(--bg);
     }
     .ph-left {
       display: flex; flex-direction: column; justify-content: flex-end;
@@ -33,22 +29,17 @@
       content: ''; position: absolute; right: 0; top: 12%; bottom: 12%;
       width: 1px; background: var(--border);
     }
-    .ph-right {
-      position: relative; overflow: hidden;
-    }
+    .ph-right { position: relative; overflow: hidden; }
     .ph-right-img {
       position: absolute; inset: 0;
       background: center / cover no-repeat;
-      transition: transform 12s ease;
-      transform: scale(1.04);
+      transition: transform 12s ease; transform: scale(1.04);
     }
     .ph-right-img.loaded { transform: scale(1.0); }
-    /* soft left bleed into text col */
     .ph-right::after {
       content: ''; position: absolute; inset: 0;
       background: linear-gradient(to right, var(--bg) 0%, transparent 20%);
     }
-    /* subtle dark wash over the image */
     .ph-right::before {
       content: ''; position: absolute; inset: 0; z-index: 1;
       background: rgba(8,8,8,0.28);
@@ -59,20 +50,16 @@
       font-size: 7rem; font-weight: 700; line-height: 1;
       color: rgba(255,255,255,0.05); pointer-events: none; user-select: none;
     }
-
     .ph-eyebrow {
       display: flex; align-items: center; gap: 0.8rem; margin-bottom: 2.2rem;
       font-size: 0.62rem; letter-spacing: 0.32em; text-transform: uppercase;
-      color: var(--accent);
-      opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
+      color: var(--accent); opacity: 0; animation: fadeUp 0.9s 0.2s forwards;
     }
     .ph-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--accent); }
-
     .ph-title {
       font-family: 'Playfair Display', serif;
       font-size: clamp(3.2rem, 5.5vw, 6rem);
-      line-height: 0.95; font-weight: 400; letter-spacing: -0.01em;
-      color: var(--text);
+      line-height: 0.95; font-weight: 400; letter-spacing: -0.01em; color: var(--text);
     }
     .ph-title-line { display: block; overflow: hidden; }
     .ph-title-line span {
@@ -82,7 +69,6 @@
     .ph-title-line:nth-child(1) span { animation-delay: 0.15s; }
     .ph-title-line:nth-child(2) span { animation-delay: 0.28s; font-style: italic; color: var(--accent); font-weight: 400; }
     .ph-title-line:nth-child(3) span { animation-delay: 0.41s; }
-
     .ph-desc {
       font-size: 0.88rem; color: var(--muted); line-height: 1.95;
       max-width: 340px; margin: 2rem 0 3rem; font-weight: 300;
@@ -97,7 +83,6 @@
       font-family: 'Playfair Display', serif;
       font-size: 1.6rem; font-weight: 400; color: var(--text); line-height: 1;
     }
-    .ph-stat .n span { color: var(--accent); }
     .ph-stat .l {
       font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
       color: var(--muted); margin-top: 0.3rem;
@@ -116,69 +101,63 @@
       animation: pulse 2.5s ease-in-out infinite;
     }
 
-    /* ---- THIN RULE DIVIDER ---- */
-    .rule-divider {
-      display: flex; align-items: center; gap: 2rem;
-      padding: 0 4rem;
-      border-top: 1px solid var(--border);
-    }
-    .rule-divider-label {
-      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: rgba(255,255,255,0.12); white-space: nowrap; padding: 1.4rem 0;
-    }
-    .rule-divider-line { flex: 1; height: 1px; background: var(--border); }
-
     /* ---- PULL QUOTE ---- */
     .people-quote {
-      padding: 5.5rem 4rem;
-      background: var(--bg);
-      border-top: 1px solid var(--border);
-      max-width: 720px; margin: 0 auto;
-      text-align: center;
+      padding: 5rem 4rem;
+      background: var(--bg); border-top: 1px solid var(--border);
+      max-width: 720px; margin: 0 auto; text-align: center;
     }
     .people-quote blockquote {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.25rem, 2vw, 1.7rem);
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
       font-style: italic; font-weight: 400;
-      line-height: 1.65; color: var(--text);
-      margin: 0 0 1.5rem;
+      line-height: 1.65; color: var(--text); margin: 0 0 1.5rem;
     }
     .people-quote cite {
       font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase;
       color: var(--muted); font-style: normal;
       display: flex; align-items: center; justify-content: center; gap: 0.8rem;
     }
-    .people-quote cite::before { content: ''; width: 20px; height: 1px; background: var(--accent); }
-    .people-quote cite::after  { content: ''; width: 20px; height: 1px; background: var(--accent); }
+    .people-quote cite::before,
+    .people-quote cite::after { content: ''; width: 20px; height: 1px; background: var(--accent); }
 
-    /* ---- GALLERY SWITCHER ---- */
-    .people-switcher {
-      padding: 4rem 4rem 3rem;
+    /* ---- GALLERY LAYOUT: sidebar + grid ---- */
+    .gallery-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
       border-top: 1px solid var(--border);
+      min-height: 80vh;
+    }
+
+    /* LEFT: switcher sidebar */
+    .gallery-sidebar {
       background: var(--bg2);
+      border-right: 1px solid var(--border);
+      padding: 3rem 2rem;
+      display: flex; flex-direction: column; gap: 0;
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
     }
-    .psw-head {
-      display: flex; justify-content: space-between; align-items: flex-end;
-      margin-bottom: 2.5rem;
-    }
-    .psw-head h2 {
+    .gallery-sidebar-head { margin-bottom: 2rem; }
+    .gallery-sidebar-head h2 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.4rem, 2vw, 2rem); font-weight: 400; color: var(--text);
+      font-size: 1.35rem; font-weight: 400; color: var(--text);
     }
-    .psw-head p { color: var(--muted); font-size: 0.78rem; letter-spacing: 0.06em; }
-    .psw-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .gallery-sidebar-label {
+      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted); margin-top: 1.5rem; margin-bottom: 0.4rem;
+    }
+    .psw-cards { display: flex; flex-direction: column; gap: 2px; }
     .psw-card {
       position: relative; overflow: hidden; cursor: pointer;
       aspect-ratio: 3/2; background: #0c0c0c;
     }
     .psw-card img {
       width: 100%; height: 100%; object-fit: cover; display: block;
-      filter: brightness(0.45) saturate(0.5);
-      transition: filter 0.6s ease, transform 0.6s ease;
+      filter: brightness(0.4) saturate(0.4);
+      transition: filter 0.5s ease, transform 0.5s ease;
     }
-    .psw-card:hover img { filter: brightness(0.65) saturate(0.85); transform: scale(1.03); }
-    .psw-card.active img { filter: brightness(0.6) saturate(1); }
-    /* active: thin accent bottom line only — no outline, keeps it clean */
+    .psw-card:hover img { filter: brightness(0.6) saturate(0.8); transform: scale(1.03); }
+    .psw-card.active img { filter: brightness(0.55) saturate(1); }
     .psw-active-bar {
       position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
       background: var(--accent);
@@ -188,68 +167,62 @@
     .psw-card-info {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 1.2rem 1.4rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, transparent 55%);
+      padding: 0.9rem 1rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
     }
     .psw-card-label {
-      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.88); line-height: 1.3;
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.9); line-height: 1.3;
     }
     .psw-card-count {
-      font-size: 0.55rem; letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.3); margin-top: 0.25rem;
+      font-size: 0.52rem; letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.3); margin-top: 0.2rem;
     }
 
-    /* ---- MAGAZINE GALLERY ---- */
-    .people-gallery-section {
-      padding: 5rem 0 7rem;
+    /* RIGHT: gallery grid */
+    .gallery-main {
       background: var(--bg);
-      border-top: 1px solid var(--border);
+      padding: 3rem 3rem 5rem;
     }
-    .pgs-header {
-      padding: 0 4rem 3rem;
+    .gallery-main-head {
       display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 2rem; padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
     }
-    .pgs-header h2 {
+    .gallery-main-head h2 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(1.6rem, 2.5vw, 2.2rem); font-weight: 400; color: var(--text);
+      font-size: clamp(1.4rem, 2vw, 1.9rem); font-weight: 400; color: var(--text);
     }
-    .pgs-header p {
-      color: var(--muted); font-size: 0.8rem;
-      max-width: 200px; text-align: right; line-height: 1.75; font-weight: 300;
+    .gallery-main-head p {
+      font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em;
     }
-
     .gallery-grid {
-      columns: 3; column-gap: 2px; padding: 0 4rem;
+      columns: 2; column-gap: 2px;
     }
     .gallery-item {
       break-inside: avoid; margin-bottom: 2px;
       position: relative; overflow: hidden; cursor: pointer;
       background: #0c0c0c;
-      /* swipe in from right */
-      opacity: 0; transform: translateX(32px);
-      transition: opacity 0.85s ease, transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      opacity: 0; transform: translateX(24px);
+      transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .gallery-item.vis { opacity: 1; transform: translateX(0); }
     .gallery-item img {
       width: 100%; height: auto; display: block;
-      filter: brightness(0.78) saturate(0.85);
-      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
+      filter: brightness(0.8) saturate(0.85);
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s ease;
     }
-    .gallery-item:hover img {
-      transform: scale(1.04); filter: brightness(0.95) saturate(1);
-    }
-    /* minimal caption — just fades in, no sliding number */
+    .gallery-item:hover img { transform: scale(1.04); filter: brightness(0.95) saturate(1); }
     .gallery-item-caption {
       position: absolute; inset: 0;
       display: flex; align-items: flex-end;
-      padding: 1rem 1.2rem;
+      padding: 1rem 1.1rem;
       background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 45%);
-      opacity: 0; transition: opacity 0.45s ease;
+      opacity: 0; transition: opacity 0.4s ease;
     }
     .gallery-item:hover .gallery-item-caption { opacity: 1; }
     .gallery-item-caption span {
-      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-size: 0.6rem; letter-spacing: 0.16em; text-transform: uppercase;
       color: rgba(255,255,255,0.75);
     }
 
@@ -260,15 +233,9 @@
       border-top: 1px solid var(--border);
       background: var(--bg2);
     }
-    .people-ig-left {
-      display: flex; align-items: center; gap: 1.1rem;
-    }
-    .people-ig-name {
-      font-size: 0.9rem; font-weight: 500; color: var(--text); line-height: 1.3;
-    }
-    .people-ig-handle {
-      font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 0.1rem;
-    }
+    .people-ig-left { display: flex; align-items: center; gap: 1.1rem; }
+    .people-ig-name { font-size: 0.9rem; font-weight: 500; color: var(--text); line-height: 1.3; }
+    .people-ig-handle { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.05em; margin-top: 0.1rem; }
     .people-ig-btn {
       font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
       color: #080808; background: var(--accent);
@@ -276,50 +243,6 @@
       transition: opacity 0.2s, transform 0.2s;
     }
     .people-ig-btn:hover { opacity: 0.85; transform: translateY(-1px); }
-
-    /* ---- LANDSCAPE FILMSTRIP ---- */
-    .people-film-section {
-      padding: 4.5rem 0;
-      background: var(--bg2);
-      border-top: 1px solid var(--border);
-    }
-    .people-film-head {
-      padding: 0 4rem 2.2rem;
-      display: flex; justify-content: space-between; align-items: flex-end;
-    }
-    .people-film-head h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.2rem, 1.8vw, 1.6rem); font-weight: 400; color: var(--text);
-    }
-    .people-film-head p {
-      font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.2);
-    }
-    .people-film-scroll {
-      display: flex; gap: 2px; overflow-x: auto;
-      padding: 0 4rem 1rem; cursor: grab;
-      -webkit-overflow-scrolling: touch; scrollbar-width: none;
-    }
-    .people-film-scroll::-webkit-scrollbar { display: none; }
-    .people-film-scroll:active { cursor: grabbing; }
-    .people-film-frame {
-      flex-shrink: 0;
-      width: 360px; height: 202px; /* 16:9 landscape — no portrait cropping */
-      position: relative; overflow: hidden; cursor: pointer;
-      background: #0c0c0c;
-    }
-    .people-film-frame img {
-      width: 100%; height: 100%; object-fit: cover; display: block;
-      filter: brightness(0.72) saturate(0.7);
-      transition: transform 0.65s ease, filter 0.65s ease;
-    }
-    .people-film-frame:hover img { transform: scale(1.05); filter: brightness(0.9) saturate(1); }
-    .people-film-id {
-      position: absolute; top: 0.65rem; left: 0.65rem;
-      font-size: 0.55rem; letter-spacing: 0.14em;
-      color: rgba(255,255,255,0.3); background: rgba(0,0,0,0.4);
-      padding: 0.15rem 0.4rem; pointer-events: none;
-    }
 
     /* ---- SEC LABEL ---- */
     .sec-label {
@@ -331,12 +254,10 @@
 
     /* ---- KEYFRAMES ---- */
     @keyframes lineReveal {
-      from { transform: translateY(105%); }
-      to   { transform: translateY(0); }
+      from { transform: translateY(105%); } to { transform: translateY(0); }
     }
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(14px); }
-      to   { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); }
     }
 
     /* ---- RESPONSIVE ---- */
@@ -345,26 +266,21 @@
       .ph-left { padding: 9rem 2.5rem 4rem; }
       .ph-left::after { display: none; }
       .ph-right { height: 55vw; }
-      .people-quote { padding: 4rem 2.5rem; }
-      .people-switcher { padding: 3rem 2.5rem 2.5rem; }
-      .pgs-header { padding: 0 2.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-      .pgs-header p { text-align: left; }
-      .gallery-grid { columns: 2; padding: 0 2.5rem; }
-      .people-film-scroll { padding: 0 2rem 1rem; }
-      .people-film-head { padding: 0 2rem 1.8rem; }
+      .gallery-layout { grid-template-columns: 1fr; }
+      .gallery-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 2.5rem 2rem; }
+      .psw-cards { flex-direction: row; }
+      .psw-card { flex: 1; }
+      .gallery-main { padding: 2.5rem 2rem 4rem; }
+      .gallery-grid { columns: 2; }
     }
     @media (max-width: 700px) {
       .ph-left { padding: 8rem 1.5rem 3.5rem; }
       .ph-right { height: 72vw; }
       .people-quote { padding: 3.5rem 1.5rem; }
-      .people-switcher { padding: 2.5rem 1.5rem; }
-      .psw-cards { grid-template-columns: 1fr 1fr; }
-      .psw-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-      .gallery-grid { columns: 1; padding: 0 1.5rem; }
-      .pgs-header { padding: 0 1.5rem 1.5rem; }
-      .people-film-frame { width: 260px; height: 146px; }
-      .people-film-scroll { padding: 0 1.5rem 1rem; }
-      .people-film-head { padding: 0 1.5rem 1.5rem; }
+      .psw-cards { flex-direction: column; }
+      .gallery-grid { columns: 1; }
+      .gallery-main { padding: 2rem 1.5rem 3rem; }
+      .people-ig { padding: 1.6rem 1.5rem; flex-wrap: wrap; gap: 1rem; }
     }
   </style>
 </head>
@@ -380,7 +296,7 @@
   </nav>
 
   <!-- ═══════════════════════════════════════
-       HERO — editorial split
+       HERO
   ═══════════════════════════════════════ -->
   <section class="people-hero">
     <div class="ph-left">
@@ -390,13 +306,10 @@
         <span class="ph-title-line"><span>Stories</span></span>
         <span class="ph-title-line"><span>Told</span></span>
       </h1>
-      <p class="ph-desc">
-        Every portrait holds a universe — a fleeting expression, a stolen glance,
-        a moment suspended in light. These are the frames that stay with you.
-      </p>
+      <p class="ph-desc">Every portrait holds a universe — a fleeting expression, a stolen glance, a moment suspended in light. These are the frames that stay with you.</p>
       <div class="ph-meta">
         <div class="ph-stat">
-          <div class="n"><span id="peopleCount">—</span></div>
+          <div class="n" id="peopleCount">—</div>
           <div class="l">Portraits</div>
         </div>
         <div class="ph-divider"></div>
@@ -425,39 +338,37 @@
        PULL QUOTE
   ═══════════════════════════════════════ -->
   <div class="people-quote">
-    <blockquote>
-      "Photography is the art of frozen time — the ability to store emotion and feelings within a frame."
-    </blockquote>
+    <blockquote>"Photography is the art of frozen time — the ability to store emotion and feelings within a frame."</blockquote>
     <cite>Meshack Otieno</cite>
   </div>
 
   <!-- ═══════════════════════════════════════
-       GALLERY SWITCHER
+       GALLERY — sidebar + grid
   ═══════════════════════════════════════ -->
-  <section class="people-switcher">
-    <div class="psw-head">
-      <div>
+  <div class="gallery-layout" id="gallery">
+
+    <!-- LEFT SIDEBAR: collection switcher -->
+    <aside class="gallery-sidebar">
+      <div class="gallery-sidebar-head">
         <div class="sec-label">Collections</div>
         <h2>Choose a Gallery</h2>
       </div>
-      <p id="activePeopleLabel">Viewing: Overview</p>
-    </div>
-    <div class="psw-cards" id="peopleSwitcherCards"></div>
-  </section>
+      <div class="psw-cards" id="peopleSwitcherCards"></div>
+    </aside>
 
-  <!-- ═══════════════════════════════════════
-       GALLERY
-  ═══════════════════════════════════════ -->
-  <section class="people-gallery-section" id="gallery">
-    <div class="pgs-header">
-      <div>
-        <div class="sec-label">Full Collection</div>
-        <h2>The Gallery</h2>
+    <!-- RIGHT: gallery grid -->
+    <div class="gallery-main">
+      <div class="gallery-main-head">
+        <div>
+          <div class="sec-label">Full Collection</div>
+          <h2 id="galleryTitle">The Gallery</h2>
+        </div>
+        <p id="activePeopleLabel">Viewing: All</p>
       </div>
-      <p>Emotions, milestones &amp; quiet moments in time.</p>
+      <div class="gallery-grid" id="galleryGrid"></div>
     </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </section>
+
+  </div>
 
   <!-- ═══════════════════════════════════════
        INSTAGRAM
@@ -483,9 +394,7 @@
         <div class="people-ig-handle">@jdk_photography_</div>
       </div>
     </div>
-    <a class="people-ig-btn" href="https://instagram.com/jdk_photography_" target="_blank" rel="noopener">
-      View on Instagram
-    </a>
+    <a class="people-ig-btn" href="https://instagram.com/jdk_photography_" target="_blank" rel="noopener">View on Instagram</a>
   </div>
 
   <!-- ═══════════════════════════════════════
@@ -519,9 +428,8 @@
       Object.keys(peopleGalleries).forEach(function(k) { allImgs += peopleGalleries[k].images.length; });
       if (cnt) cnt.textContent = allImgs;
       var firstKey = Object.keys(peopleGalleries)[0];
-      var cover = peopleGalleries[firstKey].cover;
       if (bg) {
-        bg.style.backgroundImage = "url('" + cover + "')";
+        bg.style.backgroundImage = "url('" + peopleGalleries[firstKey].cover + "')";
         setTimeout(function() { bg.classList.add('loaded'); }, 100);
       }
     })();
@@ -533,10 +441,42 @@
       _phBg.style.transform = 'scale(1.0) translateY(' + (window.scrollY * 0.14) + 'px)';
     }, { passive: true });
 
+    /* ── Build gallery grid ── */
+    function buildPeopleGrid(imgs) {
+      var grid = document.getElementById('galleryGrid');
+      if (!grid) return;
+      grid.style.opacity = '0';
+      setTimeout(function() {
+        grid.innerHTML = '';
+        imgs.forEach(function(img, i) {
+          var item = document.createElement('div');
+          item.className = 'gallery-item';
+          item.innerHTML =
+            '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+            '<div class="gallery-item-caption"><span>' + img.caption + '</span></div>';
+          item.addEventListener('click', function() { openLightbox(i); });
+          grid.appendChild(item);
+        });
+        grid.style.opacity = '1';
+        /* staggered swipe-in */
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (!entry.isIntersecting) return;
+            var idx = Array.from(grid.querySelectorAll('.gallery-item')).indexOf(entry.target);
+            setTimeout(function() { entry.target.classList.add('vis'); }, (idx % 2) * 90);
+            obs.unobserve(entry.target);
+          });
+        }, { threshold: 0.05 });
+        grid.querySelectorAll('.gallery-item').forEach(function(el) {
+          requestAnimationFrame(function() { obs.observe(el); });
+        });
+      }, 200);
+    }
+
     /* ── Gallery switcher ── */
     (function() {
       if (typeof peopleGalleries === 'undefined') return;
-      var cards = document.getElementById('peopleSwitcherCards');
+      var cardsEl  = document.getElementById('peopleSwitcherCards');
       var activeKey = Object.keys(peopleGalleries)[0];
 
       Object.keys(peopleGalleries).forEach(function(key) {
@@ -551,100 +491,25 @@
             '<div class="psw-card-count">' + g.images.length + ' frames</div>' +
           '</div>' +
           '<div class="psw-active-bar"></div>';
-        card.addEventListener('click', function() { switchPeopleGallery(key); });
-        cards.appendChild(card);
-      });
-
-      function switchPeopleGallery(key) {
-        if (key === activeKey) return;
-        activeKey = key;
-        var g = peopleGalleries[key];
-        document.querySelectorAll('.psw-card').forEach(function(c) {
-          c.classList.toggle('active', c.dataset.key === key);
-        });
-        var lbl = document.getElementById('activePeopleLabel');
-        if (lbl) lbl.textContent = 'Viewing: ' + g.label;
-        images = g.images;
-        buildPeopleGrid(g.images);
-        buildPeopleFilmStrip(g.images);
-        var sec = document.getElementById('gallery');
-        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    })();
-
-    /* ── Build gallery grid ── */
-    function buildPeopleGrid(imgs) {
-      var grid = document.getElementById('galleryGrid');
-      if (!grid) return;
-      grid.style.opacity = '0'; grid.style.transition = 'opacity 0.2s';
-      setTimeout(function() {
-        grid.innerHTML = '';
-        imgs.forEach(function(img, i) {
-          var item = document.createElement('div');
-          item.className = 'gallery-item';
-          item.innerHTML =
-            '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
-            '<div class="gallery-item-caption"><span>' + img.caption + '</span></div>';
-          item.addEventListener('click', function() { openLightbox(i); });
-          grid.appendChild(item);
-        });
-        grid.style.opacity = '1';
-
-        /* staggered swipe-in from right */
-        var obs = new IntersectionObserver(function(entries) {
-          entries.forEach(function(entry) {
-            if (!entry.isIntersecting) return;
-            var idx = Array.from(grid.querySelectorAll('.gallery-item')).indexOf(entry.target);
-            setTimeout(function() { entry.target.classList.add('vis'); }, (idx % 3) * 90);
-            obs.unobserve(entry.target);
+        card.addEventListener('click', function() {
+          if (key === activeKey) return;
+          activeKey = key;
+          document.querySelectorAll('.psw-card').forEach(function(c) {
+            c.classList.toggle('active', c.dataset.key === key);
           });
-        }, { threshold: 0.05 });
-        grid.querySelectorAll('.gallery-item').forEach(function(el) {
-          requestAnimationFrame(function() { obs.observe(el); });
+          var lbl = document.getElementById('activePeopleLabel');
+          if (lbl) lbl.textContent = 'Viewing: ' + g.label;
+          images = g.images;
+          buildPeopleGrid(g.images);
         });
-      }, 220);
-    }
+        cardsEl.appendChild(card);
+      });
 
-    /* ── Build landscape filmstrip ── */
-    function buildPeopleFilmStrip(imgs) {
-      var strip = document.getElementById('peopleFilmStrip');
-      if (!strip) return;
-      strip.innerHTML = '';
-      imgs.forEach(function(img, i) {
-        var f = document.createElement('div');
-        f.className = 'people-film-frame';
-        f.innerHTML =
-          '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
-          '<div class="people-film-id">FRAME ' + String(i + 1).padStart(2,'0') + '</div>';
-        f.addEventListener('click', function() { openLightbox(i); });
-        strip.appendChild(f);
-      });
-    }
-
-    /* ── Filmstrip drag-scroll ── */
-    (function() {
-      var strip = document.getElementById('peopleFilmStrip');
-      if (!strip) return;
-      var down = false, startX, sl;
-      strip.addEventListener('mousedown', function(e) {
-        down = true; startX = e.pageX - strip.offsetLeft; sl = strip.scrollLeft;
-      });
-      ['mouseleave','mouseup'].forEach(function(ev) {
-        strip.addEventListener(ev, function() { down = false; });
-      });
-      strip.addEventListener('mousemove', function(e) {
-        if (!down) return; e.preventDefault();
-        strip.scrollLeft = sl - (e.pageX - strip.offsetLeft - startX) * 1.5;
-      });
-    })();
-
-    /* ── Initial build ── */
-    if (typeof peopleGalleries !== 'undefined') {
+      /* ── Build once on load — no duplicate ── */
       var firstKey = Object.keys(peopleGalleries)[0];
       images = peopleGalleries[firstKey].images;
       buildPeopleGrid(images);
-      buildPeopleFilmStrip(images);
-    }
+    })();
   </script>
 </body>
 </html>
