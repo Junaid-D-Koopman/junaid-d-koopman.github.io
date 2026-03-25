@@ -168,18 +168,153 @@
     }
 
     /* ════════════════════════════════════════
-       GALLERY LAYOUT — grid left / sidebar right
+       GALLERY LAYOUT — sidebar LEFT / grid right
     ════════════════════════════════════════ */
     .car-gallery-layout {
       display: grid;
-      grid-template-columns: 1fr 280px;
+      grid-template-columns: 72px 1fr;   /* narrow icon rail on the left */
       border-top: 1px solid var(--border);
       align-items: start;
     }
 
-    /* ---- Left: image grid ---- */
-    .gallery-main {
+    /* ---- Left: gallery sidebar (icon rail) ---- */
+    .gallery-sidebar {
+      position: sticky;
+      top: 64px;
+      max-height: calc(100vh - 64px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.2rem 0;
+      background: var(--bg2);
       border-right: 1px solid var(--border);
+      overflow: hidden;
+      gap: 3px;
+      z-index: 10;
+    }
+
+    /* Nav arrow buttons */
+    .sidebar-nav-btn {
+      width: 44px; height: 28px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+      border-radius: 2px;
+    }
+    .sidebar-nav-btn:not(:disabled):hover {
+      color: var(--accent); border-color: var(--accent);
+      background: rgba(192,57,43,0.08);
+    }
+    .sidebar-nav-btn:disabled { opacity: 0.2; cursor: default; }
+    .sidebar-nav-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+
+    /* Scrollable item list */
+    .sidebar-items {
+      flex: 1;
+      display: flex; flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      width: 100%;
+      overflow: hidden;
+    }
+
+    /* Individual icon cell */
+    .sidebar-item {
+      display: none;
+      position: relative;
+      width: 52px; height: 52px;
+      align-items: center; justify-content: center;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      transition: border-color 0.22s, background 0.22s;
+      flex-shrink: 0;
+    }
+    .sidebar-item.visible { display: flex; }
+
+    /* Active state */
+    .sidebar-item.active {
+      border-color: var(--accent);
+      background: rgba(192,57,43,0.08);
+    }
+    .sidebar-item.active::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 2px; background: var(--accent);
+    }
+
+    /* Hover glow */
+    .sidebar-item:not(.active):hover {
+      border-color: rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.04);
+    }
+
+    /* Logo image inside cell */
+    .sidebar-item-logo {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.3s ease;
+      filter: brightness(0) invert(1) opacity(0.45);
+    }
+    .sidebar-item:hover .sidebar-item-logo,
+    .sidebar-item.active .sidebar-item-logo {
+      filter: brightness(0) invert(1) opacity(1);
+      transform: scale(1.18);
+    }
+    .sidebar-item.active .sidebar-item-logo {
+      /* tint active logo red */
+      filter: brightness(0) saturate(100%) invert(28%) sepia(80%) saturate(600%) hue-rotate(340deg) brightness(1.1);
+    }
+    .sidebar-item-logo img {
+      width: 100%; height: 100%; object-fit: contain; display: block;
+    }
+
+    /* Text fallback (used for "overview") */
+    .sidebar-item-text {
+      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+      text-align: center; line-height: 1.25;
+      transition: color 0.22s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .sidebar-item:hover .sidebar-item-text,
+    .sidebar-item.active .sidebar-item-text {
+      color: var(--accent); transform: scale(1.08);
+    }
+
+    /* Floating tooltip that appears to the right on hover */
+    .sidebar-item::after {
+      content: attr(data-label);
+      position: absolute; left: calc(100% + 10px); top: 50%;
+      transform: translateY(-50%) translateX(-6px);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em;
+      text-transform: uppercase; white-space: nowrap;
+      padding: 0.35rem 0.75rem;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      z-index: 100;
+    }
+    .sidebar-item:hover::after {
+      opacity: 1; transform: translateY(-50%) translateX(0);
+    }
+
+    /* Page indicator */
+    .sidebar-page-info {
+      flex-shrink: 0; text-align: center;
+      font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); padding: 0.3rem 0;
+    }
+
+    /* ---- Right: image grid ---- */
+    .gallery-main {
       min-height: 60vh;
     }
     .car-grid-header {
@@ -235,111 +370,6 @@
     }
     .mag-item:hover .mag-overlay .o-num,
     .mag-item:hover .mag-overlay .o-cap { transform: translateY(0); }
-
-    /* ---- Right: gallery sidebar ---- */
-    .gallery-sidebar {
-      position: sticky;
-      top: 64px;
-      max-height: calc(100vh - 64px);
-      display: flex;
-      flex-direction: column;
-      padding: 2.5rem 1.5rem;
-      background: var(--bg2);
-      overflow: hidden;
-    }
-    .sidebar-header {
-      flex-shrink: 0;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid var(--border);
-      margin-bottom: 1rem;
-    }
-    .sidebar-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.35rem; line-height: 1.2; margin-bottom: 0.4rem;
-    }
-    .sidebar-viewing {
-      font-size: 0.65rem; letter-spacing: 0.14em;
-      color: var(--muted); text-transform: uppercase;
-    }
-    .sidebar-nav-btn {
-      width: 100%; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
-      padding: 0.55rem 1rem;
-      background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-      cursor: pointer;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-    }
-    .sidebar-nav-btn:not(:disabled):hover {
-      color: var(--accent); border-color: var(--accent);
-      background: rgba(192,57,43,0.06);
-    }
-    .sidebar-nav-btn:disabled { opacity: 0.25; cursor: default; }
-    .sidebar-nav-btn svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 2; }
-    .sidebar-items {
-      flex: 1;
-      display: flex; flex-direction: column;
-      gap: 3px;
-      margin: 4px 0;
-      overflow: hidden;
-    }
-    .sidebar-item {
-      display: none; /* shown via JS */
-      align-items: center; gap: 1rem;
-      padding: 0.85rem 0.9rem;
-      cursor: pointer;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      position: relative;
-      transition: border-color 0.25s, background 0.25s;
-      text-decoration: none;
-    }
-    .sidebar-item.visible { display: flex; }
-    .sidebar-item.active {
-      border-color: var(--accent);
-      background: rgba(255,255,255,0.025);
-    }
-    .sidebar-item-logo {
-      width: 44px; height: 44px; flex-shrink: 0;
-      display: flex; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.06);
-    }
-    .sidebar-item-logo img {
-      width: 30px; height: 30px;
-      object-fit: contain;
-      filter: brightness(0) invert(1);
-      opacity: 0.85;
-    }
-    .sidebar-item-logo .logo-fb {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.1rem; font-weight: 700;
-      color: var(--accent); line-height: 1;
-    }
-    .sidebar-item-info { flex: 1; min-width: 0; }
-    .sidebar-item-label {
-      font-size: 0.8rem; font-weight: 500;
-      color: var(--text); white-space: nowrap;
-      overflow: hidden; text-overflow: ellipsis;
-    }
-    .sidebar-item-count {
-      font-size: 0.58rem; letter-spacing: 0.14em;
-      color: var(--muted); margin-top: 0.2rem; text-transform: uppercase;
-    }
-    .sidebar-active-bar {
-      position: absolute; left: 0; top: 0; bottom: 0;
-      width: 2px; background: var(--accent);
-      transform: scaleY(0); transform-origin: top;
-      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .sidebar-item.active .sidebar-active-bar { transform: scaleY(1); }
-    .sidebar-page-info {
-      flex-shrink: 0; text-align: center;
-      font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
-      color: rgba(255,255,255,0.2); padding: 0.6rem 0;
-    }
 
     /* ---- FILM STRIP ---- */
     .car-film-section {
@@ -448,19 +478,25 @@
     /* ---- RESPONSIVE ---- */
     @media (max-width: 1024px) {
       .car-gallery-layout { grid-template-columns: 1fr; }
-      .gallery-main { border-right: none; }
       .gallery-sidebar {
         position: static; max-height: none;
-        border-top: 1px solid var(--border);
-        flex-direction: row; flex-wrap: wrap;
-        align-items: center; gap: 0.5rem;
-        padding: 1.5rem;
+        flex-direction: row; flex-wrap: nowrap;
+        border-right: none; border-bottom: 1px solid var(--border);
+        padding: 0.75rem 1rem; gap: 3px; overflow-x: auto;
       }
-      .sidebar-header { border-bottom: none; padding-bottom: 0; margin-bottom: 0; width: 100%; }
-      .sidebar-nav-btn { width: auto; padding: 0.55rem 1.2rem; }
-      .sidebar-items { flex-direction: row; flex: none; gap: 3px; overflow-x: auto; width: 100%; }
-      .sidebar-item.visible { flex-shrink: 0; width: 180px; }
+      .sidebar-nav-btn { width: 28px; height: 44px; }
+      .sidebar-nav-btn svg { transform: rotate(90deg); }
+      .sidebar-items { flex-direction: row; flex: none; gap: 3px; overflow: visible; }
+      .sidebar-item.visible { flex-shrink: 0; }
       .sidebar-page-info { display: none; }
+      /* Tooltip above on mobile */
+      .sidebar-item::after {
+        left: 50%; top: auto; bottom: calc(100% + 8px);
+        transform: translateX(-50%) translateY(4px);
+      }
+      .sidebar-item:hover::after {
+        transform: translateX(-50%) translateY(0);
+      }
     }
     @media (max-width: 700px) {
       .car-hero { padding: 0 1.5rem 3.5rem; }
@@ -562,11 +598,31 @@
   </div>
 
   <!-- ═══════════════════════════════════════
-       GALLERY LAYOUT — image grid LEFT · selector RIGHT
+       GALLERY LAYOUT — selector LEFT · image grid RIGHT
   ═══════════════════════════════════════ -->
   <div class="car-gallery-layout" id="car-gallery">
 
-    <!-- LEFT: image grid -->
+    <!-- LEFT: gallery icon rail -->
+    <div class="gallery-sidebar">
+
+      <!-- Up button -->
+      <button class="sidebar-nav-btn" id="sidebarUp" disabled>
+        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+      </button>
+
+      <!-- Items -->
+      <div class="sidebar-items" id="sidebarItems"></div>
+
+      <!-- Page indicator -->
+      <div class="sidebar-page-info" id="sidebarPageInfo"></div>
+
+      <!-- Down button -->
+      <button class="sidebar-nav-btn" id="sidebarDown">
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+
+    <!-- RIGHT: image grid -->
     <div class="gallery-main">
       <div class="car-grid-header">
         <div>
@@ -576,33 +632,6 @@
         <p>A curated series exploring form, speed, and the artistry of automotive design.</p>
       </div>
       <div class="car-mag-grid" id="carMagGrid"></div>
-    </div>
-
-    <!-- RIGHT: gallery selector -->
-    <div class="gallery-sidebar">
-      <div class="sidebar-header">
-        <div class="sec-label">Collections</div>
-        <h2>Galleries</h2>
-        <div class="sidebar-viewing" id="sidebarViewing">Viewing: —</div>
-      </div>
-
-      <!-- Up button -->
-      <button class="sidebar-nav-btn" id="sidebarUp" disabled>
-        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
-        Previous
-      </button>
-
-      <!-- Items (4 visible at a time) -->
-      <div class="sidebar-items" id="sidebarItems"></div>
-
-      <!-- Page indicator -->
-      <div class="sidebar-page-info" id="sidebarPageInfo"></div>
-
-      <!-- Down button -->
-      <button class="sidebar-nav-btn" id="sidebarDown">
-        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        Next
-      </button>
     </div>
 
   </div>
@@ -702,70 +731,31 @@
   <script src="script.js"></script>
   <script>
     /* ─────────────────────────────────────────────
-       BRAND LOGO MAP
-       Pulls car brand PNGs from a public CDN.
-       Keys are lowercase substrings to match against
-       the gallery key + label string.
+       LOCAL LOGO MAP
+       Maps gallery key → filename in /logos/ folder.
+       Add a new entry here each time you add a gallery + logo PNG.
+       Keys that map to null (or are missing) fall back to text.
     ───────────────────────────────────────────── */
-    var LOGO_BASE = 'https://cdn.jsdelivr.net/gh/filippofilip95/car-logos-dataset@master/logos/thumb/';
-    var BRAND_MAP = {
-      'bmw':           'bmw',
-      'mercedes':      'mercedes-benz',
-      'porsche':       'porsche',
-      'ferrari':       'ferrari',
-      'lamborghini':   'lamborghini',
-      'audi':          'audi',
-      'toyota':        'toyota',
-      'honda':         'honda',
-      'volkswagen':    'volkswagen',
-      ' vw ':          'volkswagen',
-      'ford':          'ford',
-      'nissan':        'nissan',
-      'subaru':        'subaru',
-      'mazda':         'mazda',
-      'hyundai':       'hyundai',
-      'kia':           'kia',
-      'mitsubishi':    'mitsubishi',
-      'alfa':          'alfa-romeo',
-      'maserati':      'maserati',
-      'bentley':       'bentley',
-      'rolls-royce':   'rolls-royce',
-      'rolls royce':   'rolls-royce',
-      'mclaren':       'mclaren',
-      'bugatti':       'bugatti',
-      'jaguar':        'jaguar',
-      'land rover':    'land-rover',
-      'landrover':     'land-rover',
-      'volvo':         'volvo',
-      'lexus':         'lexus',
-      'infiniti':      'infiniti',
-      'cadillac':      'cadillac',
-      'chevrolet':     'chevrolet',
-      'chevy':         'chevrolet',
-      'dodge':         'dodge',
-      'jeep':          'jeep',
-      'tesla':         'tesla',
-      'peugeot':       'peugeot',
-      'renault':       'renault',
-      'citroen':       'citroen',
-      'seat':          'seat',
-      'skoda':         'skoda',
-      'mini':          'mini',
-      'fiat':          'fiat',
-      'pagani':        'pagani',
-      'koenigsegg':    'koenigsegg',
-      'aston martin':  'aston-martin',
-      'astonmartin':   'aston-martin',
-      'suzuki':        'suzuki',
-      'isuzu':         'isuzu',
+    var LOCAL_LOGOS = {
+      'alfaromeo':   'alfaromeo.png',
+      'alfa':        'alfaromeo.png',
+      'lamborghini': 'lamborghini.png',
+      'porsche':     'porsche.png',
+      /* ── add more as you drop PNGs into /logos/ ──
+      'bmw':         'bmw.png',
+      'ferrari':     'ferrari.png',
+      'mercedes':    'mercedes.png',
+      ────────────────────────────────────────────── */
     };
 
-    function getBrandLogo(key, label) {
-      var s = (' ' + key + ' ' + label + ' ').toLowerCase();
-      for (var match in BRAND_MAP) {
-        if (s.indexOf(match) !== -1) {
-          return LOGO_BASE + BRAND_MAP[match] + '.png';
-        }
+    /**
+     * Returns a local /logos/ path for the gallery key, or null if none exists.
+     * The key is matched as a substring so 'porsche911' will still find 'porsche'.
+     */
+    function getLocalLogo(key) {
+      var k = key.toLowerCase();
+      for (var match in LOCAL_LOGOS) {
+        if (k.indexOf(match) !== -1) return 'logos/' + LOCAL_LOGOS[match];
       }
       return null;
     }
@@ -777,35 +767,34 @@
     (function() {
       if (typeof carGalleries === 'undefined') return;
 
-      var VISIBLE_COUNT = 4;
-      var keys = Object.keys(carGalleries);
+      var VISIBLE_COUNT = 6;   /* fits comfortably in the narrow rail */
+      var keys      = Object.keys(carGalleries);
       var activeKey = keys[0] || 'overview';
-      var offset = 0;
+      var offset    = 0;
 
-      var itemsEl   = document.getElementById('sidebarItems');
-      var navUp     = document.getElementById('sidebarUp');
-      var navDown   = document.getElementById('sidebarDown');
-      var pageInfo  = document.getElementById('sidebarPageInfo');
-      var viewingEl = document.getElementById('sidebarViewing');
+      var itemsEl  = document.getElementById('sidebarItems');
+      var navUp    = document.getElementById('sidebarUp');
+      var navDown  = document.getElementById('sidebarDown');
+      var pageInfo = document.getElementById('sidebarPageInfo');
 
-      /* Build sidebar items */
+      /* Build sidebar items — logo only, text for overview */
       keys.forEach(function(key) {
-        var g = carGalleries[key];
-        var logoUrl = getBrandLogo(key, g.label);
-        var logoHTML = logoUrl
-          ? '<img src="' + logoUrl + '" alt="' + g.label + '" onerror="this.parentNode.innerHTML=\'<span class=\\\"logo-fb\\\">' + g.label.charAt(0).toUpperCase() + '</span>\'">'
-          : '<span class="logo-fb">' + g.label.charAt(0).toUpperCase() + '</span>';
+        var g       = carGalleries[key];
+        var logoUrl = getLocalLogo(key);
+        var isText  = !logoUrl; /* use text label when no logo */
+
+        var inner = isText
+          ? '<span class="sidebar-item-text">' + g.label + '</span>'
+          : '<div class="sidebar-item-logo"><img src="' + logoUrl + '" alt="' + g.label + '"'
+              + ' onerror="this.parentNode.innerHTML=\'<span class=\\\"sidebar-item-text\\\">'
+              + g.label.substring(0,3).toUpperCase() + '</span>\'"'
+              + '></div>';
 
         var item = document.createElement('div');
         item.className = 'sidebar-item' + (key === activeKey ? ' active' : '');
-        item.dataset.key = key;
-        item.innerHTML =
-          '<div class="sidebar-item-logo">' + logoHTML + '</div>' +
-          '<div class="sidebar-item-info">' +
-            '<div class="sidebar-item-label">' + g.label + '</div>' +
-            '<div class="sidebar-item-count">' + g.images.length + ' frames</div>' +
-          '</div>' +
-          '<div class="sidebar-active-bar"></div>';
+        item.dataset.key   = key;
+        item.dataset.label = g.label;   /* used by the CSS tooltip */
+        item.innerHTML     = inner;
 
         item.addEventListener('click', function() { switchGallery(key); });
         itemsEl.appendChild(item);
@@ -822,8 +811,7 @@
         if (pageInfo) {
           var total = Math.ceil(keys.length / VISIBLE_COUNT);
           var page  = Math.floor(offset / VISIBLE_COUNT) + 1;
-          if (total > 1) pageInfo.textContent = page + ' / ' + total;
-          else pageInfo.textContent = '';
+          pageInfo.textContent = total > 1 ? page + '/' + total : '';
         }
       }
 
@@ -839,11 +827,6 @@
 
       render();
 
-      /* Set initial viewing label */
-      if (viewingEl && carGalleries[activeKey]) {
-        viewingEl.textContent = 'Viewing: ' + carGalleries[activeKey].label;
-      }
-
       /* Global switch function */
       window.switchGallery = function(key) {
         if (key === activeKey) return;
@@ -855,14 +838,12 @@
           c.classList.toggle('active', c.dataset.key === key);
         });
 
-        /* Scroll window into view for the item if needed */
+        /* Scroll sidebar page to show the selected item */
         var idx = keys.indexOf(key);
         if (idx !== -1 && (idx < offset || idx >= offset + VISIBLE_COUNT)) {
           offset = Math.floor(idx / VISIBLE_COUNT) * VISIBLE_COUNT;
           render();
         }
-
-        if (viewingEl) viewingEl.textContent = 'Viewing: ' + g.label;
 
         /* Rebuild gallery */
         buildMagGrid(g.images);
