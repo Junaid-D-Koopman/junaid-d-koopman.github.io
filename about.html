@@ -228,49 +228,71 @@
       font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em;
     }
 
-    /* form */
-    .contact-form {}
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-    .form-group { margin-bottom: 1.2rem; }
-    .form-group label {
-      display: block; font-size: 0.62rem; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--muted); margin-bottom: 0.55rem;
+    /* contact details */
+    .contact-details { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+    .contact-item {
+      display: flex; align-items: center; gap: 1.4rem;
+      padding: 2rem 0; border-bottom: 1px solid var(--border);
     }
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
-      width: 100%; background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border); color: var(--text);
-      padding: 0.85rem 1rem; font-family: 'Inter', sans-serif;
-      font-size: 0.88rem; outline: none; border-radius: 0;
-      transition: border-color 0.25s, background 0.25s;
-      -webkit-appearance: none;
+    .contact-item:first-child { border-top: 1px solid var(--border); }
+    .contact-item-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
     }
-    .form-group select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
-      background-repeat: no-repeat; background-position: right 1rem center;
-      cursor: pointer;
+    .contact-item-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+    .contact-item-label {
+      font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.35rem;
     }
-    .form-group select option { background: #1a1a1a; }
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
-      border-color: var(--accent); background: rgba(212,175,55,0.04);
+    .contact-item-value {
+      font-size: 1rem; color: var(--text); font-weight: 400; letter-spacing: 0.02em;
     }
-    .form-group textarea { resize: vertical; min-height: 130px; }
-    .form-submit {
-      display: inline-flex; align-items: center; gap: 0.7rem;
-      padding: 1rem 2.5rem; background: var(--accent);
-      color: #080808; font-size: 0.72rem; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      border: none; cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s; width: 100%;
-      justify-content: center;
+    .contact-item-value a {
+      color: var(--text); text-decoration: none;
+      transition: color 0.2s;
     }
-    .form-submit:hover { opacity: 0.88; transform: translateY(-2px); }
-    .form-submit svg { width: 16px; height: 16px; }
+    .contact-item-value a:hover { color: var(--accent); }
 
-    /* ---- KEYFRAMES ---- */
+    /* ---- DUAL INSTAGRAM ---- */
+    .about-ig {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--border);
+    }
+    .about-ig-panel {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 2rem 3rem; gap: 1.5rem;
+    }
+    .about-ig-panel:first-child {
+      border-right: 1px solid var(--border);
+    }
+    .about-ig-left {
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .about-ig-label {
+      font-size: 0.55rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 0.3rem;
+    }
+    .about-ig-name {
+      font-size: 0.88rem; font-weight: 500; color: var(--text); line-height: 1.2;
+    }
+    .about-ig-handle {
+      font-size: 0.68rem; color: var(--muted); margin-top: 0.1rem;
+    }
+    .about-ig-btn {
+      flex-shrink: 0;
+      font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: #080808; background: var(--accent);
+      padding: 0.65rem 1.4rem; text-decoration: none; font-weight: 600;
+      transition: opacity 0.2s, transform 0.2s; white-space: nowrap;
+    }
+    .about-ig-btn:hover { opacity: 0.85; transform: translateY(-1px); }
+    @media (max-width: 700px) {
+      .about-ig { grid-template-columns: 1fr; }
+      .about-ig-panel:first-child { border-right: none; border-bottom: 1px solid var(--border); }
+      .about-ig-panel { padding: 1.6rem 1.5rem; }
+    }
     @keyframes lineReveal {
       from { transform: translateY(110%); }
       to   { transform: translateY(0); }
@@ -336,7 +358,7 @@
       <div class="about-hero-right">
         <div class="about-hero-photo-wrap">
           <!-- Replace src with your own photo -->
-          <img src="https://picsum.photos/seed/about1/600/800" alt="Junaid D Koopman">
+          <img src="images/cars/image-2" alt="Junaid D Koopman">
           <div class="about-photo-wipe"></div>
           <div class="about-photo-label">JDK · Cape Town</div>
         </div>
@@ -410,49 +432,87 @@
       </div>
     </div>
 
-    <div class="contact-form">
-      <!--
-        HOW TO SET UP THE CONTACT FORM:
-        1. Go to https://formspree.io and create a FREE account
-        2. Click "New Form", give it a name (e.g. "Portfolio Contact")
-        3. Copy your Form ID and replace YOUR_FORM_ID below
-      -->
-      <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
-        <div class="form-row">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="your@email.com" required>
-          </div>
+    <div class="contact-details">
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.95 10.5a19.79 19.79 0 01-3.07-8.67A2 2 0 012.86 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.16 6.16l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
         </div>
-        <div class="form-group">
-          <label for="project">Project Type</label>
-          <select id="project" name="project_type">
-            <option value="">Select a type</option>
-            <option value="portrait">Portrait / People</option>
-            <option value="automotive">Automotive</option>
-            <option value="event">Event</option>
-            <option value="other">Other</option>
-          </select>
+        <div>
+          <div class="contact-item-label">Phone</div>
+          <div class="contact-item-value"><a href="tel:+27828547711">+27 82 854 7711</a></div>
         </div>
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell me about your project..." required></textarea>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">
+          <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
         </div>
-        <button type="submit" class="form-submit">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="22" y1="2" x2="11" y2="13"></line>
-            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-          </svg>
-          Send Message
-        </button>
-      </form>
+        <div>
+          <div class="contact-item-label">Email</div>
+          <div class="contact-item-value"><a href="mailto:junaid.jdkphotography@gmail.com">junaid.jdkphotography@gmail.com</a></div>
+        </div>
+      </div>
     </div>
 
   </section>
+
+  <!-- ═══════════════════════════════════════
+       DUAL INSTAGRAM
+  ═══════════════════════════════════════ -->
+  <div class="about-ig">
+
+    <!-- People -->
+    <div class="about-ig-panel">
+      <div class="about-ig-left">
+        <svg width="38" height="38" viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="ig-p" cx="30%" cy="107%" r="150%">
+              <stop offset="0%"   stop-color="#fdf497"/>
+              <stop offset="10%"  stop-color="#fdf497"/>
+              <stop offset="50%"  stop-color="#fd5949"/>
+              <stop offset="68%"  stop-color="#d6249f"/>
+              <stop offset="100%" stop-color="#285AEB"/>
+            </radialGradient>
+          </defs>
+          <rect x="2" y="2" width="128" height="128" rx="30" ry="30" fill="url(#ig-p)"/>
+          <circle cx="66" cy="66" r="28" fill="none" stroke="#fff" stroke-width="8"/>
+          <circle cx="97" cy="35" r="6" fill="#fff"/>
+        </svg>
+        <div>
+          <div class="about-ig-label">People Photography</div>
+          <div class="about-ig-name">jdk_photography_</div>
+          <div class="about-ig-handle">@jdk_photography_</div>
+        </div>
+      </div>
+      <a class="about-ig-btn" href="https://instagram.com/jdk_photography_" target="_blank" rel="noopener">View Profile</a>
+    </div>
+
+    <!-- Cars -->
+    <div class="about-ig-panel">
+      <div class="about-ig-left">
+        <svg width="38" height="38" viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="ig-c" cx="30%" cy="107%" r="150%">
+              <stop offset="0%"   stop-color="#fdf497"/>
+              <stop offset="10%"  stop-color="#fdf497"/>
+              <stop offset="50%"  stop-color="#fd5949"/>
+              <stop offset="68%"  stop-color="#d6249f"/>
+              <stop offset="100%" stop-color="#285AEB"/>
+            </radialGradient>
+          </defs>
+          <rect x="2" y="2" width="128" height="128" rx="30" ry="30" fill="url(#ig-c)"/>
+          <circle cx="66" cy="66" r="28" fill="none" stroke="#fff" stroke-width="8"/>
+          <circle cx="97" cy="35" r="6" fill="#fff"/>
+        </svg>
+        <div>
+          <div class="about-ig-label">Automotive Photography</div>
+          <div class="about-ig-name">JDK Cars</div>
+          <div class="about-ig-handle">@JDK_CARS</div>
+        </div>
+      </div>
+      <a class="about-ig-btn" href="https://instagram.com/jdk_cars" target="_blank" rel="noopener">View Profile</a>
+    </div>
+
+  </div>
 
   <footer>
     <p>&copy; 2026 JDK Photography</p>
@@ -479,7 +539,26 @@
       });
     })();
 
-    /* ── Scroll reveals ── */
+    /* ── mailto form ── */
+    var form = document.getElementById('contactForm');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var name    = document.getElementById('name').value;
+        var email   = document.getElementById('email').value;
+        var project = document.getElementById('project').value;
+        var message = document.getElementById('message').value;
+        var subject = encodeURIComponent('Photography Enquiry — ' + (project || 'General') + ' | ' + name);
+        var body    = encodeURIComponent(
+          'Name: ' + name + '\n' +
+          'Email: ' + email + '\n' +
+          'Project Type: ' + (project || 'Not specified') + '\n\n' +
+          'Message:\n' + message
+        );
+        /* ← replace with your actual email address */
+        window.location.href = 'mailto:YOUR_EMAIL@gmail.com?subject=' + subject + '&body=' + body;
+      });
+    }
     var revealObs = new IntersectionObserver(function(entries) {
       entries.forEach(function(e) {
         if (e.isIntersecting) { e.target.classList.add('vis'); revealObs.unobserve(e.target); }
