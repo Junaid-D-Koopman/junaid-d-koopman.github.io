@@ -12,7 +12,6 @@
        CAR PAGE — AUTOMOTIVE MAGAZINE THEME
        ============================================================ */
 
-    /* ---- CINEMATIC HERO ---- */
     .car-hero {
       position: relative; height: 100vh; min-height: 620px;
       overflow: hidden; display: flex; align-items: flex-end;
@@ -34,7 +33,6 @@
         rgba(8,8,8,0.55) 40%,
         transparent 100%);
     }
-    /* Subtle film-grain overlay */
     .car-hero-grain {
       position: absolute; inset: 0; z-index: 1; pointer-events: none;
       opacity: 0.035;
@@ -97,7 +95,6 @@
       animation: pulse 2.2s ease-in-out infinite;
     }
 
-    /* ---- ACCENT TICKER ---- */
     .car-ticker {
       background: var(--accent); padding: 0.65rem 0; overflow: hidden;
       white-space: nowrap;
@@ -111,7 +108,6 @@
     }
     .car-ticker-dot { color: rgba(8,8,8,0.35) !important; padding: 0 !important; letter-spacing: 0 !important; }
 
-    /* ---- SECTION LABEL ---- */
     .sec-label {
       display: inline-flex; align-items: center; gap: 0.75rem;
       font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
@@ -122,13 +118,10 @@
       width: 28px; height: 1px; background: var(--accent);
     }
 
-    /* ---- FEATURED SPLIT ---- */
     .car-featured {
       display: grid; grid-template-columns: 58% 1fr; min-height: 88vh; overflow: hidden;
     }
-    .feat-img-wrap {
-      position: relative; overflow: hidden;
-    }
+    .feat-img-wrap { position: relative; overflow: hidden; }
     .feat-img-wrap img {
       width: 100%; height: 100%; object-fit: cover; display: block;
       transform: scale(1.06);
@@ -170,7 +163,6 @@
       color: var(--muted); margin-top: 0.35rem;
     }
 
-    /* ---- MAGAZINE GRID ---- */
     .car-grid-section { background: var(--bg); }
     .car-grid-header {
       padding: 5rem 4rem 2.5rem;
@@ -184,15 +176,11 @@
       color: var(--muted); font-size: 0.85rem;
       max-width: 260px; text-align: right; line-height: 1.65;
     }
-    /* ---- MASONRY GRID — autofit columns ---- */
     .car-mag-grid {
-      columns: 3;
-      column-gap: 3px;
-      padding: 0 4rem;
+      columns: 3; column-gap: 3px; padding: 0 4rem;
     }
     .mag-item {
-      break-inside: avoid;
-      margin-bottom: 3px;
+      break-inside: avoid; margin-bottom: 3px;
       position: relative; overflow: hidden; cursor: pointer;
       background: #0f0f0f;
       opacity: 0; transform: translateY(22px);
@@ -202,8 +190,7 @@
     .mag-item img {
       width: 100%; height: auto; display: block;
       filter: brightness(0.82);
-      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                  filter 0.75s ease;
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.75s ease;
     }
     .mag-item:hover img { transform: scale(1.05); filter: brightness(1); }
     .mag-overlay {
@@ -230,7 +217,6 @@
     .mag-item:hover .mag-overlay .o-num,
     .mag-item:hover .mag-overlay .o-cap { transform: translateY(0); }
 
-    /* ---- GALLERY SWITCHER ---- */
     .gallery-switcher {
       background: var(--bg); padding: 3.5rem 4rem;
       border-bottom: 1px solid var(--border);
@@ -244,9 +230,7 @@
       font-size: clamp(1.6rem, 2.5vw, 2.2rem);
     }
     .switcher-head p { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.06em; }
-    .switcher-cards {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px;
-    }
+    .switcher-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
     .switcher-card {
       position: relative; overflow: hidden; cursor: pointer;
       aspect-ratio: 16/9; background: #0f0f0f;
@@ -261,7 +245,7 @@
     }
     .switcher-card:hover img,
     .switcher-card.active img { filter: brightness(0.72) saturate(1); }
-    .switcher-card:hover img  { transform: scale(1.06); }
+    .switcher-card:hover img { transform: scale(1.06); }
     .switcher-card-info {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; justify-content: flex-end;
@@ -282,16 +266,6 @@
     }
     .switcher-card.active .switcher-active-bar { width: 100%; }
 
-    @media (max-width: 900px) {
-      .switcher-cards { grid-template-columns: repeat(2, 1fr); }
-      .gallery-switcher { padding: 2.5rem 1.5rem; }
-      .switcher-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-    }
-    @media (max-width: 500px) {
-      .switcher-cards { grid-template-columns: 1fr 1fr; }
-    }
-
-    /* ---- FILMSTRIP ---- */
     .car-film-section {
       padding: 5rem 0; background: var(--bg2);
       border-top: 1px solid var(--border);
@@ -330,11 +304,8 @@
       font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
       color: rgba(255,255,255,0.2); display: flex; align-items: center; gap: 0.6rem;
     }
-    .film-hint::before {
-      content: '←→'; font-size: 0.75rem; color: var(--accent);
-    }
+    .film-hint::before { content: '←→'; font-size: 0.75rem; color: var(--accent); }
 
-    /* ---- STATS BAR ---- */
     .car-stats {
       display: grid; grid-template-columns: repeat(4, 1fr);
       border-top: 1px solid var(--border);
@@ -361,20 +332,72 @@
       font-size: 0.65rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted);
     }
 
-    /* ---- KEYFRAMES ---- */
+    /* ---- INSTAGRAM BAR ---- */
+    .ig-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem;
+      padding: 2rem 4rem;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .ig-bar-left {
+      display: flex; align-items: center; gap: 1.4rem;
+    }
+    .ig-bar-icon {
+      flex-shrink: 0; width: 48px; height: 48px;
+    }
+    .ig-bar-identity {}
+    .ig-bar-name {
+      font-size: 1rem; font-weight: 600; color: var(--text);
+      line-height: 1.2;
+    }
+    .ig-bar-handle {
+      font-size: 0.72rem; letter-spacing: 0.1em;
+      color: var(--muted); margin-top: 0.18rem;
+    }
+    .ig-bar-divider {
+      width: 1px; height: 40px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+    .ig-bar-stats {
+      display: flex; align-items: center; gap: 2.5rem;
+    }
+    .ig-bar-stat {}
+    .ig-bar-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; font-weight: 700;
+      color: var(--text); line-height: 1;
+    }
+    .ig-bar-stat-lbl {
+      font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--muted); margin-top: 0.25rem;
+    }
+    .ig-bar-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 0.75rem 1.8rem;
+      border-radius: 2px;
+      background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      color: #fff; font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .ig-bar-btn:hover { opacity: 0.88; transform: translateY(-2px); }
+    .ig-bar-btn svg { width: 15px; height: 15px; fill: #fff; flex-shrink: 0; }
+
     @keyframes lineReveal {
       from { transform: translateY(110%); }
       to   { transform: translateY(0); }
     }
 
-    /* ---- RESPONSIVE ---- */
-    @media (max-width: 1024px) {
-      .car-featured { grid-template-columns: 1fr; }
-      .feat-img-wrap { height: 62vw; }
-      .feat-text { padding: 3rem 2.5rem; }
-      .car-mag-grid { columns: 2; padding: 0 2rem; }
-      .car-grid-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .car-grid-header p { text-align: left; }
+    @media (max-width: 900px) {
+      .switcher-cards { grid-template-columns: repeat(2, 1fr); }
+      .gallery-switcher { padding: 2.5rem 1.5rem; }
+      .switcher-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .ig-bar { flex-wrap: wrap; gap: 1.5rem; padding: 2rem 1.5rem; }
+      .ig-bar-stats { gap: 1.5rem; }
     }
     @media (max-width: 700px) {
       .car-hero { padding: 0 1.5rem 3.5rem; }
@@ -390,6 +413,9 @@
       .film-hint { padding: 1rem 1.5rem 0; }
       .car-film-head { padding: 0 1.5rem 2rem; }
       .film-frame { width: 250px; height: 168px; }
+      .ig-bar { flex-direction: column; align-items: flex-start; }
+      .ig-bar-divider { display: none; }
+      .ig-bar-btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
@@ -404,9 +430,6 @@
     </div>
   </nav>
 
-  <!-- ═══════════════════════════════════════
-       CINEMATIC HERO
-  ═══════════════════════════════════════ -->
   <section class="car-hero">
     <div class="car-hero-bg" id="heroBg"></div>
     <div class="car-hero-grain"></div>
@@ -440,16 +463,10 @@
     <div class="car-hero-side">Scroll</div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       ACCENT TICKER
-  ═══════════════════════════════════════ -->
   <div class="car-ticker" aria-hidden="true">
     <div class="car-ticker-track" id="tickerTrack"></div>
   </div>
 
-  <!-- ═══════════════════════════════════════
-       FEATURED SPLIT
-  ═══════════════════════════════════════ -->
   <div class="car-featured">
     <div class="feat-img-wrap" id="featImgWrap">
       <img id="featImg" src="" alt="Featured Shot">
@@ -477,9 +494,6 @@
     </div>
   </div>
 
-  <!-- ═══════════════════════════════════════
-       GALLERY SWITCHER
-  ═══════════════════════════════════════ -->
   <section class="gallery-switcher" id="gallerySwitcher">
     <div class="switcher-head">
       <div>
@@ -491,9 +505,6 @@
     <div class="switcher-cards" id="switcherCards"></div>
   </section>
 
-  <!-- ═══════════════════════════════════════
-       MAGAZINE GRID
-  ═══════════════════════════════════════ -->
   <section class="car-grid-section" id="car-gallery">
     <div class="car-grid-header">
       <div>
@@ -506,20 +517,53 @@
   </section>
 
   <!-- ═══════════════════════════════════════
-       FILMSTRIP
+       INSTAGRAM BAR
   ═══════════════════════════════════════ -->
-  <section class="car-film-section">
-    <div class="car-film-head">
-      <div class="sec-label">Behind the Lens</div>
-      <h2>Every Frame Counts</h2>
+  <div class="ig-bar">
+    <div class="ig-bar-left">
+      <svg class="ig-bar-icon" viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="igbg" cx="30%" cy="107%" r="150%">
+            <stop offset="0%"   stop-color="#fdf497"/>
+            <stop offset="10%"  stop-color="#fdf497"/>
+            <stop offset="50%"  stop-color="#fd5949"/>
+            <stop offset="68%"  stop-color="#d6249f"/>
+            <stop offset="100%" stop-color="#285AEB"/>
+          </radialGradient>
+        </defs>
+        <rect x="2" y="2" width="128" height="128" rx="30" ry="30" fill="url(#igbg)"/>
+        <circle cx="66" cy="66" r="28" fill="none" stroke="#fff" stroke-width="8"/>
+        <circle cx="97" cy="35" r="6" fill="#fff"/>
+      </svg>
+      <div class="ig-bar-identity">
+        <div class="ig-bar-name">JDK Cars</div>
+        <div class="ig-bar-handle">@JDK_CARS</div>
+      </div>
     </div>
-    <div class="film-scroll" id="filmStrip"></div>
-    <p class="film-hint">Drag to explore</p>
-  </section>
+    <div class="ig-bar-divider"></div>
+    <div class="ig-bar-stats">
+      <div class="ig-bar-stat">
+        <div class="ig-bar-stat-num">29</div>
+        <div class="ig-bar-stat-lbl">Posts</div>
+      </div>
+      <div class="ig-bar-stat">
+        <div class="ig-bar-stat-num">96</div>
+        <div class="ig-bar-stat-lbl">Followers</div>
+      </div>
+      <div class="ig-bar-stat">
+        <div class="ig-bar-stat-num">144</div>
+        <div class="ig-bar-stat-lbl">Following</div>
+      </div>
+    </div>
+    <div class="ig-bar-divider"></div>
+    <a class="ig-bar-btn" href="https://instagram.com/jdk_cars" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.333.014 7.053.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.053.014 8.333 0 8.741 0 12c0 3.259.014 3.667.072 4.947.085 1.856.601 3.698 1.942 5.039 1.341 1.341 3.183 1.857 5.039 1.942C8.333 23.986 8.741 24 12 24s3.667-.014 4.947-.072c1.856-.085 3.698-.601 5.039-1.942 1.341-1.341 1.857-3.183 1.942-5.039.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.085-1.856-.601-3.698-1.942-5.039C20.645.673 18.803.157 16.947.072 15.667.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+      </svg>
+      View on Instagram
+    </a>
+  </div>
 
-  <!-- ═══════════════════════════════════════
-       STATS
-  ═══════════════════════════════════════ -->
   <div class="car-stats" id="carStats">
     <div class="stat-cell">
       <div class="stat-n"><span class="counter" data-target="12">0</span></div>
@@ -540,18 +584,66 @@
   </div>
 
   <!-- ═══════════════════════════════════════
-       PORTFOLIO SWITCH
+       PORTFOLIO SWITCH — REMOVED
   ═══════════════════════════════════════ -->
-  <div class="portfolio-switch">
-    <a href="index.html" class="switch-link">
-      <span>Also explore</span>
-      <strong>People Photography &#x2192;</strong>
-    </a>
-  </div>
 
   <!-- ═══════════════════════════════════════
-       LIGHTBOX
+       INSTAGRAM BAR
   ═══════════════════════════════════════ -->
+  <div class="ig-bar">
+
+    <!-- Logo + Identity -->
+    <div class="ig-bar-left">
+      <svg class="ig-bar-icon" viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="igbg" cx="30%" cy="107%" r="150%">
+            <stop offset="0%"   stop-color="#fdf497"/>
+            <stop offset="10%"  stop-color="#fdf497"/>
+            <stop offset="50%"  stop-color="#fd5949"/>
+            <stop offset="68%"  stop-color="#d6249f"/>
+            <stop offset="100%" stop-color="#285AEB"/>
+          </radialGradient>
+        </defs>
+        <rect x="2" y="2" width="128" height="128" rx="30" ry="30" fill="url(#igbg)"/>
+        <circle cx="66" cy="66" r="28" fill="none" stroke="#fff" stroke-width="8"/>
+        <circle cx="97" cy="35" r="6" fill="#fff"/>
+      </svg>
+      <div class="ig-bar-identity">
+        <div class="ig-bar-name">JDK Cars</div>
+        <div class="ig-bar-handle">@JDK_CARS</div>
+      </div>
+    </div>
+
+    <div class="ig-bar-divider"></div>
+
+    <!-- Stats -->
+    <div class="ig-bar-stats">
+      <div class="ig-bar-stat">
+        <div class="ig-bar-stat-num">29</div>
+        <div class="ig-bar-stat-lbl">Posts</div>
+      </div>
+      <div class="ig-bar-stat">
+        <div class="ig-bar-stat-num">96</div>
+        <div class="ig-bar-stat-lbl">Followers</div>
+      </div>
+      <div class="ig-bar-stat">
+        <div class="ig-bar-stat-num">144</div>
+        <div class="ig-bar-stat-lbl">Following</div>
+      </div>
+    </div>
+
+    <div class="ig-bar-divider"></div>
+
+    <!-- CTA -->
+    <a class="ig-bar-btn" href="https://instagram.com/jdk_cars" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.334 3.608 1.308.974.974 1.246 2.241 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.334 2.633-1.308 3.608-.974.974-2.241 1.246-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.334-3.608-1.308-.974-.974-1.246-2.241-1.308-3.608C2.175 15.584 2.163 15.204 2.163 12s.012-3.584.07-4.85c.062-1.366.334-2.633 1.308-3.608.974-.974 2.241-1.246 3.608-1.308C8.416 2.175 8.796 2.163 12 2.163zm0-2.163C8.741 0 8.333.014 7.053.072 5.197.157 3.355.673 2.014 2.014.673 3.355.157 5.197.072 7.053.014 8.333 0 8.741 0 12c0 3.259.014 3.667.072 4.947.085 1.856.601 3.698 1.942 5.039 1.341 1.341 3.183 1.857 5.039 1.942C8.333 23.986 8.741 24 12 24s3.667-.014 4.947-.072c1.856-.085 3.698-.601 5.039-1.942 1.341-1.341 1.857-3.183 1.942-5.039.058-1.28.072-1.688.072-4.947s-.014-3.667-.072-4.947c-.085-1.856-.601-3.698-1.942-5.039C20.645.673 18.803.157 16.947.072 15.667.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/>
+      </svg>
+      View on Instagram
+    </a>
+
+  </div>
+
   <div id="lightbox" class="lightbox">
     <button class="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
     <button class="lightbox-prev"  onclick="changeSlide(-1)">&#x2039;</button>
@@ -574,11 +666,11 @@
     /* ── Gallery Switcher ── */
     (function() {
       if (typeof carGalleries === 'undefined') return;
-      var cards     = document.getElementById('switcherCards');
+      var cards = document.getElementById('switcherCards');
       var activeKey = 'overview';
 
       Object.keys(carGalleries).forEach(function(key) {
-        var g    = carGalleries[key];
+        var g = carGalleries[key];
         var card = document.createElement('div');
         card.className = 'switcher-card' + (key === activeKey ? ' active' : '');
         card.dataset.key = key;
@@ -597,54 +689,33 @@
         if (key === activeKey) return;
         activeKey = key;
         var g = carGalleries[key];
-
-        /* update active state on cards */
         document.querySelectorAll('.switcher-card').forEach(function(c) {
           c.classList.toggle('active', c.dataset.key === key);
         });
-
-        /* update label */
         var lbl = document.getElementById('activeGalleryLabel');
         if (lbl) lbl.textContent = 'Viewing: ' + g.label;
-
-        /* update global images array & lightbox source */
         images = g.images;
-
-        /* rebuild magazine grid */
         buildMagGrid(g.images);
-
-        /* rebuild filmstrip */
         buildFilmStrip(g.images);
-
-        /* update hero count */
         var cnt = document.getElementById('heroImgCount');
         if (cnt) cnt.textContent = g.images.length;
-
-        /* update featured image */
         var fi = document.getElementById('featImg');
         if (fi && g.images.length > 1) {
           fi.style.opacity = '0';
           setTimeout(function() {
-            fi.src = g.images[1].src;
-            fi.alt = g.images[1].caption;
+            fi.src = g.images[1].src; fi.alt = g.images[1].caption;
             fi.style.opacity = '1';
           }, 250);
         }
-
-        /* scroll to grid */
         var sec = document.getElementById('car-gallery');
         if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     })();
 
-    /* ── Build magazine grid (extracted as callable fn) ── */
     function buildMagGrid(imgs) {
       var grid = document.getElementById('carMagGrid');
       if (!grid) return;
-
-      /* animate out */
-      grid.style.opacity = '0';
-      grid.style.transition = 'opacity 0.25s';
+      grid.style.opacity = '0'; grid.style.transition = 'opacity 0.25s';
       setTimeout(function() {
         grid.innerHTML = '';
         imgs.forEach(function(img, i) {
@@ -659,8 +730,6 @@
           item.addEventListener('click', function() { openLightbox(i); });
           grid.appendChild(item);
         });
-
-        /* staggered reveal */
         grid.style.opacity = '1';
         var obs = new IntersectionObserver(function(entries) {
           entries.forEach(function(entry, i) {
@@ -676,7 +745,6 @@
       }, 260);
     }
 
-    /* ── Build filmstrip (extracted as callable fn) ── */
     function buildFilmStrip(imgs) {
       var strip = document.getElementById('filmStrip');
       if (!strip) return;
@@ -696,7 +764,6 @@
       }, 260);
     }
 
-    /* ── Ticker ── */
     (function() {
       var words = ['Automotive Photography','·','Speed & Form','·','Mechanical Beauty','·','Track Day','·','Raw Power','·'];
       var t = document.getElementById('tickerTrack');
@@ -705,39 +772,32 @@
         words.forEach(function(w) {
           var s = document.createElement('span');
           if (w === '·') s.className = 'car-ticker-dot';
-          s.textContent = w;
-          t.appendChild(s);
+          s.textContent = w; t.appendChild(s);
         });
       });
     })();
 
-    /* ── Hero BG + hero count (data-driven from carImages) ── */
     (function() {
       var bg = document.getElementById('heroBg');
       var cnt = document.getElementById('heroImgCount');
       if (typeof carImages === 'undefined') return;
-      if (bg && carImages.length)
-        bg.style.backgroundImage = "url('" + carImages[0].src + "')";
-      if (cnt)
-        cnt.textContent = carImages.length;
+      if (bg && carImages.length) bg.style.backgroundImage = "url('" + carImages[0].src + "')";
+      if (cnt) cnt.textContent = carImages.length;
     })();
 
-    /* ── Hero parallax ── */
     var _heroBg = document.getElementById('heroBg');
     window.addEventListener('scroll', function() {
       if (!_heroBg) return;
       _heroBg.style.transform = 'scale(1.1) translateY(' + (window.scrollY * 0.22) + 'px)';
     }, { passive: true });
 
-    /* ── Featured split reveal ── */
     (function() {
       if (typeof carImages === 'undefined' || carImages.length < 2) return;
       var fi = document.getElementById('featImg');
       if (fi) { fi.src = carImages[1].src; fi.alt = carImages[1].caption; }
-
       var wrap = document.getElementById('featImgWrap');
       var text = document.getElementById('featText');
-      var obs  = new IntersectionObserver(function(entries) {
+      var obs = new IntersectionObserver(function(entries) {
         if (entries[0].isIntersecting) {
           if (wrap) wrap.classList.add('revealed');
           if (text) text.classList.add('revealed');
@@ -747,13 +807,11 @@
       if (wrap) obs.observe(wrap);
     })();
 
-    /* ── Initial grid + filmstrip build ── */
     if (typeof carImages !== 'undefined') {
       buildMagGrid(carImages);
       buildFilmStrip(carImages);
     }
 
-    /* ── Filmstrip drag-to-scroll ── */
     (function() {
       var strip = document.getElementById('filmStrip');
       if (!strip) return;
@@ -765,13 +823,11 @@
         strip.addEventListener(ev, function() { down = false; });
       });
       strip.addEventListener('mousemove', function(e) {
-        if (!down) return;
-        e.preventDefault();
+        if (!down) return; e.preventDefault();
         strip.scrollLeft = sl - (e.pageX - strip.offsetLeft - startX) * 1.6;
       });
     })();
 
-    /* ── Stats counters ── */
     (function() {
       function count(el) {
         var target = +el.dataset.target, dur = 1800, t0 = performance.now();
