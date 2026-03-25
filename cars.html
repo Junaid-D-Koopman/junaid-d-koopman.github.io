@@ -181,105 +181,120 @@
     .gallery-sidebar {
       position: sticky;
       top: 64px;
-      max-height: calc(100vh - 64px);
+      height: calc(100vh - 64px);
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 1.2rem 0;
-      background: var(--bg2);
-      border-right: 1px solid var(--border);
+      align-items: stretch;
+      padding: 0;
+      background: #0a0a0a;
+      border-right: 1px solid rgba(255,255,255,0.06);
       overflow: hidden;
-      gap: 3px;
       z-index: 10;
     }
 
     /* Nav arrow buttons */
     .sidebar-nav-btn {
-      width: 44px; height: 28px; flex-shrink: 0;
+      width: 100%; height: 36px; flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
       padding: 0;
       background: transparent;
-      border: 1px solid var(--border);
-      color: var(--muted);
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.18);
       cursor: pointer;
-      transition: color 0.2s, border-color 0.2s, background 0.2s;
-      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+    .sidebar-nav-btn:last-child {
+      border-bottom: none;
+      border-top: 1px solid rgba(255,255,255,0.05);
     }
     .sidebar-nav-btn:not(:disabled):hover {
-      color: var(--accent); border-color: var(--accent);
-      background: rgba(192,57,43,0.08);
+      color: var(--accent);
+      background: rgba(192,57,43,0.06);
     }
-    .sidebar-nav-btn:disabled { opacity: 0.2; cursor: default; }
-    .sidebar-nav-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 2.5; }
+    .sidebar-nav-btn:disabled { opacity: 0.15; cursor: default; }
+    .sidebar-nav-btn svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2.5; }
 
     /* Scrollable item list */
     .sidebar-items {
       flex: 1;
       display: flex; flex-direction: column;
-      align-items: center;
-      gap: 3px;
+      align-items: stretch;
       width: 100%;
       overflow: hidden;
     }
 
-    /* Individual icon cell */
+    /* Individual cell — fills available space evenly via flex */
     .sidebar-item {
       display: none;
       position: relative;
-      width: 100%;
-      min-height: 72px;
+      flex: 1;
       align-items: center; justify-content: center;
       cursor: pointer;
       border: none;
       border-left: 2px solid transparent;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
       background: transparent;
-      transition: border-color 0.22s, background 0.22s;
-      flex-shrink: 0;
-      padding: 14px 0;
+      transition: background 0.25s, border-left-color 0.25s;
     }
+    .sidebar-item:last-child { border-bottom: none; }
     .sidebar-item.visible { display: flex; }
 
     /* Active state */
     .sidebar-item.active {
       border-left-color: var(--accent);
-      background: rgba(192,57,43,0.08);
+      background: rgba(192,57,43,0.07);
     }
 
-    /* Hover glow */
+    /* Hover */
     .sidebar-item:not(.active):hover {
-      background: rgba(255,255,255,0.04);
+      background: rgba(255,255,255,0.035);
     }
 
-    /* Text label inside cell — rotated vertical */
+    /* Subtle scan-line shimmer on hover */
+    .sidebar-item::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.03) 0%, transparent 100%);
+      opacity: 0; transition: opacity 0.3s;
+      pointer-events: none;
+    }
+    .sidebar-item:hover::before { opacity: 1; }
+
+    /* Text label — vertical stacked */
     .sidebar-item-text {
       writing-mode: vertical-lr;
       text-orientation: upright;
-      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em;
-      text-transform: uppercase; color: rgba(255,255,255,0.32);
+      font-size: 0.6rem;
+      font-weight: 900;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.28);
       text-align: center;
-      transition: color 0.22s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: color 0.25s, letter-spacing 0.3s cubic-bezier(0.22,1,0.36,1);
       user-select: none;
     }
     .sidebar-item:hover .sidebar-item-text {
-      color: rgba(255,255,255,0.85); transform: scale(1.06);
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.42em;
     }
     .sidebar-item.active .sidebar-item-text {
-      color: var(--accent); transform: scale(1.06);
+      color: var(--accent);
+      letter-spacing: 0.38em;
     }
 
-    /* Floating tooltip that appears to the right on hover */
+    /* Tooltip */
     .sidebar-item::after {
       content: attr(data-label);
       position: absolute; left: calc(100% + 10px); top: 50%;
       transform: translateY(-50%) translateX(-6px);
-      background: var(--bg2);
-      border: 1px solid var(--border);
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.08);
       color: var(--text);
-      font-size: 0.62rem; font-weight: 500; letter-spacing: 0.1em;
+      font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em;
       text-transform: uppercase; white-space: nowrap;
-      padding: 0.35rem 0.75rem;
-      pointer-events: none;
-      opacity: 0;
+      padding: 0.4rem 0.9rem;
+      pointer-events: none; opacity: 0;
       transition: opacity 0.18s ease, transform 0.18s ease;
       z-index: 100;
     }
@@ -289,9 +304,7 @@
 
     /* Page indicator */
     .sidebar-page-info {
-      flex-shrink: 0; text-align: center;
-      font-size: 0.5rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(255,255,255,0.18); padding: 0.3rem 0;
+      display: none;
     }
 
     /* ---- Right: image grid ---- */
