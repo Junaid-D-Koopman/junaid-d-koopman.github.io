@@ -197,7 +197,7 @@
       font-size: 0.75rem; color: var(--muted); letter-spacing: 0.06em;
     }
     .gallery-grid {
-      columns: 2; column-gap: 2px;
+      columns: 3; column-gap: 2px;
     }
     .gallery-item {
       break-inside: avoid; margin-bottom: 2px;
@@ -477,6 +477,7 @@
     (function() {
       if (typeof peopleGalleries === 'undefined') return;
       var cardsEl  = document.getElementById('peopleSwitcherCards');
+      cardsEl.innerHTML = ''; /* clear any cards script.js may have already added */
       var activeKey = Object.keys(peopleGalleries)[0];
 
       Object.keys(peopleGalleries).forEach(function(key) {
