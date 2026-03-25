@@ -9,107 +9,106 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* ============================================================
-       PEOPLE PAGE — EDITORIAL MAGAZINE THEME  (light)
+       PEOPLE PAGE — DARK EDITORIAL MAGAZINE THEME
        ============================================================ */
 
-    /* ---- HERO: full-bleed image right, text left ---- */
+    /* ---- HERO ---- */
     .people-hero {
-      min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      overflow: hidden;
+      position: relative; height: 100vh; min-height: 640px;
+      overflow: hidden; display: flex; align-items: flex-end;
+      padding: 0 4rem 5rem;
     }
-    .ph-left {
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 10rem 4rem 5rem;
-      background: var(--bg);
-      position: relative; z-index: 1;
-    }
-    /* thin vertical rule between columns */
-    .ph-left::after {
-      content: ''; position: absolute; right: 0; top: 10%; bottom: 10%;
-      width: 1px; background: var(--border);
-    }
-    .ph-right {
-      position: relative; overflow: hidden;
-    }
-    .ph-right-img {
+    .ph-bg {
       position: absolute; inset: 0;
       background: center / cover no-repeat;
-      transform: scale(1.08);
-      transition: transform 8s ease;
+      transform: scale(1.1); will-change: transform;
     }
-    .ph-right-img.loaded { transform: scale(1.0); }
-    .ph-right::after {
+    .ph-bg::before {
       content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to right, var(--bg) 0%, transparent 18%);
+      background: rgba(0,0,0,0.5);
     }
-    /* issue-number watermark */
-    .ph-issue {
-      position: absolute; bottom: 2.5rem; right: 2.5rem; z-index: 2;
-      font-family: 'Playfair Display', serif;
-      font-size: 8rem; font-weight: 700; line-height: 1;
-      color: rgba(0,0,0,0.06); pointer-events: none; user-select: none;
+    .ph-bg::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top,
+        rgba(8,8,8,1) 0%,
+        rgba(8,8,8,0.6) 38%,
+        transparent 100%);
     }
-
+    .ph-grain {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    }
+    .ph-content {
+      position: relative; z-index: 2; max-width: 1200px; width: 100%;
+    }
     .ph-eyebrow {
-      display: flex; align-items: center; gap: 0.8rem;
-      font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 2rem;
-      opacity: 0; animation: fadeIn 0.8s 0.2s forwards;
+      display: flex; align-items: center; gap: 1rem; margin-bottom: 1.8rem;
+      font-size: 0.68rem; letter-spacing: 0.32em; text-transform: uppercase;
+      color: var(--accent); opacity: 0; animation: fadeIn 0.8s 0.2s forwards;
     }
     .ph-eyebrow::before {
-      content: ''; width: 32px; height: 1px; background: var(--accent);
+      content: ''; width: 36px; height: 1px; background: var(--accent);
     }
-
     .ph-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3.5rem, 6vw, 6.5rem);
-      line-height: 0.92; font-weight: 700; letter-spacing: -0.02em;
-      color: var(--text); margin-bottom: 2rem;
+      font-size: clamp(4.5rem, 10.5vw, 10rem);
+      line-height: 0.88; font-weight: 700; letter-spacing: -0.02em;
+      color: #fff;
     }
     .ph-title-line { display: block; overflow: hidden; }
     .ph-title-line span {
-      display: block;
-      transform: translateY(110%);
-      animation: lineReveal 1s cubic-bezier(0.22,1,0.36,1) forwards;
+      display: block; transform: translateY(110%);
+      animation: lineReveal 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
     }
-    .ph-title-line:nth-child(1) span { animation-delay: 0.1s; }
-    .ph-title-line:nth-child(2) span { animation-delay: 0.26s; font-style: italic; color: var(--accent); }
-    .ph-title-line:nth-child(3) span { animation-delay: 0.42s; }
-
-    .ph-desc {
-      font-size: 0.93rem; color: var(--muted); line-height: 1.85;
-      max-width: 380px; margin-bottom: 3rem;
-      opacity: 0; animation: fadeIn 0.9s 0.75s forwards;
-    }
+    .ph-title-line:nth-child(1) span { animation-delay: 0.15s; }
+    .ph-title-line:nth-child(2) span { animation-delay: 0.30s; color: var(--accent); font-style: italic; }
+    .ph-title-line:nth-child(3) span { animation-delay: 0.45s; }
     .ph-meta {
-      display: flex; align-items: center; gap: 2.5rem;
-      padding-top: 2rem; border-top: 1px solid var(--border);
-      opacity: 0; animation: fadeIn 0.9s 0.95s forwards;
+      display: flex; align-items: center; gap: 3rem;
+      margin-top: 2.8rem; padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      opacity: 0; animation: fadeIn 0.8s 0.9s forwards;
     }
-    .ph-stat .n {
+    .ph-stat .num {
       font-family: 'Playfair Display', serif;
-      font-size: 1.7rem; font-weight: 700; color: var(--accent); line-height: 1;
+      font-size: 2rem; font-weight: 700; color: var(--accent); line-height: 1;
     }
-    .ph-stat .l {
-      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--muted); margin-top: 0.25rem;
+    .ph-stat .lbl {
+      font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-top: 0.3rem;
     }
-    .ph-divider { width: 1px; height: 32px; background: var(--border); }
-    .ph-scroll {
-      display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
-      margin-top: 3.5rem; color: var(--muted);
-      font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
-      opacity: 0; animation: fadeIn 0.8s 1.3s forwards;
+    .ph-divider { width: 1px; height: 38px; background: rgba(255,255,255,0.12); }
+    .ph-cta { margin-left: auto; }
+    .ph-side {
+      position: absolute; right: 4rem; top: 50%; transform: translateY(-50%);
+      z-index: 2; writing-mode: vertical-lr;
+      display: flex; flex-direction: column; align-items: center; gap: 1rem;
+      font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      opacity: 0; animation: fadeIn 1s 1.2s forwards;
     }
-    .ph-scroll-line {
-      width: 1px; height: 42px;
-      background: linear-gradient(to bottom, var(--muted), transparent);
+    .ph-side::after {
+      content: ''; width: 1px; height: 64px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
       animation: pulse 2.2s ease-in-out infinite;
     }
 
-    /* ---- PULL QUOTE DIVIDER ---- */
+    /* ---- TICKER ---- */
+    .people-ticker {
+      background: var(--accent); padding: 0.65rem 0;
+      overflow: hidden; white-space: nowrap;
+    }
+    .people-ticker-track {
+      display: inline-flex; animation: marquee 30s linear infinite;
+    }
+    .people-ticker-track span {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.3em;
+      text-transform: uppercase; color: #080808; padding: 0 2rem;
+    }
+    .ticker-dot { color: rgba(8,8,8,0.35) !important; padding: 0 !important; letter-spacing: 0 !important; }
+
+    /* ---- PULL QUOTE ---- */
     .people-quote {
       padding: 5rem 4rem;
       display: flex; align-items: center; gap: 3rem;
@@ -119,7 +118,7 @@
     .quote-mark {
       font-family: 'Playfair Display', serif;
       font-size: 8rem; line-height: 0.6;
-      color: var(--accent); opacity: 0.25;
+      color: var(--accent); opacity: 0.2;
       flex-shrink: 0; user-select: none;
     }
     .quote-body { max-width: 580px; }
@@ -133,11 +132,9 @@
       font-size: 0.62rem; letter-spacing: 0.26em; text-transform: uppercase;
       color: var(--muted); display: flex; align-items: center; gap: 0.6rem;
     }
-    .quote-attr::before {
-      content: ''; width: 22px; height: 1px; background: var(--accent);
-    }
+    .quote-attr::before { content: ''; width: 22px; height: 1px; background: var(--accent); }
 
-    /* ---- GALLERY SWITCHER (people) ---- */
+    /* ---- GALLERY SWITCHER ---- */
     .people-switcher {
       background: var(--bg); padding: 4rem 4rem 2.5rem;
       border-top: 1px solid var(--border);
@@ -151,29 +148,27 @@
       font-size: clamp(1.6rem, 2.5vw, 2.2rem); color: var(--text);
     }
     .psw-head p { color: var(--muted); font-size: 0.82rem; letter-spacing: 0.06em; }
-    .psw-cards {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px;
-    }
+    .psw-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
     .psw-card {
       position: relative; overflow: hidden; cursor: pointer;
-      aspect-ratio: 3/2; background: #e8e0d8;
+      aspect-ratio: 3/2; background: #0f0f0f;
       outline: 2px solid transparent; outline-offset: -2px;
       transition: outline-color 0.3s;
     }
     .psw-card.active { outline-color: var(--accent); }
     .psw-card img {
       width: 100%; height: 100%; object-fit: cover; display: block;
-      filter: brightness(0.65) saturate(0.7);
+      filter: brightness(0.5) saturate(0.7);
       transition: filter 0.45s ease, transform 0.45s ease;
     }
     .psw-card:hover img,
-    .psw-card.active img { filter: brightness(0.78) saturate(1); }
+    .psw-card.active img { filter: brightness(0.72) saturate(1); }
     .psw-card:hover img { transform: scale(1.06); }
     .psw-card-info {
       position: absolute; inset: 0;
       display: flex; flex-direction: column; justify-content: flex-end;
       padding: 1.1rem 1.3rem;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 60%);
     }
     .psw-card-label {
       font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
@@ -190,9 +185,10 @@
     }
     .psw-card.active .psw-active-bar { width: 100%; }
 
-    /* ---- MASONRY GALLERY ---- */
+    /* ---- MAGAZINE GALLERY ---- */
     .people-gallery-section {
       padding: 4rem 0 6rem; background: var(--bg);
+      border-top: 1px solid var(--border);
     }
     .pgs-header {
       padding: 0 4rem 2.5rem;
@@ -204,25 +200,105 @@
     }
     .pgs-header p { color: var(--muted); font-size: 0.82rem; max-width: 220px; text-align: right; line-height: 1.7; }
 
-    /* re-skin the shared .gallery-grid for the light editorial look */
+    /* Magazine masonry grid */
     .gallery-grid {
-      columns: 3; column-gap: 3px;
-      padding: 0 4rem;
+      columns: 3; column-gap: 3px; padding: 0 4rem;
     }
     .gallery-item {
       break-inside: avoid; margin-bottom: 3px;
+      position: relative; overflow: hidden; cursor: pointer;
+      background: #0f0f0f;
+      /* swipe-in from right */
+      opacity: 0;
+      transform: translateX(48px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .gallery-item img { width: 100%; height: auto; display: block; }
+    .gallery-item.vis {
+      opacity: 1; transform: translateX(0);
+    }
+    .gallery-item img {
+      width: 100%; height: auto; display: block;
+      filter: brightness(0.82);
+      transition: transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.75s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.05); filter: brightness(1); }
+    .gallery-item-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 50%);
+      opacity: 0; transition: opacity 0.35s;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 1.2rem 1.4rem;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-item-overlay .o-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem; font-weight: 700; color: var(--accent); line-height: 1;
+      transform: translateY(10px);
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .gallery-item-overlay .o-cap {
+      font-size: 0.68rem; letter-spacing: 0.16em; text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      transform: translateY(10px);
+      transition: transform 0.35s 0.04s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .gallery-item:hover .gallery-item-overlay .o-num,
+    .gallery-item:hover .gallery-item-overlay .o-cap { transform: translateY(0); }
 
-    /* ---- SEC LABEL (shared helper) ---- */
+    /* ---- LANDSCAPE FILMSTRIP (replaces marquee) ---- */
+    .people-film-section {
+      padding: 4rem 0; background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .people-film-head {
+      padding: 0 4rem 2rem;
+      display: flex; justify-content: space-between; align-items: flex-end;
+    }
+    .people-film-head h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 2vw, 2rem); color: var(--text);
+    }
+    .people-film-head p { color: var(--muted); font-size: 0.78rem; letter-spacing: 0.06em; }
+    .people-film-scroll {
+      display: flex; gap: 3px; overflow-x: auto;
+      padding: 0 4rem 1rem; cursor: grab;
+      -webkit-overflow-scrolling: touch; scrollbar-width: none;
+    }
+    .people-film-scroll::-webkit-scrollbar { display: none; }
+    .people-film-scroll:active { cursor: grabbing; }
+    .people-film-frame {
+      flex-shrink: 0;
+      width: 380px; height: 215px; /* fixed landscape 16:9 */
+      position: relative; overflow: hidden; cursor: pointer;
+      background: #0f0f0f;
+    }
+    .people-film-frame img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: brightness(0.78) sepia(0.1);
+      transition: transform 0.55s ease, filter 0.55s ease;
+    }
+    .people-film-frame:hover img { transform: scale(1.07); filter: brightness(1) sepia(0); }
+    .people-film-id {
+      position: absolute; top: 0.7rem; left: 0.7rem;
+      font-size: 0.58rem; font-weight: 600; letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.5); background: rgba(0,0,0,0.55);
+      padding: 0.18rem 0.45rem; pointer-events: none;
+    }
+    .people-film-hint {
+      padding: 1rem 4rem 0;
+      font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2); display: flex; align-items: center; gap: 0.6rem;
+    }
+    .people-film-hint::before { content: '←→'; font-size: 0.75rem; color: var(--accent); }
+
+    /* ---- SEC LABEL ---- */
     .sec-label {
       display: inline-flex; align-items: center; gap: 0.7rem;
       font-size: 0.62rem; letter-spacing: 0.3em; text-transform: uppercase;
       color: var(--accent); margin-bottom: 0.6rem;
     }
-    .sec-label::before {
-      content: ''; width: 26px; height: 1px; background: var(--accent);
-    }
+    .sec-label::before { content: ''; width: 26px; height: 1px; background: var(--accent); }
 
     /* ---- KEYFRAMES ---- */
     @keyframes lineReveal {
@@ -232,30 +308,35 @@
 
     /* ---- RESPONSIVE ---- */
     @media (max-width: 1024px) {
-      .people-hero { grid-template-columns: 1fr; min-height: auto; }
-      .ph-left { padding: 9rem 2.5rem 4rem; }
-      .ph-left::after { display: none; }
-      .ph-right { height: 55vw; }
       .people-quote { padding: 3.5rem 2.5rem; gap: 1.5rem; }
       .people-switcher { padding: 3rem 2.5rem 2rem; }
       .pgs-header { padding: 0 2.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .pgs-header p { text-align: left; }
       .gallery-grid { columns: 2; padding: 0 2.5rem; }
+      .people-film-scroll { padding: 0 2rem 1rem; }
+      .people-film-hint { padding: 1rem 2rem 0; }
+      .people-film-head { padding: 0 2rem 1.5rem; }
     }
-    @media (max-width: 650px) {
-      .ph-left { padding: 8rem 1.5rem 3rem; }
-      .ph-right { height: 72vw; }
-      .people-quote { flex-direction: column; gap: 0; padding: 3rem 1.5rem; }
+    @media (max-width: 700px) {
+      .people-hero { padding: 0 1.5rem 3.5rem; }
+      .ph-side { display: none; }
+      .ph-meta { flex-wrap: wrap; gap: 1.5rem; }
+      .ph-cta { margin-left: 0; width: 100%; }
+      .people-quote { flex-direction: column; gap: 0.5rem; padding: 3rem 1.5rem; }
       .quote-mark { font-size: 5rem; }
       .people-switcher { padding: 2.5rem 1.5rem 1.5rem; }
       .psw-cards { grid-template-columns: 1fr 1fr; }
       .psw-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
       .gallery-grid { columns: 1; padding: 0 1.5rem; }
       .pgs-header { padding: 0 1.5rem 1.5rem; }
+      .people-film-frame { width: 260px; height: 147px; }
+      .people-film-scroll { padding: 0 1.5rem 1rem; }
+      .people-film-hint { padding: 1rem 1.5rem 0; }
+      .people-film-head { padding: 0 1.5rem 1.5rem; }
     }
   </style>
 </head>
-<body class="light" data-page="people">
+<body class="dark" data-page="people">
 
   <nav id="navbar">
     <a class="nav-logo" href="index.html">Junaid K</a>
@@ -267,52 +348,46 @@
   </nav>
 
   <!-- ═══════════════════════════════════════
-       HERO — split layout
+       CINEMATIC HERO
   ═══════════════════════════════════════ -->
   <section class="people-hero">
-    <div class="ph-left">
+    <div class="ph-bg" id="phHeroBg"></div>
+    <div class="ph-grain"></div>
+    <div class="ph-content">
       <div class="ph-eyebrow">Portrait Photography</div>
       <h1 class="ph-title">
         <span class="ph-title-line"><span>Human</span></span>
         <span class="ph-title-line"><span>Stories</span></span>
         <span class="ph-title-line"><span>Told</span></span>
       </h1>
-      <p class="ph-desc">
-        Every portrait holds a universe — a fleeting expression, a stolen glance,
-        a moment suspended in light. These are the frames that stay with you.
-      </p>
       <div class="ph-meta">
         <div class="ph-stat">
-          <div class="n" id="peopleCount">—</div>
-          <div class="l">Portraits</div>
+          <div class="num" id="peopleCount">—</div>
+          <div class="lbl">Portraits</div>
         </div>
         <div class="ph-divider"></div>
         <div class="ph-stat">
-          <div class="n">2</div>
-          <div class="l">Collections</div>
+          <div class="num">2</div>
+          <div class="lbl">Collections</div>
         </div>
         <div class="ph-divider"></div>
         <div class="ph-stat">
-          <div class="n">2026</div>
-          <div class="l">Season</div>
+          <div class="num">2026</div>
+          <div class="lbl">Season</div>
+        </div>
+        <div class="ph-cta">
+          <a href="#gallery" class="cta-btn">View Gallery</a>
         </div>
       </div>
-      <div class="ph-scroll">
-        <span>Scroll</span>
-        <div class="ph-scroll-line"></div>
-      </div>
     </div>
-    <div class="ph-right">
-      <div class="ph-right-img" id="phHeroBg"></div>
-      <div class="ph-issue">01</div>
-    </div>
+    <div class="ph-side">Scroll</div>
   </section>
 
   <!-- ═══════════════════════════════════════
-       MARQUEE
+       ACCENT TICKER
   ═══════════════════════════════════════ -->
-  <div class="marquee-section">
-    <div class="marquee-track" id="marqueeTrack"></div>
+  <div class="people-ticker" aria-hidden="true">
+    <div class="people-ticker-track" id="peopleTicker"></div>
   </div>
 
   <!-- ═══════════════════════════════════════
@@ -341,7 +416,7 @@
   </section>
 
   <!-- ═══════════════════════════════════════
-       MASONRY GALLERY
+       MAGAZINE GALLERY
   ═══════════════════════════════════════ -->
   <section class="people-gallery-section" id="gallery">
     <div class="pgs-header">
@@ -349,20 +424,25 @@
         <div class="sec-label">Full Collection</div>
         <h2>The Gallery</h2>
       </div>
-      <p>Emotions, milestones & quiet moments in time.</p>
+      <p>Emotions, milestones &amp; quiet moments in time.</p>
     </div>
     <div class="gallery-grid" id="galleryGrid"></div>
   </section>
 
   <!-- ═══════════════════════════════════════
-       PORTFOLIO SWITCH
+       LANDSCAPE FILMSTRIP
   ═══════════════════════════════════════ -->
-  <div class="portfolio-switch">
-    <a href="cars.html" class="switch-link">
-      <span>Also explore</span>
-      <strong>Automotive Photography &#x2192;</strong>
-    </a>
-  </div>
+  <section class="people-film-section">
+    <div class="people-film-head">
+      <div>
+        <div class="sec-label">Behind the Lens</div>
+        <h2>Every Frame Counts</h2>
+      </div>
+      <p>Drag to explore</p>
+    </div>
+    <div class="people-film-scroll" id="peopleFilmStrip"></div>
+    <p class="people-film-hint">Drag to explore</p>
+  </section>
 
   <!-- ═══════════════════════════════════════
        LIGHTBOX
@@ -395,19 +475,153 @@
                     peopleGalleries.wedding.images.length;
       if (cnt) cnt.textContent = allImgs;
       var cover = peopleGalleries.matricBall.cover;
-      if (bg) {
-        bg.style.backgroundImage = "url('" + cover + "')";
-        /* subtle ken-burns on load */
-        setTimeout(function() { bg.classList.add('loaded'); }, 100);
-      }
+      if (bg) bg.style.backgroundImage = "url('" + cover + "')";
     })();
 
-    /* ── Parallax hero image ── */
+    /* ── Hero parallax ── */
     var _phBg = document.getElementById('phHeroBg');
     window.addEventListener('scroll', function() {
       if (!_phBg) return;
-      _phBg.style.transform = 'scale(1.0) translateY(' + (window.scrollY * 0.18) + 'px)';
+      _phBg.style.transform = 'scale(1.1) translateY(' + (window.scrollY * 0.22) + 'px)';
     }, { passive: true });
+
+    /* ── Ticker ── */
+    (function() {
+      var words = ['Portrait Photography','·','Human Stories','·','Weddings','·','Matric Ball','·','Cape Town','·'];
+      var t = document.getElementById('peopleTicker');
+      if (!t) return;
+      [0,1].forEach(function() {
+        words.forEach(function(w) {
+          var s = document.createElement('span');
+          if (w === '·') s.className = 'ticker-dot';
+          s.textContent = w; t.appendChild(s);
+        });
+      });
+    })();
+
+    /* ── Gallery switcher ── */
+    (function() {
+      if (typeof peopleGalleries === 'undefined') return;
+      var cards = document.getElementById('peopleSwitcherCards');
+      var activeKey = Object.keys(peopleGalleries)[0];
+
+      Object.keys(peopleGalleries).forEach(function(key) {
+        var g = peopleGalleries[key];
+        var card = document.createElement('div');
+        card.className = 'psw-card' + (key === activeKey ? ' active' : '');
+        card.dataset.key = key;
+        card.innerHTML =
+          '<img src="' + g.cover + '" alt="' + g.label + '" loading="lazy">' +
+          '<div class="psw-card-info">' +
+            '<div class="psw-card-label">' + g.label + '</div>' +
+            '<div class="psw-card-count">' + g.images.length + ' frames</div>' +
+          '</div>' +
+          '<div class="psw-active-bar"></div>';
+        card.addEventListener('click', function() { switchPeopleGallery(key); });
+        cards.appendChild(card);
+      });
+
+      function switchPeopleGallery(key) {
+        if (key === activeKey) return;
+        activeKey = key;
+        var g = peopleGalleries[key];
+        document.querySelectorAll('.psw-card').forEach(function(c) {
+          c.classList.toggle('active', c.dataset.key === key);
+        });
+        var lbl = document.getElementById('activePeopleLabel');
+        if (lbl) lbl.textContent = 'Viewing: ' + g.label;
+        images = g.images;
+        buildPeopleGrid(g.images);
+        buildPeopleFilmStrip(g.images);
+        var sec = document.getElementById('gallery');
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    })();
+
+    /* ── Build gallery grid with swipe-in reveal ── */
+    function buildPeopleGrid(imgs) {
+      var grid = document.getElementById('galleryGrid');
+      if (!grid) return;
+      grid.style.opacity = '0'; grid.style.transition = 'opacity 0.2s';
+      setTimeout(function() {
+        grid.innerHTML = '';
+        imgs.forEach(function(img, i) {
+          var item = document.createElement('div');
+          item.className = 'gallery-item';
+          item.innerHTML =
+            '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+            '<div class="gallery-item-overlay">' +
+              '<div class="o-num">0' + (i + 1) + '</div>' +
+              '<div class="o-cap">' + img.caption + '</div>' +
+            '</div>';
+          item.addEventListener('click', function() { openLightbox(i); });
+          grid.appendChild(item);
+        });
+        grid.style.opacity = '1';
+
+        /* staggered swipe-in observer */
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              /* slight stagger based on column position */
+              var idx = Array.from(grid.querySelectorAll('.gallery-item')).indexOf(entry.target);
+              setTimeout(function() {
+                entry.target.classList.add('vis');
+              }, (idx % 3) * 80);
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.05 });
+
+        grid.querySelectorAll('.gallery-item').forEach(function(el) {
+          requestAnimationFrame(function() { obs.observe(el); });
+        });
+      }, 220);
+    }
+
+    /* ── Build landscape filmstrip (landscape frames only) ── */
+    function buildPeopleFilmStrip(imgs) {
+      var strip = document.getElementById('peopleFilmStrip');
+      if (!strip) return;
+      /* filter to landscape only — or include all but force landscape crop */
+      strip.innerHTML = '';
+      imgs.forEach(function(img, i) {
+        var f = document.createElement('div');
+        f.className = 'people-film-frame';
+        /* object-fit:cover on a 380×215 container will crop portrait images
+           to their landscape centre — fine for a filmstrip */
+        f.innerHTML =
+          '<img src="' + img.src + '" alt="' + img.caption + '" loading="lazy">' +
+          '<div class="people-film-id">FRAME ' + String(i + 1).padStart(2,'0') + '</div>';
+        f.addEventListener('click', function() { openLightbox(i); });
+        strip.appendChild(f);
+      });
+    }
+
+    /* ── Filmstrip drag-scroll ── */
+    (function() {
+      var strip = document.getElementById('peopleFilmStrip');
+      if (!strip) return;
+      var down = false, startX, sl;
+      strip.addEventListener('mousedown', function(e) {
+        down = true; startX = e.pageX - strip.offsetLeft; sl = strip.scrollLeft;
+      });
+      ['mouseleave','mouseup'].forEach(function(ev) {
+        strip.addEventListener(ev, function() { down = false; });
+      });
+      strip.addEventListener('mousemove', function(e) {
+        if (!down) return; e.preventDefault();
+        strip.scrollLeft = sl - (e.pageX - strip.offsetLeft - startX) * 1.6;
+      });
+    })();
+
+    /* ── Initial build ── */
+    if (typeof peopleGalleries !== 'undefined') {
+      var firstKey = Object.keys(peopleGalleries)[0];
+      buildPeopleGrid(peopleGalleries[firstKey].images);
+      buildPeopleFilmStrip(peopleGalleries[firstKey].images);
+      images = peopleGalleries[firstKey].images;
+    }
   </script>
 </body>
 </html>
