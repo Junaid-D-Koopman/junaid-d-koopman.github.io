@@ -253,35 +253,16 @@
       background: rgba(255,255,255,0.04);
     }
 
-    /* Logo image inside cell */
-    .sidebar-item-logo {
-      width: 32px; height: 32px;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
-                  filter 0.3s ease;
-      filter: brightness(0) invert(1) opacity(0.45);
-    }
-    .sidebar-item:hover .sidebar-item-logo,
-    .sidebar-item.active .sidebar-item-logo {
-      filter: brightness(0) invert(1) opacity(1);
-      transform: scale(1.18);
-    }
-    .sidebar-item.active .sidebar-item-logo {
-      /* tint active logo red */
-      filter: brightness(0) saturate(100%) invert(28%) sepia(80%) saturate(600%) hue-rotate(340deg) brightness(1.1);
-    }
-    .sidebar-item-logo img {
-      width: 100%; height: 100%; object-fit: contain; display: block;
-    }
-
-    /* Text fallback (used for "overview") */
+    /* Text label inside cell */
     .sidebar-item-text {
-      font-size: 0.55rem; font-weight: 700; letter-spacing: 0.14em;
-      text-transform: uppercase; color: rgba(255,255,255,0.45);
-      text-align: center; line-height: 1.25;
+      font-size: 0.52rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.38);
+      text-align: center; line-height: 1.3; padding: 0 4px;
       transition: color 0.22s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
-    .sidebar-item:hover .sidebar-item-text,
+    .sidebar-item:hover .sidebar-item-text {
+      color: rgba(255,255,255,0.9); transform: scale(1.08);
+    }
     .sidebar-item.active .sidebar-item-text {
       color: var(--accent); transform: scale(1.08);
     }
@@ -780,15 +761,7 @@
       /* Build sidebar items — logo only, text for overview */
       keys.forEach(function(key) {
         var g       = carGalleries[key];
-        var logoUrl = getLocalLogo(key);
-        var isText  = !logoUrl; /* use text label when no logo */
-
-        var inner = isText
-          ? '<span class="sidebar-item-text">' + g.label + '</span>'
-          : '<div class="sidebar-item-logo"><img src="' + logoUrl + '" alt="' + g.label + '"'
-              + ' onerror="this.parentNode.innerHTML=\'<span class=\\\"sidebar-item-text\\\">'
-              + g.label.substring(0,3).toUpperCase() + '</span>\'"'
-              + '></div>';
+        var inner = '<span class="sidebar-item-text">' + g.label + '</span>';
 
         var item = document.createElement('div');
         item.className = 'sidebar-item' + (key === activeKey ? ' active' : '');
