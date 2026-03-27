@@ -260,27 +260,70 @@
       from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); }
     }
 
-    /* ---- RESPONSIVE ---- */
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+
+    /* Tablet */
     @media (max-width: 1024px) {
+      /* Stack hero */
       .people-hero { grid-template-columns: 1fr; min-height: auto; }
       .ph-left { padding: 9rem 2.5rem 4rem; }
       .ph-left::after { display: none; }
-      .ph-right { height: 55vw; }
+      .ph-right { height: 55vw; min-height: 280px; }
+
+      /* Gallery layout stacks */
       .gallery-layout { grid-template-columns: 1fr; }
-      .gallery-sidebar { position: static; height: auto; border-right: none; border-bottom: 1px solid var(--border); padding: 2.5rem 2rem; }
-      .psw-cards { flex-direction: row; }
-      .psw-card { flex: 1; }
+      .gallery-sidebar {
+        position: static; height: auto;
+        border-right: none; border-bottom: 1px solid var(--border);
+        padding: 2rem 1.5rem;
+      }
+      .psw-cards {
+        flex-direction: row; gap: 3px; overflow-x: auto;
+        padding-bottom: 0.5rem;
+        /* Smooth horizontal scroll on touch */
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .psw-cards::-webkit-scrollbar { display: none; }
+      .psw-card {
+        flex: 0 0 200px; /* fixed width, no distortion */
+        aspect-ratio: 3/2;
+      }
       .gallery-main { padding: 2.5rem 2rem 4rem; }
       .gallery-grid { columns: 2; }
     }
+
+    /* Mobile */
     @media (max-width: 700px) {
       .ph-left { padding: 8rem 1.5rem 3.5rem; }
       .ph-right { height: 72vw; }
+      .ph-meta { gap: 1.5rem; }
+      .ph-divider { display: none; }
+
+      /* Quote section */
       .people-quote { padding: 3.5rem 1.5rem; }
-      .psw-cards { flex-direction: column; }
-      .gallery-grid { columns: 1; }
+
+      /* Sidebar cards stack again on small mobile */
+      .gallery-sidebar { padding: 1.8rem 1.5rem; }
+      .psw-cards { flex-direction: column; overflow-x: visible; }
+      .psw-card { flex: none; width: 100%; aspect-ratio: 16/7; }
+
+      /* Gallery grid */
       .gallery-main { padding: 2rem 1.5rem 3rem; }
+      .gallery-grid { columns: 1; }
+      .gallery-main-head { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+
+      /* Instagram bar */
       .people-ig { padding: 1.6rem 1.5rem; flex-wrap: wrap; gap: 1rem; }
+      .people-ig-btn { width: 100%; text-align: center; }
+    }
+
+    /* Very small phones */
+    @media (max-width: 400px) {
+      .ph-title { font-size: clamp(2.6rem, 12vw, 3.5rem); }
+      .ph-left { padding: 7rem 1.2rem 3rem; }
     }
   </style>
 </head>
@@ -477,7 +520,7 @@
     (function() {
       if (typeof peopleGalleries === 'undefined') return;
       var cardsEl  = document.getElementById('peopleSwitcherCards');
-      cardsEl.innerHTML = ''; /* clear any cards script.js may have already added */
+      cardsEl.innerHTML = '';
       var activeKey = Object.keys(peopleGalleries)[0];
 
       Object.keys(peopleGalleries).forEach(function(key) {
@@ -506,7 +549,7 @@
         cardsEl.appendChild(card);
       });
 
-      /* ── Build once on load — no duplicate ── */
+      /* Build on load */
       var firstKey = Object.keys(peopleGalleries)[0];
       images = peopleGalleries[firstKey].images;
       buildPeopleGrid(images);
