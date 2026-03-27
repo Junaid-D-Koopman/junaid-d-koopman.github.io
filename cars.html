@@ -55,7 +55,7 @@
     }
     .car-hero-title {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(4.5rem, 10.5vw, 10rem);
+      font-size: clamp(3.5rem, 9vw, 10rem);
       line-height: 0.88; font-weight: 700; letter-spacing: -0.02em;
       color: #fff; margin-bottom: 0;
     }
@@ -224,7 +224,7 @@
       overflow: hidden;
     }
 
-    /* Individual cell — fills available space evenly via flex */
+    /* Individual cell */
     .sidebar-item {
       display: none;
       position: relative;
@@ -323,8 +323,9 @@
       color: var(--muted); font-size: 0.85rem;
       max-width: 260px; text-align: right; line-height: 1.65;
     }
+    /* ── CHANGED: 4 columns on desktop for smaller, more editorial images ── */
     .car-mag-grid {
-      columns: 3; column-gap: 3px;
+      columns: 4; column-gap: 3px;
       padding: 0 4rem 4rem;
     }
     .mag-item {
@@ -346,18 +347,18 @@
       background: linear-gradient(to top, rgba(0,0,0,0.78) 0%, transparent 55%);
       opacity: 0; transition: opacity 0.38s;
       display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 1.4rem 1.6rem;
+      padding: 1rem 1.1rem;
     }
     .mag-item:hover .mag-overlay { opacity: 1; }
     .mag-overlay .o-num {
       font-family: 'Playfair Display', serif;
-      font-size: 2.4rem; font-weight: 700;
+      font-size: 1.6rem; font-weight: 700;
       color: var(--accent); line-height: 1;
       transform: translateY(10px);
       transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .mag-overlay .o-cap {
-      font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+      font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
       color: rgba(255,255,255,0.8);
       transform: translateY(10px);
       transition: transform 0.38s 0.04s cubic-bezier(0.22, 1, 0.36, 1);
@@ -469,21 +470,63 @@
       to   { transform: translateY(0); }
     }
 
-    /* ---- RESPONSIVE ---- */
+    /* ════════════════════════════════════════
+       RESPONSIVE
+    ════════════════════════════════════════ */
+
+    /* Large tablets — drop to 3 image columns */
+    @media (max-width: 1280px) {
+      .car-mag-grid { columns: 3; }
+    }
+
+    /* Tablet — stack featured, adjust layout */
     @media (max-width: 1024px) {
+      /* Stack featured section */
+      .car-featured {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+      .feat-img-wrap {
+        height: 62vw;
+        min-height: 320px;
+      }
+      .feat-text {
+        padding: 3.5rem 3rem;
+        transform: none;
+        /* Override the translateX animation on mobile */
+        transition: opacity 0.9s ease 0.4s;
+      }
+      .feat-ghost-num { display: none; }
+
+      /* Gallery sidebar becomes horizontal strip */
       .car-gallery-layout { grid-template-columns: 1fr; }
       .gallery-sidebar {
-        position: static; max-height: none;
+        position: static; height: auto;
         flex-direction: row; flex-wrap: nowrap;
         border-right: none; border-bottom: 1px solid var(--border);
-        padding: 0.75rem 1rem; gap: 3px; overflow-x: auto;
+        padding: 0.5rem 0.75rem; gap: 3px; overflow-x: auto;
       }
-      .sidebar-nav-btn { width: 28px; height: 44px; }
+      .sidebar-nav-btn {
+        width: 28px; height: auto; min-height: 44px; flex-shrink: 0;
+      }
       .sidebar-nav-btn svg { transform: rotate(90deg); }
-      .sidebar-items { flex-direction: row; flex: none; gap: 3px; overflow: visible; }
-      .sidebar-item.visible { flex-shrink: 0; }
-      .sidebar-page-info { display: none; }
-      /* Tooltip above on mobile */
+      .sidebar-items {
+        flex-direction: row; flex: none; gap: 3px; overflow: visible;
+      }
+      .sidebar-item {
+        writing-mode: horizontal-tb;
+        min-width: 80px; height: 44px; flex: none; flex-shrink: 0;
+        border-left: none; border-bottom: 2px solid transparent;
+        padding: 0 1rem;
+      }
+      .sidebar-item.active {
+        border-left-color: transparent;
+        border-bottom-color: var(--accent);
+      }
+      .sidebar-item-text {
+        writing-mode: horizontal-tb; text-orientation: mixed;
+        font-size: 0.55rem; letter-spacing: 0.16em;
+      }
       .sidebar-item::after {
         left: 50%; top: auto; bottom: calc(100% + 8px);
         transform: translateX(-50%) translateY(4px);
@@ -492,25 +535,64 @@
       .sidebar-item:hover::after {
         transform: translateX(-50%) translateY(0);
       }
-    }
-    @media (max-width: 700px) {
-      .car-hero { padding: 0 1.5rem 3.5rem; }
-      .car-hero-side { display: none; }
-      .car-hero-meta { flex-wrap: wrap; gap: 1.5rem; }
-      .hero-cta { margin-left: 0; width: 100%; }
-      .car-grid-header { padding: 3rem 1.5rem 1.5rem; flex-direction: column; align-items: flex-start; gap: 0.8rem; }
-      .car-grid-header p { text-align: left; }
-      .car-mag-grid { columns: 1; padding: 0 1.5rem 3rem; }
+      .sidebar-page-info { display: none; }
+
+      /* Grid header */
+      .car-grid-header {
+        padding: 3rem 2.5rem 1.5rem;
+        flex-direction: column; align-items: flex-start; gap: 0.6rem;
+      }
+      .car-grid-header p { text-align: left; max-width: 100%; }
+      .car-mag-grid { columns: 2; padding: 0 2.5rem 3rem; }
       .car-stats { grid-template-columns: repeat(2, 1fr); }
       .stat-cell:nth-child(2) { border-right: none; }
-      .stat-cell { padding: 2.5rem 1rem; }
+      .film-scroll { padding: 0 2.5rem 1rem; }
+      .film-hint { padding: 1rem 2.5rem 0; }
+      .car-film-head { padding: 0 2.5rem 2rem; }
+      .ig-bar { padding: 2rem 2.5rem; }
+    }
+
+    /* Mobile */
+    @media (max-width: 700px) {
+      .car-hero { padding: 0 1.5rem 3.5rem; min-height: 100svh; }
+      .car-hero-side { display: none; }
+      .car-hero-meta { flex-wrap: wrap; gap: 1.2rem; margin-top: 2rem; }
+      .hero-stat .num { font-size: 1.5rem; }
+      .hero-divider { display: none; }
+      .hero-cta { margin-left: 0; width: 100%; }
+
+      /* Stack featured */
+      .feat-img-wrap { height: 75vw; min-height: 240px; }
+      .feat-text { padding: 2.5rem 1.5rem; }
+      .feat-specs { flex-wrap: wrap; gap: 1.5rem; }
+
+      /* Gallery */
+      .car-grid-header { padding: 2.5rem 1.5rem 1.2rem; }
+      .car-mag-grid { columns: 1; padding: 0 1.5rem 3rem; }
+
+      /* Stats */
+      .stat-cell { padding: 2.2rem 1rem; }
+      .stat-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+      .stat-cell:nth-child(even) { border-right: none; }
+
+      /* Film strip */
       .film-scroll { padding: 0 1.5rem 1rem; }
       .film-hint { padding: 1rem 1.5rem 0; }
       .car-film-head { padding: 0 1.5rem 2rem; }
-      .film-frame { width: 250px; height: 168px; }
+      .film-frame { width: 240px; height: 160px; }
+
+      /* Instagram bar */
       .ig-bar { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
       .ig-bar-divider { display: none; }
+      .ig-bar-stats { gap: 1.5rem; }
       .ig-bar-btn { width: 100%; justify-content: center; }
+    }
+
+    /* Very small phones */
+    @media (max-width: 400px) {
+      .car-hero-title { font-size: clamp(2.8rem, 13vw, 4rem); }
+      .sidebar-item { min-width: 65px; }
+      .sidebar-item-text { font-size: 0.48rem; }
     }
   </style>
 </head>
@@ -599,19 +681,11 @@
 
     <!-- LEFT: gallery icon rail -->
     <div class="gallery-sidebar">
-
-      <!-- Up button -->
       <button class="sidebar-nav-btn" id="sidebarUp" disabled>
         <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
       </button>
-
-      <!-- Items -->
       <div class="sidebar-items" id="sidebarItems"></div>
-
-      <!-- Page indicator -->
       <div class="sidebar-page-info" id="sidebarPageInfo"></div>
-
-      <!-- Down button -->
       <button class="sidebar-nav-btn" id="sidebarDown">
         <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
       </button>
@@ -715,28 +789,13 @@
 
   <script src="script.js"></script>
   <script>
-    /* ─────────────────────────────────────────────
-       LOCAL LOGO MAP
-       Maps gallery key → filename in /logos/ folder.
-       Add a new entry here each time you add a gallery + logo PNG.
-       Keys that map to null (or are missing) fall back to text.
-    ───────────────────────────────────────────── */
     var LOCAL_LOGOS = {
       'alfaromeo':   'alfaromeo.png',
       'alfa':        'alfaromeo.png',
       'lamborghini': 'lamborghini.png',
       'porsche':     'porsche.png',
-      /* ── add more as you drop PNGs into /logos/ ──
-      'bmw':         'bmw.png',
-      'ferrari':     'ferrari.png',
-      'mercedes':    'mercedes.png',
-      ────────────────────────────────────────────── */
     };
 
-    /**
-     * Returns a local /logos/ path for the gallery key, or null if none exists.
-     * The key is matched as a substring so 'porsche911' will still find 'porsche'.
-     */
     function getLocalLogo(key) {
       var k = key.toLowerCase();
       for (var match in LOCAL_LOGOS) {
@@ -745,14 +804,11 @@
       return null;
     }
 
-    /* ─────────────────────────────────────────────
-       GALLERY SIDEBAR — up / down navigation
-       Shows VISIBLE_COUNT items at a time
-    ───────────────────────────────────────────── */
+    /* ── GALLERY SIDEBAR ── */
     (function() {
       if (typeof carGalleries === 'undefined') return;
 
-      var VISIBLE_COUNT = 6;   /* fits comfortably in the narrow rail */
+      var VISIBLE_COUNT = 6;
       var keys      = Object.keys(carGalleries);
       var activeKey = keys[0] || 'overview';
       var offset    = 0;
@@ -762,22 +818,18 @@
       var navDown  = document.getElementById('sidebarDown');
       var pageInfo = document.getElementById('sidebarPageInfo');
 
-      /* Build sidebar items — logo only, text for overview */
       keys.forEach(function(key) {
-        var g       = carGalleries[key];
+        var g     = carGalleries[key];
         var inner = '<span class="sidebar-item-text">' + g.label + '</span>';
-
-        var item = document.createElement('div');
-        item.className = 'sidebar-item' + (key === activeKey ? ' active' : '');
+        var item  = document.createElement('div');
+        item.className     = 'sidebar-item' + (key === activeKey ? ' active' : '');
         item.dataset.key   = key;
-        item.dataset.label = g.label;   /* used by the CSS tooltip */
+        item.dataset.label = g.label;
         item.innerHTML     = inner;
-
         item.addEventListener('click', function() { switchGallery(key); });
         itemsEl.appendChild(item);
       });
 
-      /* Show/hide items and update nav buttons */
       function render() {
         var items = itemsEl.querySelectorAll('.sidebar-item');
         items.forEach(function(item, i) {
@@ -804,31 +856,22 @@
 
       render();
 
-      /* Global switch function */
       window.switchGallery = function(key) {
         if (key === activeKey) return;
         activeKey = key;
         var g = carGalleries[key];
-
-        /* Update active item */
         itemsEl.querySelectorAll('.sidebar-item').forEach(function(c) {
           c.classList.toggle('active', c.dataset.key === key);
         });
-
-        /* Scroll sidebar page to show the selected item */
         var idx = keys.indexOf(key);
         if (idx !== -1 && (idx < offset || idx >= offset + VISIBLE_COUNT)) {
           offset = Math.floor(idx / VISIBLE_COUNT) * VISIBLE_COUNT;
           render();
         }
-
-        /* Rebuild gallery */
         buildMagGrid(g.images);
         buildFilmStrip(g.images);
-
         var cnt = document.getElementById('heroImgCount');
         if (cnt) cnt.textContent = g.images.length;
-
         var fi = document.getElementById('featImg');
         if (fi && g.images.length > 1) {
           fi.style.opacity = '0';
@@ -840,9 +883,7 @@
       };
     })();
 
-    /* ─────────────────────────────────────────────
-       BUILD MAG GRID
-    ───────────────────────────────────────────── */
+    /* ── BUILD MAG GRID ── */
     function buildMagGrid(imgs) {
       var grid = document.getElementById('carMagGrid');
       if (!grid) return;
@@ -876,9 +917,7 @@
       }, 260);
     }
 
-    /* ─────────────────────────────────────────────
-       BUILD FILM STRIP
-    ───────────────────────────────────────────── */
+    /* ── BUILD FILM STRIP ── */
     function buildFilmStrip(imgs) {
       var strip = document.getElementById('filmStrip');
       if (!strip) return;
@@ -898,9 +937,7 @@
       }, 260);
     }
 
-    /* ─────────────────────────────────────────────
-       TICKER
-    ───────────────────────────────────────────── */
+    /* ── TICKER ── */
     (function() {
       var words = ['Automotive Photography','·','Speed & Form','·','Mechanical Beauty','·','Track Day','·','Raw Power','·'];
       var t = document.getElementById('tickerTrack');
@@ -914,9 +951,7 @@
       });
     })();
 
-    /* ─────────────────────────────────────────────
-       HERO BG + COUNT
-    ───────────────────────────────────────────── */
+    /* ── HERO BG + COUNT ── */
     (function() {
       var bg  = document.getElementById('heroBg');
       var cnt = document.getElementById('heroImgCount');
@@ -931,9 +966,7 @@
       _heroBg.style.transform = 'scale(1.1) translateY(' + (window.scrollY * 0.22) + 'px)';
     }, { passive: true });
 
-    /* ─────────────────────────────────────────────
-       FEATURED IMAGE REVEAL
-    ───────────────────────────────────────────── */
+    /* ── FEATURED IMAGE REVEAL ── */
     (function() {
       if (typeof carImages === 'undefined' || carImages.length < 2) return;
       var fi   = document.getElementById('featImg');
@@ -950,17 +983,13 @@
       if (wrap) obs.observe(wrap);
     })();
 
-    /* ─────────────────────────────────────────────
-       INITIAL GRID
-    ───────────────────────────────────────────── */
+    /* ── INITIAL GRID ── */
     if (typeof carImages !== 'undefined') {
       buildMagGrid(carImages);
       buildFilmStrip(carImages);
     }
 
-    /* ─────────────────────────────────────────────
-       FILM STRIP DRAG
-    ───────────────────────────────────────────── */
+    /* ── FILM STRIP DRAG ── */
     (function() {
       var strip = document.getElementById('filmStrip');
       if (!strip) return;
@@ -977,9 +1006,7 @@
       });
     })();
 
-    /* ─────────────────────────────────────────────
-       STATS COUNTER
-    ───────────────────────────────────────────── */
+    /* ── STATS COUNTER ── */
     (function() {
       function count(el) {
         var target = +el.dataset.target, dur = 1800, t0 = performance.now();
